@@ -1,0 +1,29 @@
+<!-- VERSIÓN ESCRITORIO -->
+<nav class="navigation">
+    <ul class="nav-links">
+      <li><a mat-button routerLink="/" (click)="onLinkClick()">HOME</a></li>
+      <li class="call-to-action"><a mat-button routerLink="/crear-itinerario" (click)="onLinkClick()">CREAR ITINERARIO</a></li>
+      
+      <li>
+        <button mat-button [matMenuTriggerFor]="menuItinerarios">ITINERARIOS</button>
+        <mat-menu #menuItinerarios="matMenu">
+          <a mat-menu-item routerLink="/itinerarios/africa">ÁFRICA</a>
+          <a mat-menu-item routerLink="/itinerarios/america">AMÉRICA</a>
+          <a mat-menu-item routerLink="/itinerarios/asia">ASIA</a>
+          <a mat-menu-item routerLink="/itinerarios/europa">EUROPA</a>
+          <a mat-menu-item routerLink="/itinerarios/oceania">OCEANÍA</a>
+        </mat-menu>
+      </li>
+  
+      <li><a mat-button [routerLink]="['/puntos-interes']" (click)="onLinkClick()">PUNTOS DE INTERÉS</a></li>
+      <li><a mat-button [routerLink]="['/blog']" (click)="onLinkClick()">BLOG</a></li>
+      <li><a mat-button routerLink="/faqs" (click)="onLinkClick()">FAQs</a></li>
+      <li><a mat-button routerLink="/contacto" (click)="onLinkClick()">CONTACTO</a></li>
+    </ul>
+  
+    <div class="nav-buttons">
+      <button mat-button class="primary btn-large">INGRESAR</button>
+      <button mat-button class="secondary btn-large">REGISTRARSE</button>
+    </div>
+</nav>
+  

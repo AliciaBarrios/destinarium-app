@@ -1,0 +1,57 @@
+@import '../../../styles/main';
+
+.header-container {
+    background-color: $primary-dark-color;
+    color: $basic-light
+}
+
+// Header para pantallas móviles y tablets
+.header-mobile {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+
+    .mobile-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100%;
+        background: $basic-light;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transform: translateX(0);
+        transition: transform 0.3s ease-in-out;
+
+        .close-menu {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+            font-size: 2rem;
+            color: $basic-dark;
+        }
+    }
+    
+    // Ocultar en pantallas más grandes
+    @include media-breakpoint-up(sm-desktop) {
+      display: none;
+    }
+}
+
+// Header para pantallas de escritorio
+.header-desktop {
+    display: none;
+
+    // Mostrar en pantallas grandes
+    @include media-breakpoint-up(sm-desktop) {
+        display: block;
+    }
+}
+
+

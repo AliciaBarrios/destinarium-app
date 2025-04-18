@@ -1,0 +1,25 @@
+// Breakpoints para media queries
+$breakpoint-mobile: 320px;  // Móviles
+$breakpoint-tablet: 481px;  // iPads, tablets
+$breakpoint-sm-desktop: 769px;  // Pantallas pequeñas, ordenadores portátiles
+$breakpoint-lg-desktop: 1025px; // Pantallas grandes, ordenadores de escritorio
+$breakpoint-xl-desktop: 1201px; // Pantallas extra-grandes, televisores
+
+// Mixin para min-width (mobile first)
+@mixin media-breakpoint-up($breakpoint) {
+  @if $breakpoint == mobile {
+    @media (min-width: #{$breakpoint-mobile}) { @content; }
+  }
+  @else if $breakpoint == tablet {
+    @media (min-width: #{$breakpoint-tablet}) { @content; }
+  }
+  @else if $breakpoint == sm-desktop {
+    @media (min-width: #{$breakpoint-sm-desktop}) { @content; }
+  }
+  @else if $breakpoint == lg-desktop {
+    @media (min-width: #{$breakpoint-lg-desktop}) { @content; }
+  }
+  @else if $breakpoint == xl-desktop {
+    @media (min-width: #{$breakpoint-xl-desktop}) { @content; }
+  }
+}

@@ -1,0 +1,87 @@
+/* You can add global styles to this file, and also import other style files */
+@import './variables';
+@import './mixins';
+
+*,
+html,
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: $font-family-primary;
+    font-size: $p-font-size;
+    font-weight: $font-weight-regular;
+}
+
+h1 {
+    font-size: $h1-font-size;
+    font-weight: $h1-font-weight;
+}
+
+h3 {
+    font-size: $h3-font-size;
+}
+  
+// Párrafos
+p {
+    font-size: $p-font-size;
+    font-weight: $font-weight-regular;
+}
+
+// Botones
+
+button {
+    font-size: $btn-font-size;
+    border: none;
+    border-radius: 10px;
+    padding: 1.25rem 0;
+    cursor: pointer;
+
+    &.primary {
+        background-color: $primary-dark-color;
+        color: $basic-light;
+    }
+
+    &.secondary {
+        border: 1px solid $secondary-color;
+        background-color: $basic-light;
+        color: $secondary-color;
+    }
+
+    &.call-to-action {
+        background-color: $call-to-action-color;
+        color: $basic-dark;
+    }
+}
+
+.btn-large {
+    width: 300px;
+}
+
+.btn-small {
+    width: 150px;
+}
+
+// Enlaces
+a {
+    font-size: $link-font-size;
+    text-decoration: none;
+  
+    &:hover,
+    &:active {
+      font-weight: bold;
+      text-decoration: underline;
+    }
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem auto;
+    width: 80vw;
+}
