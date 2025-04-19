@@ -2,7 +2,14 @@
 
 .header-container {
     background-color: $primary-dark-color;
-    color: $basic-light
+    color: $basic-light;
+
+    .logo {
+        color: $basic-light;
+        font-size: 1.3rem;
+        font-weight: $font-weight-regular;
+        letter-spacing: 3px;
+    }
 }
 
 // Header para pantallas móviles y tablets

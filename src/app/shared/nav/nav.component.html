@@ -1,24 +1,30 @@
 <!-- VERSIÓN ESCRITORIO -->
 <nav class="navigation">
     <ul class="nav-links">
-      <li><a mat-button routerLink="/" (click)="onLinkClick()">HOME</a></li>
-      <li class="call-to-action"><a mat-button routerLink="/crear-itinerario" (click)="onLinkClick()">CREAR ITINERARIO</a></li>
+      <li><a mat-button [routerLink]="['/']" (click)="onLinkClick()" class="nav-item">HOME</a></li>
+      <li class="call-to-action"><a mat-button routerLink="/crear-itinerario" (click)="onLinkClick()" class="nav-item">CREAR ITINERARIO</a></li>
       
       <li>
-        <button mat-button [matMenuTriggerFor]="menuItinerarios">ITINERARIOS</button>
-        <mat-menu #menuItinerarios="matMenu">
-          <a mat-menu-item routerLink="/itinerarios/africa">ÁFRICA</a>
-          <a mat-menu-item routerLink="/itinerarios/america">AMÉRICA</a>
-          <a mat-menu-item routerLink="/itinerarios/asia">ASIA</a>
-          <a mat-menu-item routerLink="/itinerarios/europa">EUROPA</a>
-          <a mat-menu-item routerLink="/itinerarios/oceania">OCEANÍA</a>
-        </mat-menu>
+        <mat-accordion>
+          <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
+            <mat-expansion-panel-header>
+              <mat-panel-title class="nav-item"> ITINERARIOS </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <a mat-button routerLink="/itinerarios/africa" class="nav-item">ÁFRICA</a>
+            <a mat-button routerLink="/itinerarios/america" class="nav-item">AMÉRICA</a>
+            <a mat-button  routerLink="/itinerarios/asia" class="nav-item">ASIA</a>
+            <a mat-button routerLink="/itinerarios/europa" class="nav-item">EUROPA</a>
+            <a mat-button  routerLink="/itinerarios/oceania" class="nav-item">OCEANÍA</a>
+
+          </mat-expansion-panel>
+        </mat-accordion>
       </li>
   
-      <li><a mat-button [routerLink]="['/puntos-interes']" (click)="onLinkClick()">PUNTOS DE INTERÉS</a></li>
-      <li><a mat-button [routerLink]="['/blog']" (click)="onLinkClick()">BLOG</a></li>
-      <li><a mat-button routerLink="/faqs" (click)="onLinkClick()">FAQs</a></li>
-      <li><a mat-button routerLink="/contacto" (click)="onLinkClick()">CONTACTO</a></li>
+      <li><a mat-button [routerLink]="['/puntos-interes']" (click)="onLinkClick()" class="nav-item">PUNTOS DE INTERÉS</a></li>
+      <li><a mat-button [routerLink]="['/blog']" (click)="onLinkClick()" class="nav-item">BLOG</a></li>
+      <li><a mat-button routerLink="/faqs" (click)="onLinkClick()" class="nav-item">FAQs</a></li>
+      <li><a mat-button routerLink="/contacto" (click)="onLinkClick()" class="nav-item">CONTACTO</a></li>
     </ul>
   
     <div class="nav-buttons">

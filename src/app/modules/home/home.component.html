@@ -1,4 +1,7 @@
 <div class="main-container">
     <h1>¿Qué te apetece hoy?</h1>
+    <div class="cards-container">
+        <app-simple-card *ngFor="let card of simpleCards" [card]="card"></app-simple-card>
+    </div>
 </div>
 

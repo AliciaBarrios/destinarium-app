@@ -1,0 +1,16 @@
+<div class="full-card">
+    <a [routerLink]="card.link">
+      <div class="card-image" [ngStyle]="{ 'background-image': 'url(' + card.imageUrl + ')' }"></div>
+      <div class="card-content">
+        <h3>{{ card.title }}</h3>
+        <p class="meta">
+          <span>Publicado {{ card.date }}</span> | <span>{{ card.author }}</span>
+        </p>
+        <div class="tags">
+          <span class="category-tag">{{ card.category }}</span>
+          <span class="rating-tag">{{ card.rating }} ★</span>
+        </div>
+        <a class="details-link" [routerLink]="card.link">Ver detalles</a>
+      </div>
+    </a>
+</div>
