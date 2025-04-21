@@ -33,6 +33,7 @@ import { FooterComponent } from './footer/footer.component';
   exports: [ 
     NavComponent,
     HeaderComponent,
+    FooterComponent,
     SimpleCardComponent,
     FullCardComponent,
     SwitchAuthComponent

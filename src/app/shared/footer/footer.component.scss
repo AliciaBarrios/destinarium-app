@@ -1,0 +1,36 @@
+@import '../../../styles/main';
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: $primary-dark-color;
+    color: $basic-light;
+    padding: 0.5rem;
+
+    li {
+        list-style: none;
+        margin-bottom: 0.5rem;
+    }
+
+    .legal-links a, 
+    p {
+        font-size: 0.8rem;
+    }
+
+    .center-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        
+        .social-links {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.6rem 0;
+            i {
+                font-size: 1.3rem;
+            }
+        }
+    }
+}

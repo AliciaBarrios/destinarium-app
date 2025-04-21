@@ -1,1 +1,36 @@
-<p>footer works!</p>
+<div class="footer-container">
+    <div>
+        <ul class="legal-links">
+            <li><a mat-button [routerLink]="['/contacto']">Contacto</a></li>
+            <li><a mat-button [routerLink]="['/legal']">Aviso legal</a></li>
+            <li><a mat-button [routerLink]="['/cookies']">Política de cookies</a></li>
+            <li><a mat-button [routerLink]="['/privacidad']">Política de privacidad</a></li>
+        </ul>
+    </div>
+    <div class="center-container">
+        <ul class="social-links">
+            <li>
+                <a mat-button [routerLink]="['/contacto']">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </li>
+            <li>
+                <a mat-button [routerLink]="['/legal']">
+                    <i class="fab fa-facebook"></i>
+                </a>
+            </li>
+            <li>
+                <a mat-button [routerLink]="['/cookies']">
+                    <i class="fab fa-youtube"></i>
+                </a>
+            </li>
+            <li>
+                <a mat-button [routerLink]="['/privacidad']">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+            </li>
+        </ul>
+        <p>Copyrights 2025</p>
+    </div>
+</div>
+
