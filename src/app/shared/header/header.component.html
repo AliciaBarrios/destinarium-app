@@ -11,7 +11,7 @@
             </div>
             <div class="header-icons">
                 <button mat-icon-button aria-label="Soporte"><mat-icon>support_agent</mat-icon></button>
-                <button mat-icon-button aria-label="Usuario"><mat-icon>person</mat-icon></button>
+                <button mat-icon-button aria-label="Usuario" (click)="goToUserSection()"><mat-icon>person</mat-icon></button>
                 <button mat-icon-button aria-label="Contacto"><mat-icon>mail</mat-icon></button>
             </div>
         </div>
@@ -27,7 +27,7 @@
         </div>
         <div class="mobile-icons">
             <button mat-icon-button aria-label="Buscar"><mat-icon>search</mat-icon></button>
-            <button mat-icon-button aria-label="Usuario"><mat-icon>person</mat-icon></button>
+            <button mat-icon-button aria-label="Usuario" (click)="goToUserSection()"><mat-icon>person</mat-icon></button>
             <button mat-icon-button (click)="toggleMenu()" aria-label="Menú">
                 <mat-icon>menu</mat-icon>
             </button>

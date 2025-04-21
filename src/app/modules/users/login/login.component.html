@@ -1,1 +1,55 @@
-<p>login works!</p>
+<div style="margin-left: auto; margin-right: auto">
+  <p id="loginFeedback"></p>
+</div>
+
+<div class="main-container">
+  <app-switch-auth active="login"></app-switch-auth>
+  <form [formGroup]="loginForm" (ngSubmit)="login()">
+    <div class="form-item">
+      <label for="email">Email </label>
+      <input type="email" [formControl]="email" placeholder="Introduce tu email"/>
+    </div>
+
+    <div class="form-item">
+      <label for="password">Contraseña </label>
+      <input type="password" [formControl]="password" placeholder="Introduce tu contraseña" />
+    </div>
+
+    <a href="#" class="form-link form-item">¿Olvidaste tu contraseña?</a>
+
+    <div class="form-item">
+      <label>
+        <input type="checkbox" name="remember" />
+        Recuerdame
+      </label>
+    </div>
+
+    <button mat-button type="submit" class="primary btn-large">INICIAR SESIÓN</button>
+  </form>
+</div>
+
+<div *ngIf="email.errors" class="main-container">
+  <span
+    style="color: red"
+    *ngIf="email.errors && (email.touched || email.dirty)"
+  >
+    <span *ngIf="email.errors['required']">Email is required</span>
+    <div *ngIf="email.errors['pattern']">Email not a valid format.</div>
+  </span>
+</div>
+
+<div *ngIf="password.errors" class="main-container">
+  <span
+    style="color: red"
+    *ngIf="password.errors && (password.touched || password.dirty)"
+  >
+    <span *ngIf="password.errors['required']">Password is required</span>
+    <span *ngIf="password.errors['minlength']"
+      >Password must be greater tha 8 characters</span
+    >
+    <span *ngIf="password.errors['maxlength']"
+      >Password can be max 16 characters long</span
+    >
+  </span>
+</div>
+

@@ -1,1 +1,113 @@
-<p>register works!</p>
+<div style="margin-left: auto; margin-right: auto">
+  <p id="registerFeedback"></p> 
+</div>
+
+<div class="main-container">
+  <app-switch-auth active="registro"></app-switch-auth>
+  <form [formGroup]="registerForm" (ngSubmit)="register()">
+    <P class="alert">*Los campos marcados con asterísco son obligatorios</P>
+    <div class="form-item">
+        <label for="name">Nombre de usuario* </label>
+        <input type="text" [formControl]="name" placeholder="Nombre de usuario*"/>
+        <div
+        *ngIf="name.errors && isValidForm != null && !isValidForm"
+        [ngClass]="'error'"
+        >
+        <div *ngIf="name.errors['required']">Este campo es obligatorio</div>
+        <div *ngIf="name.errors['minlength']">
+            El nombre de usuario debe tener al menos 5 caracteres.
+        </div>
+        <div *ngIf="name.errors['maxlength']">
+            El nombre de usuario no puede superar los 25 caracteres.
+        </div>
+        </div>
+    </div>
+    <div class="form-item">
+        <label for="surname1">Primer apellido* </label>
+        <input type="text" [formControl]="surname_1" placeholder="Primer apellido*"/>
+        <div
+          *ngIf="surname_1.errors && isValidForm != null && !isValidForm"
+          [ngClass]="'error'"
+        >
+          <div *ngIf="surname_1.errors['required']">Este campo es obligatorio</div>
+          <div *ngIf="surname_1.errors['minlength']">
+            Surname1 must be at least 5 characters long.
+          </div>
+          <div *ngIf="surname_1.errors['maxlength']">
+            Surname1 can be max 25 characters long.
+          </div>
+        </div>
+      </div>
+      <div class="form-item">
+        <label for="surname2">Segundo apellido </label>
+        <input type="text" [formControl]="surname_2" placeholder="Segundo apellido" />
+        <div
+          *ngIf="surname_2.errors && isValidForm != null && !isValidForm"
+          [ngClass]="'error'"
+        >
+          <div *ngIf="surname_2.errors['minlength']">
+            Surname2 must be at least 5 characters long.
+          </div>
+          <div *ngIf="surname_2.errors['maxlength']">
+            Surname2 can be max 25 characters long.
+          </div>
+        </div>
+      </div>
+      <div class="form-item">
+        <label for="alias">Alias* </label>
+        <input type="text" [formControl]="alias" placeholder="Alias*"/>
+        <div
+          *ngIf="alias.errors && isValidForm != null && !isValidForm"
+          [ngClass]="'error'"
+        >
+          <div *ngIf="alias.errors['required']">AEste campo es obligatorio</div>
+          <div *ngIf="alias.errors['minlength']">
+            Alias must be at least 5 characters long.
+          </div>
+          <div *ngIf="alias.errors['maxlength']">
+            Alias can be max 25 characters long.
+          </div>
+        </div>
+      </div>
+      <div class="form-item">
+        <label for="birthDate">Fecha de nacimiento* </label>
+        <input type="date" [formControl]="birth_date" />
+        <div
+          *ngIf="birth_date.errors && isValidForm != null && !isValidForm"
+          [ngClass]="'error'"
+        >
+          <div *ngIf="birth_date.errors['required']">Este campo es obligatorio</div>
+        </div>
+      </div>
+    <div class="form-item">
+        <label for="email">Email* </label>
+        <input type="email" [formControl]="email" placeholder="Email*"/>
+        <div
+        *ngIf="email.errors && isValidForm != null && !isValidForm"
+        [ngClass]="'error'"
+        >
+        <div *ngIf="email.errors['required']">Este campo es obligatorio</div>
+        <div *ngIf="email.errors['pattern']">Email no tiene un formato válido.</div>
+        </div>
+    </div>
+
+    <div class="form-item">
+        <label for="password">Contraseña* </label>
+        <input type="password" [formControl]="password" placeholder="Contraseña*"/>
+        <div
+        *ngIf="password.errors && isValidForm != null && !isValidForm"
+        [ngClass]="'error'"
+        >
+        <div *ngIf="password.errors['required']">Este campo es obligatorio</div>
+        <div *ngIf="password.errors['minlength']">
+            La contraseña debe tener mínimo 8 caracteres.
+        </div>
+        <div *ngIf="password.errors['maxlengt']h">
+            La contraseña no puede superar los 16 caracteres.
+        </div>
+        </div>
+    </div>
+
+    <button type="submit" class="primary btn-large">ENVIAR DATOS</button>
+  </form>
+</div>

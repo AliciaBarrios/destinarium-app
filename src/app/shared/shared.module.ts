@@ -10,13 +10,17 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { RouterModule } from '@angular/router';
 import { SimpleCardComponent } from './simple-card/simple-card.component';
 import { FullCardComponent } from './full-card/full-card.component';
+import { SwitchAuthComponent } from './switch-auth/switch-auth.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
     NavComponent,
     HeaderComponent,
     SimpleCardComponent,
-    FullCardComponent
+    FullCardComponent,
+    SwitchAuthComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,
@@ -30,7 +34,8 @@ import { FullCardComponent } from './full-card/full-card.component';
     NavComponent,
     HeaderComponent,
     SimpleCardComponent,
-    FullCardComponent
+    FullCardComponent,
+    SwitchAuthComponent
   ]
 })
 export class SharedModule { }

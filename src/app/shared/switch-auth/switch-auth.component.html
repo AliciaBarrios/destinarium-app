@@ -1,0 +1,19 @@
+<div class="switch-buttons">
+    <button
+      class="switch-btn"
+      [class.active]="active === 'login'"
+      [disabled]="active === 'login'"
+      (click)="goTo('login')"
+    >
+      Ingresar
+    </button>
+    <button
+      class="switch-btn"
+      [class.active]="active === 'registro'"
+      [disabled]="active === 'registro'"
+      (click)="goTo('registro')"
+    >
+      Registrarse
+    </button>
+</div>
+  
