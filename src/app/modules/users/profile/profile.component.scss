@@ -1,0 +1,15 @@
+@import '../../../../styles/main.scss';
+
+.user-header {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid $basic-grey;
+}
+
+.counter {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 1rem;
+    border-bottom: 1px solid $basic-grey;
+}

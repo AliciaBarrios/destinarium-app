@@ -13,7 +13,7 @@ export class FullCardComponent {
     title: '',
     date: new Date(''),
     author: '',
-    category: '',
+    categories: [],
     rating: 0
   };
 }

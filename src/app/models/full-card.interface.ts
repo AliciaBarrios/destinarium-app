@@ -1,9 +1,11 @@
+import { CategoryDTO } from "./category.dto";
+
 export interface FullCard {
     imageUrl: string;
     link: string;
     title: string;
     date: Date;
     author: string;
-    category: string;
+    categories: string[];
     rating: number;
 }
