@@ -1,33 +1,20 @@
 <nav class="navigation">
     <ul class="nav-links">
       <li><a mat-button [routerLink]="['/']" (click)="onLinkClick()" class="nav-item">HOME</a></li>
-      <li class="call-to-action"><a mat-button routerLink="/crear-itinerario" (click)="onLinkClick()" class="nav-item">CREAR ITINERARIO</a></li>
-      <!-- <li>
-        <mat-accordion>
-          <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
-            <mat-expansion-panel-header>
-              <mat-panel-title class="nav-item"> ITINERARIOS </mat-panel-title>
-            </mat-expansion-panel-header>
-
-            <a mat-button routerLink="/itinerarios/africa" class="nav-item">ÁFRICA</a>
-            <a mat-button routerLink="/itinerarios/america" class="nav-item">AMÉRICA</a>
-            <a mat-button  routerLink="/itinerarios/asia" class="nav-item">ASIA</a>
-            <a mat-button routerLink="/itinerarios/europa" class="nav-item">EUROPA</a>
-            <a mat-button  routerLink="/itinerarios/oceania" class="nav-item">OCEANÍA</a>
-
-          </mat-expansion-panel>
-        </mat-accordion>
-      </li> -->
+      <li class="call-to-action"><a mat-button [routerLink]="['/crear-itinerario']" (click)="onLinkClick()" class="nav-item">CREAR ITINERARIO</a></li>
       <li><a mat-button [routerLink]="['/itinerarios']" (click)="onLinkClick()" class="nav-item">ITINERARIOS</a></li>
       <li><a mat-button [routerLink]="['/puntos-interes']" (click)="onLinkClick()" class="nav-item">PUNTOS DE INTERÉS</a></li>
       <li><a mat-button [routerLink]="['/blog']" (click)="onLinkClick()" class="nav-item">BLOG</a></li>
-      <li><a mat-button routerLink="/faqs" (click)="onLinkClick()" class="nav-item">FAQs</a></li>
-      <li><a mat-button routerLink="/contacto" (click)="onLinkClick()" class="nav-item">CONTACTO</a></li>
+      <li><a mat-button [routerLink]="['/faqs']" (click)="onLinkClick()" class="nav-item">FAQs</a></li>
+      <li><a mat-button [routerLink]="['/contacto']" (click)="onLinkClick()" class="nav-item">CONTACTO</a></li>
     </ul>
   
     <div class="nav-buttons" *ngIf="!(isAuthenticated$ | async)">
-      <button mat-button class="primary btn-large" (click)="goTo('login')">INGRESAR</button>
-      <button mat-button class="secondary btn-large" (click)="goTo('registro')">REGISTRARSE</button>
+      <button mat-button class="call-to-action" [ngClass]="isDesktop ? 'btn-small' : 'btn-large'" (click)="goTo('login')">INGRESAR</button>
+      <button mat-button class="secondary" [ngClass]="isDesktop ? 'btn-small' : 'btn-large'" (click)="goTo('registro')">REGISTRARSE</button>
+    </div>
+    <div class="nav-buttons" *ngIf="(isAuthenticated$ | async)">
+      <button mat-button class="call-to-action btn-large" (click)="goTo('menu')">MI USUARIO</button>
     </div>
 </nav>
   

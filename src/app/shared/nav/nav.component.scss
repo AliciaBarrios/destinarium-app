@@ -48,7 +48,48 @@
 @include media-breakpoint-up(sm-desktop) {
     .navigation {
         flex-direction: row;
+        width: 100%;
+        padding: 1rem 2rem;
+        gap: 2rem;
+        box-sizing: border-box; 
         background-color: $primary-dark-color;
+        height: auto;
+        border-top:1px solid $basic-light;
+        border-bottom: 1px solid $basic-light;
+
+        .nav-links {
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 1.5rem;
+            max-width: 100%;
+            padding: 0;
+            margin: 0;
+
+            li {
+                background-color: $secondary-color;
+                border-radius: 16px;
+                width: auto;
+                border: none;
+                padding: 0.2rem 0.7rem;
+
+                &.call-to-action {
+                    background-color: $secondary-color;
+                    border: none;
+                }
+                
+                .nav-item {
+                    color: $basic-light;
+                }
+            }
+        }
+
+        .nav-buttons {
+            flex-direction: row;
+            gap: 1rem;
+            margin-top: 0;
+        }
     }
 }
 

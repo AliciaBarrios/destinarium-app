@@ -41,4 +41,8 @@ export class HeaderComponent {
       this.router.navigate(['/usuario/login']);
     }
   }
+
+  goTo(path: 'faqs' | 'contacto') {
+    this.router.navigate([`/${path}`]);
+  }
 }

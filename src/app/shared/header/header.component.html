@@ -2,22 +2,22 @@
     <!-- Header para escritorio -->
     <div class="header-desktop">
         <div class="top-bar">
-            <div class="logo"> 
-                <a [routerLink]="['/']">Destinarium</a>
+            <div> 
+                <a [routerLink]="['/']" class="logo">Destinarium</a>
             </div>
             <div class="search-bar">
-                <!-- Aquí tu buscador -->
                 <input type="text" class="form-control" placeholder="Buscar..." />
             </div>
             <div class="header-icons">
-                <button mat-icon-button aria-label="Soporte"><mat-icon>support_agent</mat-icon></button>
+                <button mat-icon-button aria-label="Soporte" (click)="goTo('faqs')"><mat-icon>support_agent</mat-icon></button>
                 <button mat-icon-button aria-label="Usuario" (click)="goToUserSection()"><mat-icon>person</mat-icon></button>
-                <button mat-icon-button aria-label="Contacto"><mat-icon>mail</mat-icon></button>
+                <button mat-icon-button aria-label="Contacto" (click)="goTo('contacto')"><mat-icon>mail</mat-icon></button>
             </div>
         </div>
         <div class="nav-var">
             <app-nav></app-nav>
         </div>
+        <img src="../../../assets/cielo-img.jpg" alt="Imagen de fondo decorativa" class="header-bg-img" />
     </div>
 
     <!-- Header para móvil -->

@@ -55,7 +55,7 @@ export class ProfileComponent implements OnInit {
     return {
       link: '/itinerarios/' + itinerary.itineraryId,
       imageUrl: itinerary.coverImage,
-      title: `Itinerario de ${itinerary.duration} por ${itinerary.destination}`,
+      title: `Itinerario de ${itinerary.duration} días por ${itinerary.destination}`,
       date: itinerary.publicationDate,
       author: itinerary.userAlias || 'Autor desconocido',
       categories: itinerary.categories?.map(cat => cat.title) || 'Sin categoría',
