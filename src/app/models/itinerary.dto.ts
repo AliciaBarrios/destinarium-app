@@ -5,7 +5,7 @@ import { AccommodationDTO } from "./accommodation.dto";
 import { TransportDTO } from "./transport.dto";
 
 export class ItineraryDTO {
-    itineraryId?: string;
+    itineraryId: string;
     title: string;
     publicationDate: Date;
     userAlias?: string;
@@ -15,6 +15,7 @@ export class ItineraryDTO {
     startDate: Date;
     endDate: Date;
     rating: number;
+    budget: number;
     categories: CategoryDTO[];
     coverImage: string;
     transports?: TransportDTO[];
@@ -32,6 +33,7 @@ export class ItineraryDTO {
       startDate: Date,
       endDate: Date,
       rating: number,
+      budget: number,
       categories: CategoryDTO[],
       coverImage: string,
       userAlias?: string,
@@ -43,15 +45,16 @@ export class ItineraryDTO {
       this.itineraryId = itineraryId;
       this.title = title;
       this.publicationDate = publicationDate;
-      this.userAlias = userAlias;
       this.userId = userId;
       this.duration = duration;
       this.destination = destination;
       this.startDate = startDate;
       this.endDate = endDate;
       this.rating = rating;
+      this.budget = budget;
       this.categories = categories;
       this.coverImage = coverImage;
+      this.userAlias = userAlias;
       this.transports = transports;
       this.accommodations = accommodations;
       this.restaurants = restaurants;

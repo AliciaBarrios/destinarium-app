@@ -4,7 +4,9 @@ import { ItineraryService } from '../../../services/itineraries.service';
 import { ItineraryDTO } from '../../../models/itinerary.dto';
 import { LocalStorageService } from '../../../services/local-storage.service';
 import { UserDTO } from '../../../models/user.dto';
-import { CategoryDTO } from '../../../models/category.dto';
+import { Router } from '@angular/router';
+import { SharedService } from '../../../services/shared.services';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-profile',
@@ -19,11 +21,18 @@ export class ProfileComponent implements OnInit {
   private userService: UserService,
   private itineraryService: ItineraryService,
   private localStorageService: LocalStorageService,
+  private router: Router,
+  private sharedService: SharedService
   ) {
     this.userData = new UserDTO('', '', '', '', new Date(), '', '');
   }
 
  ngOnInit(): void {
+    this.loadItineraries();
+  }
+
+  private async loadItineraries(): Promise<void> {
+    let errorResponse: any;
     const userId = this.localStorageService.get('user_id');
     if (userId) {
       this.userService.getUSerById(userId).subscribe({
@@ -31,12 +40,12 @@ export class ProfileComponent implements OnInit {
           this.userData = user;
           console.log('userID recibido:', userId);
           this.itineraryService.getItinerariesByUserId(userId).subscribe({
-            next: (itinerarios) => {
-              console.log('Itinerarios recibidos:', itinerarios);
+            next: (itinerarios: ItineraryDTO[]) => {
               this.itineraries = itinerarios;
             },
-            error: (err) => {
-              console.error('Error al obtener los itinerarios del usuario', err);
+            error: (error: HttpErrorResponse) => {
+              errorResponse = error.error;
+              this.sharedService.errorLog(errorResponse);
             }
           });
         },
@@ -61,5 +70,30 @@ export class ProfileComponent implements OnInit {
       categories: itinerary.categories?.map(cat => cat.title) || 'Sin categoría',
       rating: itinerary.rating
     };
+  }
+
+  onEditItinerary(id: string): void {
+    this.router.navigate(['/itinerarios/editar', id]);
+  }
+
+  onDeleteItinerary(id: string) {
+    let errorResponse: any;
+
+    // show confirmation popup
+    let result = confirm('Confirm delete post with id: ' + id + ' .');
+    if (result) {
+      this.itineraryService.deleteItinerary(id).subscribe({
+        next: (response: any) => {
+          const rowsAffected = response; 
+          if (rowsAffected.affected > 0) {
+            this.loadItineraries();
+          }
+        }, 
+        error: (error: HttpErrorResponse) => {
+          errorResponse = error.error;
+          this.sharedService.errorLog(errorResponse);
+        }
+      });
+    }
   }
 }

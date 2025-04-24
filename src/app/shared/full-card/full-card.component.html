@@ -1,5 +1,13 @@
 <div class="full-card" [ngStyle]="{ 'background-image': 'url(' + card.imageUrl + ')' }">
   <div class="card-content">
+    <div class="card-actions">
+      <button mat-icon-button (click)="onEdit()">
+        <mat-icon class="edit-btn">edit</mat-icon>
+      </button>
+      <button mat-icon-button (click)="onDelete()">
+        <mat-icon  class="delete-btn">delete</mat-icon>
+      </button>
+    </div>
     <h3>{{ card.title }}</h3>
     <p class="meta">
       <span>Publicado {{ card.date }}</span> | <span>{{ card.author }}</span>

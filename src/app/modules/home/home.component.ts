@@ -11,7 +11,7 @@ export class HomeComponent {
   simpleCards: SimpleCard[] = [
     {
       imageUrl: '../../../assets/itinerarios-img.jpg',
-      link: '/crear-itinerario',
+      link: '/itinerarios/crear-itinerario',
       title: 'Crear un itinerario'
     },
     {

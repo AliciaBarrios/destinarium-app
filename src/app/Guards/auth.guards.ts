@@ -31,7 +31,7 @@ export class AuthGuard implements CanActivate {
       // logged in so return true
       return true;
     }
-
+    alert('Por favor, inicia sesión para continuar');
     this.router.navigate(['/usuario/login']);
 
     return false;

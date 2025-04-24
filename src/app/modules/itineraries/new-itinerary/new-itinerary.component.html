@@ -1,0 +1,14 @@
+<div class="new-itinerary-container">
+    <h1>Crear tu itinerario</h1>
+
+    <nav class="steps">
+        <button [routerLink]="['paso-1']" routerLinkActive="activo">Paso 1</button>
+        <button [routerLink]="['paso-2']" routerLinkActive="activo">Paso 2</button>
+        <button [routerLink]="['paso-3']" routerLinkActive="activo">Paso 3</button>
+        <button [routerLink]="['resumen']" routerLinkActive="activo">Resumen</button>
+    </nav>
+    
+    <section class="steps-container">
+        <router-outlet></router-outlet>
+    </section>
+</div>

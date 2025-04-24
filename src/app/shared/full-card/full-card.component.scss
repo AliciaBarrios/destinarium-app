@@ -1,12 +1,13 @@
 .full-card {
     width: 100%;
-    height: 250px;
+    height: 300px;
     background-size: cover;
     background-position: center;
     position: relative;
     border-radius: 10px;
     overflow: hidden;
     margin-bottom: 1.2rem;
+    padding: 0.5rem;
 
     .card-content {
         display: flex;
@@ -14,6 +15,27 @@
         justify-content: center;
         height: 100%;
         gap: 1rem;
+
+        .card-actions {
+            display: flex;
+            justify-content: space-between;
+
+            button {
+                background-color: rgba(23, 115, 219, 0.438);
+                border-radius: 50%;
+                padding: 10px;
+                margin-left: 10px;
+
+                .edit-btn, .delete-btn {
+                    color: white;
+                    font-size: 24px;
+                }
+                  
+                .edit-btn:hover, .delete-btn:hover {
+                    background-color: rgba(0, 0, 0, 0.5);
+                }
+            }
+        } 
 
         .tags {
             display: flex;

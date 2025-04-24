@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FullCard } from '../../models/full-card.interface';
 
 @Component({
@@ -16,4 +16,15 @@ export class FullCardComponent {
     categories: [],
     rating: 0
   };
+
+  @Output() edit = new EventEmitter<void>(); 
+  @Output() delete = new EventEmitter<void>(); 
+
+  onEdit() {
+    this.edit.emit(); 
+  }
+
+  onDelete() {
+    this.delete.emit();
+  }
 }
