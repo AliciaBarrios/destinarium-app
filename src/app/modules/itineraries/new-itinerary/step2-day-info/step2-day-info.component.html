@@ -1,1 +1,29 @@
-<p>step2-day-info works!</p>
+<div class="day-form">
+    <h2>Paso 2 - Añadir información por días</h2>
+    <p>Días añadidos: {{ dayCount }}</p>
+    <form [formGroup]="dayForm" (ngSubmit)="onSubmit()">
+        <div formArrayName="days">
+            <div *ngFor="let day of days.controls; let i = index" [formGroupName]="i">
+                <div>
+                    <label for="startPlace">Lugar de inicio</label>
+                    <input type="text" id="startPlace" formControlName="startPlace" placeholder="Lugar de inicio" />
+                </div>
+                <div>
+                    <label for="endPlace">Lugar de fin</label>
+                    <input type="text" id="endPlace" formControlName="endPlace" placeholder="Lugar de fin" />
+                </div>
+                <quill-editor
+                    [modules]="quillModules"
+                    [(ngModel)]="editorContent"
+                    (onEditorCreated)="onEditorCreated($event)"
+                    formControlName="description">
+                </quill-editor>
+                <button type="button" (click)="removeDay(i)">Eliminar este día</button>
+                <hr />
+            </div>
+        </div>
+    
+        <button type="button" class="call-to-action btn-large" (click)="addNewDay()">GUARDAR Y AÑADIR OTRO DÍA</button>
+        <button type="submit" class="primary btn-large">GUARDAR Y CONTINUAR</button>
+    </form>
+</div>

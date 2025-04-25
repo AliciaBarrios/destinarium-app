@@ -93,7 +93,6 @@ export class Step1BasicDataComponent implements OnInit {
       categories: this.categories,
     });
   }
-
   private async loadCategories(): Promise<void> {
     let errorResponse: any;
   
@@ -125,7 +124,7 @@ export class Step1BasicDataComponent implements OnInit {
           );
     
           if (responseOK) {
-            this.router.navigateByUrl('paso-2');
+            this.router.navigateByUrl('/itinerarios/crear-itinerario/paso-2');
           }
         })
       ).subscribe({
@@ -142,11 +141,9 @@ export class Step1BasicDataComponent implements OnInit {
   }
 
   async saveItinerary() {
-    console.log("funcion save");
     this.isValidForm = false;
 
     if (this.formStep1.invalid) {
-      console.log("funcion nvalido");
       return;
     }
 
@@ -156,4 +153,5 @@ export class Step1BasicDataComponent implements OnInit {
 
     this.validRequest = await this.createItinerary();
   }
+
 }

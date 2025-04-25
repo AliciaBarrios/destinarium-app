@@ -1,154 +1,81 @@
-<!-- <form [formGroup]="formStep1" (ngSubmit)="saveItinerary()">
-    <P class="alert">*Los campos marcados con asterísco son obligatorios</P> -->
-    <!-- DESTINO -->
-    <!-- <mat-form-field appearance="outline">
-      <mat-label>Destino</mat-label>
-      <mat-icon matPrefix>travel_explore</mat-icon>
-      <input matInput formControlName="destination" />
-    </mat-form-field>
-     -->
-     <!-- FECHA INICIO -->
-     <!-- <mat-form-field appearance="outline">
-      <mat-label>Fecha de inicio</mat-label>
-      <mat-icon matPrefix>event</mat-icon>
-      <input matInput [matDatepicker]="picker1" formControlName="startDate" />
-      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-      <mat-datepicker #picker1></mat-datepicker>
-    </mat-form-field> -->
-  
-    <!-- FECHA FIN -->
-    <!-- <mat-form-field appearance="outline">
-      <mat-label>Fecha de fin</mat-label>
-      <mat-icon matPrefix>event</mat-icon>
-      <input matInput [matDatepicker]="picker2" formControlName="endDate" />
-      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-      <mat-datepicker #picker2></mat-datepicker>
-    </mat-form-field> -->
-  
-    <!-- PRESUPUESTO -->
-    <!-- <mat-form-field appearance="outline">
-      <mat-label>Presupuesto por persona (€)</mat-label>
-      <mat-icon matPrefix>euro</mat-icon>
-      <input matInput type="number" formControlName="budget" />
-    </mat-form-field> -->
-  
-    <!-- CATEGORÍA -->
-    <!-- <mat-form-field appearance="outline">
-      <mat-label>Categoría</mat-label>
-      <mat-icon matPrefix>category</mat-icon>
-      <mat-select formControlName="categories" multiple>
-        <mat-option *ngFor="let category of categoriesList" [ngValue]="cat">{{ cat.title }}</mat-option>
-      </mat-select>
-    </mat-form-field> -->
-    <!-- <div>
-        <label for="categories">Choose categories:</label>
-        <select multiple [formControl]="categories">
-          <option
-            *ngFor="let category of categoriesList"
-            [ngValue]="category.title"
-          >
-            {{ category.title }}
-          </option>
-        </select>
-    </div> -->
-  
-    <!-- IMAGEN PORTADA -->
-    <!-- <mat-form-field class="imagen-portada">
-      <mat-label for="imagen">
-        
-        Subir imagen de portada
-      </mat-label>
-     
-      <input type="file" id="imagen" />
-    </mat-form-field>
-   -->
-   
-    <!-- BOTÓN -->
-    <!-- <div class="boton-siguiente">
-      <button mat-raised-button class="primary btn-large" type="submit">Guardar y continuar</button>
+<div style="margin-left: auto; margin-right: auto">
+  <p id="postFeedback"></p>
+</div>
+<div>
+  <h2>Paso 1 - Datos básicos</h2>
+  <form *ngIf="formStep1" [formGroup]="formStep1" (ngSubmit)="saveItinerary()">
+    <P class="alert">*Los campos marcados con asterísco son obligatorios</P>
+    <div class="form-item">
+      <label for="destination">Destino</label>
+      <input type="text" [formControl]="destination" />
+
+      <div *ngIf="destination.errors">
+        <div
+          *ngIf="destination.errors && isValidForm != null && !isValidForm"
+          [ngClass]="'error'"
+        >
+          <div *ngIf="destination.errors['required']">Campo requerido</div>
+
+          <div *ngIf="destination.errors['minLenght']">
+            Al menos debe contener tres caracteres
+          </div>
+        </div>
+      </div>
     </div>
+
+    <div class="form-item">
+      <label for="startDate">Fecha inicio</label>
+      <input type="date" [formControl]="startDate" />
+      <div
+        *ngIf="startDate.errors && isValidForm != null && !isValidForm"
+        [ngClass]="'error'"
+      >
+        <div *ngIf="startDate.errors['required']">
+          Campo requerido
+        </div>
+      </div>
+    </div>
+
+    <div class="form-item">
+      <label for="endDate">Fecha fin</label>
+      <input type="date" [formControl]="endDate" />
+      <div
+        *ngIf="endDate.errors && isValidForm != null && !isValidForm"
+        [ngClass]="'error'"
+      >
+        <div *ngIf="endDate.errors['required']">
+          Campo requerido
+        </div>
+      </div>
+    </div>
+
+    <div class="form-item">
+      <label for="rating">Calificación itinerario</label>
+      <input type="number" [formControl]="rating" />
+    </div>
+
+    <div class="form-item">
+      <label for="budget">Presupuesto por persona (€)</label>
+      <input type="text" [formControl]="budget" />
+    </div>
+
+    <div class="form-item">
+      <label for="categories">Selecciona el tipo de viaje</label>
+      <select multiple [formControl]="categories">
+        <option
+          *ngFor="let category of categoriesList"
+          [ngValue]="category.categoryId"
+        >
+          {{ category.title }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-item">
+      <label for="coverImage">Subir imagen de portada</label>
+      <input type="text" [formControl]="coverImage" />
+    </div>
+
+    <button type="submit" class="primary btn-large">GUARDAR Y CONTINUAR</button>
   </form>
-   -->
-
-  <div style="margin-left: auto; margin-right: auto">
-    <p id="postFeedback"></p>
-  </div>
-  <div>
-    <h2>Paso 1 - Datos básicos</h2>
-    <form *ngIf="formStep1" [formGroup]="formStep1" (ngSubmit)="saveItinerary()">
-      <P class="alert">*Los campos marcados con asterísco son obligatorios</P>
-      <div class="form-item">
-        <label for="destination">Destino</label>
-        <input type="text" [formControl]="destination" />
-  
-        <div *ngIf="destination.errors">
-          <div
-            *ngIf="destination.errors && isValidForm != null && !isValidForm"
-            [ngClass]="'error'"
-          >
-            <div *ngIf="destination.errors['required']">Campo requerido</div>
-  
-            <div *ngIf="destination.errors['minLenght']">
-              Al menos debe contener tres caracteres
-            </div>
-          </div>
-        </div>
-      </div>
-  
-      <div class="form-item">
-        <label for="startDate">Fecha inicio</label>
-        <input type="date" [formControl]="startDate" />
-        <div
-          *ngIf="startDate.errors && isValidForm != null && !isValidForm"
-          [ngClass]="'error'"
-        >
-          <div *ngIf="startDate.errors['required']">
-            Campo requerido
-          </div>
-        </div>
-      </div>
-  
-      <div class="form-item">
-        <label for="endDate">Fecha fin</label>
-        <input type="date" [formControl]="endDate" />
-        <div
-          *ngIf="endDate.errors && isValidForm != null && !isValidForm"
-          [ngClass]="'error'"
-        >
-          <div *ngIf="endDate.errors['required']">
-            Campo requerido
-          </div>
-        </div>
-      </div>
-
-      <div class="form-item">
-        <label for="rating">Calificación itinerario</label>
-        <input type="number" [formControl]="rating" />
-      </div>
-
-      <div class="form-item">
-        <label for="budget">Presupuesto por persona (€)</label>
-        <input type="text" [formControl]="budget" />
-      </div>
-  
-      <div class="form-item">
-        <label for="categories">Selecciona el tipo de viaje</label>
-        <select multiple [formControl]="categories">
-          <option
-            *ngFor="let category of categoriesList"
-            [ngValue]="category.categoryId"
-          >
-            {{ category.title }}
-          </option>
-        </select>
-      </div>
-
-      <div class="form-item">
-        <label for="coverImage">Subir imagen de portada</label>
-        <input type="text" [formControl]="coverImage" />
-      </div>
-  
-      <button type="submit" class="primary btn-large">GUARDAR Y CONTINUAR</button>
-    </form>
-  </div>
-  
+</div>

@@ -20,8 +20,4 @@ export class ItinerariesComponent implements OnInit {
       queryParams: { destino: this.searchTerm }
     });
   }
-
-  goTo(path: 'resultados') {
-    this.router.navigate([`/itinerarios/${path}`]);
-  }
 }

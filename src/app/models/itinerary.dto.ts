@@ -8,7 +8,6 @@ export class ItineraryDTO {
     itineraryId: string;
     title: string;
     publicationDate: Date;
-    userAlias?: string;
     userId: string;
     duration: number;
     destination: string;
@@ -18,6 +17,7 @@ export class ItineraryDTO {
     budget: number;
     categories: CategoryDTO[];
     coverImage: string;
+    userAlias?: string;
     transports?: TransportDTO[];
     accommodations?: AccommodationDTO[];
     restaurants?: RestaurantDTO[];

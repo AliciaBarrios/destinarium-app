@@ -17,6 +17,7 @@ import { ItinerarySummeryComponent } from './new-itinerary/itinerary-summery/iti
 import { ItineraryConfirmationComponent } from './new-itinerary/itinerary-confirmation/itinerary-confirmation.component';
 import { ResultsComponent } from './results/results.component';
 import { MatIconModule } from '@angular/material/icon';
+import { QuillModule } from 'ngx-quill';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatSelectModule,
     ReactiveFormsModule,
     FormsModule,
-    MatIconModule
+    MatIconModule,
+    QuillModule.forRoot()
   ],
   exports: [ItinerariesComponent]
 })
