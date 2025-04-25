@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class PlacesApiService {
   private apiUrl = 'https://api.example.com/lugares'; // URL de la API
-  private password = 'AIzaSyB0wWjhkNl0MpDC1kouPgV5z265MPA8X_o';
+  
 
   constructor(private http: HttpClient) { }
 

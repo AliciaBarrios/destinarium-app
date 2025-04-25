@@ -1,12 +1,47 @@
 <nav class="navigation">
     <ul class="nav-links">
-      <li><a mat-button [routerLink]="['/']" (click)="onLinkClick()" class="nav-item">HOME</a></li>
-      <li class="call-to-action"><a mat-button [routerLink]="['/itinerarios/crear-itinerario']" (click)="onLinkClick()" class="nav-item">CREAR ITINERARIO</a></li>
-      <li><a mat-button [routerLink]="['/itinerarios']" (click)="onLinkClick()" class="nav-item">ITINERARIOS</a></li>
-      <li><a mat-button [routerLink]="['/puntos-interes']" (click)="onLinkClick()" class="nav-item">PUNTOS DE INTERÉS</a></li>
-      <li><a mat-button [routerLink]="['/blog']" (click)="onLinkClick()" class="nav-item">BLOG</a></li>
-      <li><a mat-button [routerLink]="['/faqs']" (click)="onLinkClick()" class="nav-item">FAQs</a></li>
-      <li><a mat-button [routerLink]="['/contacto']" (click)="onLinkClick()" class="nav-item">CONTACTO</a></li>
+      <li>
+        <a mat-button [routerLink]="['/']" (click)="onLinkClick()" class="nav-item">
+          <mat-icon>home</mat-icon>
+          HOME
+        </a>
+      </li>
+      <li class="call-to-action">
+        <a mat-button [routerLink]="['/itinerarios/crear-itinerario']" (click)="onLinkClick()" class="nav-item">
+          <mat-icon>add_circle_outline</mat-icon>
+          CREAR ITINERARIO
+        </a>
+      </li>
+      <li>
+        <a mat-button [routerLink]="['/itinerarios']" (click)="onLinkClick()" class="nav-item">
+          <mat-icon>map</mat-icon>
+          ITINERARIOS
+        </a>
+      </li>
+      <li>
+        <a mat-button [routerLink]="['/puntos-interes']" (click)="onLinkClick()" class="nav-item">
+          <mat-icon>location_on</mat-icon> 
+          PUNTOS DE INTERÉS
+        </a>
+      </li>
+      <li>
+        <a mat-button [routerLink]="['/blog']" (click)="onLinkClick()" class="nav-item">
+          <mat-icon>description</mat-icon> 
+          BLOG
+        </a>
+      </li>
+      <li>
+        <a mat-button [routerLink]="['/faqs']" (click)="onLinkClick()" class="nav-item">
+          <mat-icon>help</mat-icon>
+          FAQs
+        </a>
+      </li>
+      <li>
+        <a mat-button [routerLink]="['/contacto']" (click)="onLinkClick()" class="nav-item">
+          <mat-icon>contact_mail</mat-icon>
+          CONTACTO
+        </a>
+      </li>
     </ul>
   
     <div class="nav-buttons" *ngIf="!(isAuthenticated$ | async)">
