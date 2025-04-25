@@ -15,22 +15,22 @@
         <button mat-button class="btn-small">Filtros</button>
     </div>
     <div *ngIf="itineraries.length > 0; else noItineraries">
-        <app-full-card
-          *ngFor="let itinerary of itineraries"
-          [card]="getCardData(itinerary)"
-          (edit)="onEditItinerary(itinerary.itineraryId)"
-          (delete)="onDeleteItinerary(itinerary.itineraryId)">
-        ></app-full-card>
-      </div>
+      <app-full-card
+        *ngFor="let itinerary of itineraries"
+        [card]="getCardData(itinerary)"
+        (edit)="onEditItinerary(itinerary.itineraryId)"
+        (delete)="onDeleteItinerary(itinerary.itineraryId)">
+      ></app-full-card>
+    </div>
     
-      <ng-template #noItineraries>
-        <div class="empty-state">
-          <mat-icon class="empty-icon">travel_explore</mat-icon>
-          <p>Todavía no has subido ningún itinerario. Introducelo para compartir tus aventuras con la comunidad.</p>
-        </div>
-      </ng-template>
-      <button mat-button class="call-to-action btn-large" [routerLink]="'/itinerarios/crear-itinerario'">
-        <mat-icon class="icon-left">add_circle_outline</mat-icon>
-        Subir itinerario
+    <ng-template #noItineraries>
+      <div class="empty-state">
+        <mat-icon class="empty-icon">travel_explore</mat-icon>
+        <p>Todavía no has subido ningún itinerario. Introducelo para compartir tus aventuras con la comunidad.</p>
+      </div>
+    </ng-template>
+    <button mat-button class="call-to-action btn-large" [routerLink]="'/itinerarios/crear-itinerario'">
+      <mat-icon class="icon-left">add_circle_outline</mat-icon>
+      Subir itinerario
     </button>
 </div>

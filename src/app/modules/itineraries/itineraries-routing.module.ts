@@ -8,9 +8,11 @@ import { Step3ExtrasComponent } from './new-itinerary/step3-extras/step3-extras.
 import { ItinerarySummeryComponent } from './new-itinerary/itinerary-summery/itinerary-summery.component';
 import { ItineraryConfirmationComponent } from './new-itinerary/itinerary-confirmation/itinerary-confirmation.component';
 import { AuthGuard } from '../../Guards/auth.guards';
+import { ResultsComponent } from './results/results.component';
 
 const routes: Routes = [
   { path: '', component: ItinerariesComponent },
+  { path: 'resultados', component: ResultsComponent},
   {
     path: 'crear-itinerario',
     component: NewItineraryComponent,

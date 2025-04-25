@@ -1,0 +1,19 @@
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem 0;
+
+    .btn-filtro,
+    .btn-ordenar {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background-color: white;
+        border: 1px solid black;
+        border-radius: 0px;
+        width: 110px;
+        padding: 0.75rem;
+        text-align: center;
+    }
+}

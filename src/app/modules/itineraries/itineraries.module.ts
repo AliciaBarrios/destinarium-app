@@ -4,6 +4,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 import { ItinerariesRoutingModule } from './itineraries-routing.module';
 import { ItinerariesComponent } from './itineraries.component';
@@ -14,6 +15,8 @@ import { Step2DayInfoComponent } from './new-itinerary/step2-day-info/step2-day-
 import { Step3ExtrasComponent } from './new-itinerary/step3-extras/step3-extras.component';
 import { ItinerarySummeryComponent } from './new-itinerary/itinerary-summery/itinerary-summery.component';
 import { ItineraryConfirmationComponent } from './new-itinerary/itinerary-confirmation/itinerary-confirmation.component';
+import { ResultsComponent } from './results/results.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,8 @@ import { ItineraryConfirmationComponent } from './new-itinerary/itinerary-confir
     Step2DayInfoComponent,
     Step3ExtrasComponent,
     ItinerarySummeryComponent,
-    ItineraryConfirmationComponent
+    ItineraryConfirmationComponent,
+    ResultsComponent
   ],
   imports: [
     CommonModule,
@@ -32,7 +36,9 @@ import { ItineraryConfirmationComponent } from './new-itinerary/itinerary-confir
     MatFormFieldModule,
     MatDatepickerModule,
     MatSelectModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule,
+    MatIconModule
   ],
   exports: [ItinerariesComponent]
 })

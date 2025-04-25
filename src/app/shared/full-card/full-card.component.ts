@@ -17,6 +17,8 @@ export class FullCardComponent {
     rating: 0
   };
 
+  @Input() showEditDeleteButtons: boolean = true;
+
   @Output() edit = new EventEmitter<void>(); 
   @Output() delete = new EventEmitter<void>(); 
 

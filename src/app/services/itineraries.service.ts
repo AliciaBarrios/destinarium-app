@@ -46,16 +46,6 @@ export class ItineraryService {
       .put<ItineraryDTO>(this.urlBlogUocApi + '/' + itineraryId, itinerary);
   }
 
-//   likePost(postId: string): Observable<updateResponse> {
-//     return this.http
-//       .put<updateResponse>(this.urlBlogUocApi + '/like/' + postId, NONE_TYPE);
-//   }
-
-//   dislikePost(postId: string): Observable<updateResponse> {
-//     return this.http
-//       .put<updateResponse>(this.urlBlogUocApi + '/dislike/' + postId, NONE_TYPE);
-//   }
-
   deleteItinerary(itineraryId: string): Observable<deleteResponse> {
     return this.http
       .delete<deleteResponse>(this.urlBlogUocApi + '/' + itineraryId);

@@ -1,1 +1,17 @@
-<p>itineraries works!</p>
+<div class="main-container">
+    <h1>ITINERARIOS</h1>
+    <div class="search-container">
+        <input 
+            [(ngModel)]="searchTerm" 
+            type="text" 
+            placeholder="Buscar por destino" 
+            (keydown.enter)="search()" />
+        <button (click)="search()">
+          <mat-icon>search</mat-icon>
+        </button>
+    </div>
+
+    <h2>¿A dónde vas?</h2>
+    <p>Todavía no tengo claro el destino</p>
+    <button class="primary btn-large" (click)="goTo('resultados')">Ver itinerarios</button>
+</div>

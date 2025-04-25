@@ -1,0 +1,28 @@
+<div class="main-container">
+    <h2 *ngIf="searchTerm">Resultados para "{{ searchTerm }}"</h2>
+    <h2 *ngIf="!searchTerm">Todos los itinerarios</h2>
+  
+    <div class="action-buttons">
+        <button class="btn-filtro">
+            <mat-icon>tune</mat-icon>
+            Filtrar
+        </button>
+        <button class="btn-ordenar">
+            <mat-icon>sort</mat-icon>
+            Ordenar
+        </button>
+    </div>
+
+    <div *ngIf="filteredItineraries.length === 0">
+      <p>No se encontraron itinerarios.</p>
+    </div>
+  
+    <ul *ngIf="filteredItineraries.length > 0">
+      <app-full-card
+        *ngFor="let itinerary of filteredItineraries"
+        [card]="getCardData(itinerary)"
+        [showEditDeleteButtons]="showEditDeleteButtons"
+        ></app-full-card>
+    </ul>
+</div>
+  
