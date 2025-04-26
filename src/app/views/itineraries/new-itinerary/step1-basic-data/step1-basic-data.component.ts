@@ -85,13 +85,20 @@ export class Step1BasicDataComponent implements OnInit {
     this.loadCategories();
 
     this.formStep1 = this.formBuilder.group({
+      title: "",
+      publicationDate: new Date(),
       destination: this.destination,
+      duration: 0,
       startDate: this.startDate,
       endDate: this.endDate,
+      rating: this.rating,
       budget: this.budget,
       coverImage: this.coverImage,
       categories: this.categories,
     });
+
+    this.startDate.valueChanges.subscribe(() => this.updateForm());
+    this.endDate.valueChanges.subscribe(() => this.updateForm());
   }
   private async loadCategories(): Promise<void> {
     let errorResponse: any;
@@ -140,6 +147,24 @@ export class Step1BasicDataComponent implements OnInit {
     return responseOK;
   }
 
+  private updateForm() {
+    const start = new Date(this.startDate.value);
+    const end = new Date(this.endDate.value);
+  
+    if (!isNaN(start.getTime()) && !isNaN(end.getTime())) {
+      const duration = this.calculateDuration(start, end);
+      this.formStep1.patchValue({
+        duration: duration,
+        title: `Itinerario de ${duration} días por ${this.destination.value}`
+      }, { emitEvent: false }); 
+    }
+  }
+
+  private calculateDuration(startDate: Date, endDate: Date): number {
+    console.log('fechas', startDate, endDate);
+    const diff = endDate.getTime() - startDate.getTime();
+    return Math.ceil(diff / (1000 * 60 * 60 * 24)) + 1; 
+  }
   async saveItinerary() {
     this.isValidForm = false;
 
@@ -149,9 +174,9 @@ export class Step1BasicDataComponent implements OnInit {
 
     this.isValidForm = true;
 
-    this.newItinerary = this.formStep1.value;
+    console.log(this.formStep1.value);
+    this.newItinerary = this.formStep1.value
 
     this.validRequest = await this.createItinerary();
   }
-
 }
