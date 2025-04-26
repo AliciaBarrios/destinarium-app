@@ -1,17 +1,17 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { UsersRoutingModule } from './users-routing.module';
-import { SharedModule } from '../../shared/shared.module';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { SharedModule } from '../../shared/shared.module';
+import { UsersRoutingModule } from './users-routing.module';
 
 import { UsersComponent } from './users.component';
 import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
-import { ProfileComponent } from './profile/profile.component';
 import { MenuComponent } from './menu/menu.component';
+import { ProfileComponent } from './profile/profile.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +19,7 @@ import { MenuComponent } from './menu/menu.component';
     LoginComponent,
     RegisterComponent,
     ProfileComponent,
-    MenuComponent
+    MenuComponent,
   ],
   imports: [
     CommonModule,
@@ -28,7 +28,7 @@ import { MenuComponent } from './menu/menu.component';
     SharedModule,
     MatDividerModule,
     MatListModule,
-    MatIconModule
-  ]
+    MatIconModule,
+  ],
 })
-export class UsersModule { }
+export class UsersModule {}

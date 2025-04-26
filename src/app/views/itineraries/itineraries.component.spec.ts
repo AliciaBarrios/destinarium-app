@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ItinerariesComponent } from './itineraries.component';
+import { ItinerariesComponent } from '../../views/itineraries/itineraries.component';
 
 describe('ItinerariesComponent', () => {
   let component: ItinerariesComponent;
@@ -8,10 +8,9 @@ describe('ItinerariesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ItinerariesComponent]
-    })
-    .compileComponents();
-    
+      declarations: [ItinerariesComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(ItinerariesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

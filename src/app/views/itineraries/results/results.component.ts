@@ -54,7 +54,7 @@ export class ResultsComponent implements OnInit {
   }
 
   get resultsCount(): number {
-    return this.itineraries.length;
+    return this.filteredItineraries.length;
   }
 
 }

@@ -2,26 +2,32 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { 
-    path: '', 
-    loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule) 
-  }, 
-  { 
-    path: 'itinerarios', 
-    loadChildren: () => import('./modules/itineraries/itineraries.module').then(m => m.ItinerariesModule) 
+  {
+    path: '',
+    loadChildren: () =>
+      import('./views/home/home.module').then((m) => m.HomeModule),
   },
-  { 
-    path: 'blog', 
-    loadChildren: () => import('./modules/blog/blog.module').then(m => m.BlogModule) 
+  {
+    path: 'itinerarios',
+    loadChildren: () =>
+      import('./views/itineraries/itineraries.module').then(
+        (m) => m.ItinerariesModule
+      ),
   },
-  { 
-    path: 'usuario', 
-    loadChildren: () => import('./modules/users/users.module').then(m => m.UsersModule) 
+  {
+    path: 'blog',
+    loadChildren: () =>
+      import('./views/blog/blog.module').then((m) => m.BlogModule),
+  },
+  {
+    path: 'usuario',
+    loadChildren: () =>
+      import('./views/users/users.module').then((m) => m.UsersModule),
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
