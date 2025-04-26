@@ -13,16 +13,18 @@
         </button>
     </div>
 
+    <p>{{ resultsCount }} Resultados</p>
+
     <div *ngIf="filteredItineraries.length === 0">
       <p>No se encontraron itinerarios.</p>
     </div>
   
-    <ul *ngIf="filteredItineraries.length > 0">
+    <div *ngIf="filteredItineraries.length > 0" class="cards-container">
       <app-full-card
         *ngFor="let itinerary of filteredItineraries"
         [card]="getCardData(itinerary)"
         [showEditDeleteButtons]="showEditDeleteButtons"
         ></app-full-card>
-    </ul>
+    </div>
 </div>
   

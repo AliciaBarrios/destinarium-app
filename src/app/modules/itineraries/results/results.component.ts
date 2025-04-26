@@ -52,4 +52,9 @@ export class ResultsComponent implements OnInit {
       rating: itinerary.rating
     };
   }
+
+  get resultsCount(): number {
+    return this.itineraries.length;
+  }
+
 }

@@ -11,10 +11,19 @@
 </mat-list>
 <div class="main-container">
     <div>
-        <h2>Tus itinerarios</h2>
-        <button mat-button class="btn-small">Filtros</button>
+      <h2>Tus itinerarios</h2>
+      <div class="action-buttons">
+        <button class="btn-filtro">
+            <mat-icon>tune</mat-icon>
+            Filtrar
+        </button>
+        <button class="btn-ordenar">
+            <mat-icon>sort</mat-icon>
+            Ordenar
+        </button>
+      </div>
     </div>
-    <div *ngIf="itineraries.length > 0; else noItineraries">
+    <div *ngIf="itineraries.length > 0; else noItineraries" class="cards-container">
       <app-full-card
         *ngFor="let itinerary of itineraries"
         [card]="getCardData(itinerary)"

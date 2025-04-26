@@ -1,3 +1,4 @@
+@import '../../../../styles/main.scss';
 .action-buttons {
     display: flex;
     justify-content: center;
@@ -15,5 +16,32 @@
         width: 110px;
         padding: 0.75rem;
         text-align: center;
+    }
+}
+
+@include media-breakpoint-up(sm-desktop) {
+    .cards-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3rem;
+        width: 100%;
+    }
+}
+
+@include media-breakpoint-up(lg-desktop) {
+    .cards-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 3rem;
+        width: 100%;
+    }
+}
+
+@include media-breakpoint-up(xl-desktop) {
+    .cards-container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 3rem;
+        width: 100%;
     }
 }
