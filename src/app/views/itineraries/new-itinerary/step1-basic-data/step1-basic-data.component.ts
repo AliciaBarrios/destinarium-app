@@ -125,7 +125,7 @@ export class Step1BasicDataComponent implements OnInit {
       this.itineraryService.createItinerary(this.newItinerary).pipe(
         finalize(async () => {
           await this.sharedService.managementToast(
-            'postFeedback',
+            'step1Feedback',
             responseOK,
             errorResponse
           );
@@ -161,7 +161,6 @@ export class Step1BasicDataComponent implements OnInit {
   }
 
   private calculateDuration(startDate: Date, endDate: Date): number {
-    console.log('fechas', startDate, endDate);
     const diff = endDate.getTime() - startDate.getTime();
     return Math.ceil(diff / (1000 * 60 * 60 * 24)) + 1; 
   }
@@ -174,7 +173,6 @@ export class Step1BasicDataComponent implements OnInit {
 
     this.isValidForm = true;
 
-    console.log(this.formStep1.value);
     this.newItinerary = this.formStep1.value
 
     this.validRequest = await this.createItinerary();

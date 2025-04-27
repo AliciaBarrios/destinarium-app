@@ -38,7 +38,6 @@ export class ProfileComponent implements OnInit {
       this.userService.getUSerById(userId).subscribe({
         next: (user: UserDTO) => {
           this.userData = user;
-          console.log('userID recibido:', userId);
           this.itineraryService.getItinerariesByUserId(userId).subscribe({
             next: (itinerarios: ItineraryDTO[]) => {
               this.itineraries = itinerarios;
@@ -64,9 +63,9 @@ export class ProfileComponent implements OnInit {
     return {
       link: '/itinerarios/' + itinerary.itineraryId,
       imageUrl: '../../../../assets/predeterminada-img.webp',
-      title: `Itinerario de ${itinerary.duration} días por ${itinerary.destination}`,
+      title: itinerary.title,
       date: itinerary.publicationDate,
-      author: itinerary.userAlias || 'Autor desconocido',
+      author: this.userData.alias || 'Autor desconocido',
       categories: itinerary.categories?.map(cat => cat.title) || 'Sin categoría',
       rating: itinerary.rating
     };

@@ -34,6 +34,27 @@
     }
 }
 
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 1.5rem;
+    padding: 2rem 0;
+
+    mat-icon {
+        width: 5rem;
+        height: 5rem;
+        font-size: 5rem;
+    }
+
+    p {
+        font-size: 1.3rem;
+    }
+}
+
+
 @include media-breakpoint-up(sm-desktop) {
     .cards-container {
         display: grid;

@@ -3,14 +3,10 @@
 form {
   display: flex;
   flex-direction: column;
-
-  a.form-link {
-    text-decoration: underline;
-    font-size: 0.9rem;
-    text-align: end;
-    margin: 2rem 0;
-    color: $primary-dark-color;
-  }
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 1rem;
 
   .form-item {
     display: flex;
@@ -37,7 +33,7 @@ form {
   color: red;
 }
 
-#loginFeedback {
+#step1Feedback {
   visibility: hidden;
   min-width: 250px;
   color: #fff;
@@ -50,15 +46,15 @@ form {
   margin-right: auto;
 }
 
-#loginFeedback.requestOk {
+#step1Feedback.requestOk {
   background-color: $secondary-color;
 }
 
-#loginFeedback.requestKo {
+#step1Feedback.requestKo {
   background-color: red;
 }
 
-#loginFeedback.show {
+#step1Feedback.show {
   visibility: visible;
   -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
   animation: fadein 0.5s, fadeout 0.5s 2.5s;

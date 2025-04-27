@@ -1,7 +1,4 @@
-<div style="margin-left: auto; margin-right: auto">
-  <p id="postFeedback"></p>
-</div>
-<div>
+<div class="main-container">
   <h2>Paso 1 - Datos básicos</h2>
   <form *ngIf="formStep1" [formGroup]="formStep1" (ngSubmit)="saveItinerary()">
     <P class="alert">*Los campos marcados con asterísco son obligatorios</P>
@@ -78,4 +75,7 @@
 
     <button type="submit" class="primary btn-large">GUARDAR Y CONTINUAR</button>
   </form>
+  <div style="margin-left: auto; margin-right: auto">
+    <p id="step1Feedback"></p>
+  </div>
 </div>

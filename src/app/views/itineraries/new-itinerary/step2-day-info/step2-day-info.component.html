@@ -1,14 +1,15 @@
-<div class="day-form">
+<div class="main-container">
     <h2>Paso 2 - Añadir información por días</h2>
     <p>Días añadidos: {{ dayCount }}</p>
-    <form [formGroup]="dayForm" (ngSubmit)="onSubmit()">
-        <div formArrayName="days">
-            <div *ngFor="let day of days.controls; let i = index" [formGroupName]="i">
-                <div>
+    <form [formGroup]="dayForm" (ngSubmit)="onSubmit()" >
+        <div formArrayName="days" class="days-container">
+            <div *ngFor="let day of days.controls; let i = index" [formGroupName]="i" class="day">
+                <h3>Día: {{ i+1 }}</h3>
+                <div class="form-item">
                     <label for="startPlace">Lugar de inicio</label>
                     <input type="text" id="startPlace" formControlName="startPlace" placeholder="Lugar de inicio" />
                 </div>
-                <div>
+                <div class="form-item">
                     <label for="endPlace">Lugar de fin</label>
                     <input type="text" id="endPlace" formControlName="endPlace" placeholder="Lugar de fin" />
                 </div>
@@ -16,14 +17,16 @@
                     [modules]="quillModules"
                     [(ngModel)]="editorContent"
                     (onEditorCreated)="onEditorCreated($event)"
-                    formControlName="description">
+                    formControlName="description"
+                    class="form-item">
                 </quill-editor>
-                <button type="button" (click)="removeDay(i)">Eliminar este día</button>
-                <hr />
+                <div class="action-buttons">
+                    <button type="button" class="call-to-action btn-large" (click)="addNewDay()">GUARDAR Y AÑADIR OTRO DÍA</button>
+                    <button type="button" (click)="removeDay(i)" class="secondary btn-large">ELIMINAR ESTE DÍA</button>
+                </div>
             </div>
         </div>
-    
-        <button type="button" class="call-to-action btn-large" (click)="addNewDay()">GUARDAR Y AÑADIR OTRO DÍA</button>
+
         <button type="submit" class="primary btn-large">GUARDAR Y CONTINUAR</button>
     </form>
 </div>

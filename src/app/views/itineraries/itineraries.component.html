@@ -1,4 +1,4 @@
-<div class="main-container">
+<div class="main-container text-center">
     <h1>ITINERARIOS</h1>
     <div class="search-container">
         <input 
@@ -10,8 +10,13 @@
           <mat-icon>search</mat-icon>
         </button>
     </div>
+    <section class="map-section">
+        <h2>¿A dónde vas?</h2>
+        <img src="../../../assets/mapa-img.jpg" alt="Imagen mapa del mundo" />
+    </section>
 
-    <h2>¿A dónde vas?</h2>
-    <p>Todavía no tengo claro el destino</p>
-    <button class="primary btn-large" (click)="search()">Ver itinerarios</button>
+    <section>
+        <h3>Todavía no tengo claro el destino</h3>
+        <button class="primary btn-large" (click)="search()">Ver itinerarios</button>
+    </section>
 </div>

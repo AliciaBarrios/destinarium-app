@@ -3,7 +3,6 @@ import { FormBuilder, UntypedFormGroup, FormArray, Validators } from '@angular/f
 import { QuillEditorComponent } from 'ngx-quill';
 import { HttpClient } from '@angular/common/http';
 
-declare var google: any;
 @Component({
   selector: 'app-step2-day-info',
   templateUrl: './step2-day-info.component.html',

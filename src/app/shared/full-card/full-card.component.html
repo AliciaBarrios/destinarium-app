@@ -10,7 +10,8 @@
     </div>
     <h3>{{ card.title }}</h3>
     <p class="meta">
-      <span>Publicado {{ card.date }}</span> | <span>{{ card.author }}</span>
+      <span>Publicado el {{ card.date | date:'dd/MM/yyyy' }}</span> 
+      <span> Usuario: {{ card.author }}</span>
     </p>
     <div class="tags">
       <p class="category-tag tag" *ngFor="let category of card.categories">{{ category }}</p>

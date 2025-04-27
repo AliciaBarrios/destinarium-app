@@ -1,3 +1,5 @@
+@import '../../../styles/main.scss';
+
 .full-card {
     width: 100%;
     height: 300px;
@@ -15,7 +17,7 @@
         justify-content: space-between;
         height: 100%;
         gap: 1rem;
-        padding: 1rem 0.5rem;
+        padding: 1rem 0.6rem;
 
         .card-actions {
             display: flex;
@@ -36,6 +38,15 @@
             }
         } 
 
+        .meta {
+            display: flex;
+            flex-direction: column;
+            border-radius: 10px;
+            background-color: rgba($primary-light-color, 0.8);
+            padding: 0.5rem;
+            font-size: 1.1rem;
+        }
+
         .tags {
             display: flex;
             justify-content: space-between;
@@ -50,11 +61,11 @@
 
             .category-tag {
                 background-color: #030819;
-                color: white;
+                color: $basic-light;
             }
     
             .rating-tag {
-                background-color: rgb(245, 191, 14);
+                background-color: $call-to-action-color;
             }
         }
     
@@ -63,7 +74,7 @@
           bottom: 0;
           left: 0;
           width: 100%;
-          color: white;
+          color: $basic-light;
           text-align: center;
           background-color: rgba(0, 0, 0, 0.6);
           padding: 0.5rem;

@@ -1,6 +1,6 @@
 <div class="main-container">
-    <h2 *ngIf="searchTerm">Resultados para "{{ searchTerm }}"</h2>
-    <h2 *ngIf="!searchTerm">Todos los itinerarios</h2>
+    <h1 *ngIf="searchTerm">Resultados para "{{ searchTerm }}"</h1>
+    <h1 *ngIf="!searchTerm">Todos los itinerarios</h1>
   
     <div class="action-buttons">
         <button class="btn-filtro">
@@ -26,5 +26,10 @@
         [showEditDeleteButtons]="showEditDeleteButtons"
         ></app-full-card>
     </div>
+    <section class="section-container">
+        <h2>¿No encuentras lo que buscas?</h2>
+        <p>Si no encuentras el itinerario que buscas, siempre puedes revisar los <a [routerLink]="['/puntos-de-interes']">puntos de interés</a> disponibles</p>
+        <mat-icon>location_on</mat-icon>
+    </section>
 </div>
   

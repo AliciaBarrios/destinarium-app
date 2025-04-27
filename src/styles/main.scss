@@ -28,16 +28,22 @@ h1 {
 
 h2 {
     font-size: $h2-font-size;
+    margin-bottom: 1.5rem;
 }
 
 h3 {
     font-size: $h3-font-size;
+    margin-bottom: 1.5rem;
 }
   
 // Párrafos
 p {
     font-size: $p-font-size;
     font-weight: $font-weight-regular;
+}
+
+.text-center {
+    text-align: center;
 }
 
 // Botones
@@ -108,7 +114,7 @@ a {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 2rem auto;
+    margin: 1.5rem auto;
     width: 80vw;
 }
 

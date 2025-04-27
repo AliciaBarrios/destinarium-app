@@ -1,0 +1,128 @@
+@import '../../../../../styles/main.scss';
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  .days-container {
+    padding: 1rem 0;
+    width: 100%;
+    .day {
+        padding: 1.5rem 0;
+        border-bottom: 1px solid $basic-grey;
+
+        .form-item {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1.2rem;
+            width: 100%;
+        
+            input {
+              background-color: $primary-light-color;
+              padding: 0.7rem;
+              border-radius: 8px;
+              border: none;
+              border-bottom: 1px solid $call-to-action-color;
+              margin-top: 0.5rem
+            }
+        }
+    }
+  }
+
+  button {
+    margin-top: 2rem;
+  }
+}
+
+p {
+    font-size: 1.2rem;
+}
+
+.error {
+  color: red;
+}
+
+#step2Feedback {
+  visibility: hidden;
+  min-width: 250px;
+  color: #fff;
+  text-align: center;
+  border-radius: 10px;
+  padding: 16px;
+  z-index: 1;
+  font-size: 14px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#step2Feedback.requestOk {
+  background-color: $secondary-color;
+}
+
+#step2Feedback.requestKo {
+  background-color: red;
+}
+
+#step2Feedback.show {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
+}
+
+@keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeout {
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}
+
+@include media-breakpoint-up(sm-desktop) {
+    .action-buttons {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+    }
+}
+
