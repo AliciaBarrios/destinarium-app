@@ -1,4 +1,4 @@
-<div class="full-card" [ngStyle]="{ 'background-image': 'url(' + card.imageUrl + ')' }">
+<div class="full-card" [ngStyle]="{ 'background-image': 'url(' + (card.imageUrl ? card.imageUrl : fallbackImage) + ')' }">
   <div class="card-content">
     <div class="card-actions" *ngIf="showEditDeleteButtons">
       <button mat-icon-button (click)="onEdit()">

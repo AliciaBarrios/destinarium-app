@@ -70,7 +70,7 @@
 
     <div class="form-item">
       <label for="coverImage">Subir imagen de portada</label>
-      <input type="text" [formControl]="coverImage" />
+      <input type="file" (change)="onFileChange($event)"/>
     </div>
 
     <button type="submit" class="primary btn-large">GUARDAR Y CONTINUAR</button>

@@ -41,7 +41,6 @@ export class Step1BasicDataComponent implements OnInit {
   private isUpdateMode: boolean;
   private validRequest: boolean;
   private itineraryId: string | null;
-
   constructor(
     private formBuilder: UntypedFormBuilder,
     private itineraryService: ItineraryService,
@@ -158,6 +157,27 @@ export class Step1BasicDataComponent implements OnInit {
         title: `Itinerario de ${duration} días por ${this.destination.value}`
       }, { emitEvent: false }); 
     }
+  }
+
+  onFileChange(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.uploadImage(file);
+    }
+  }
+
+  private uploadImage(file: File) {
+    const formData = new FormData();
+    formData.append('coverImage', file, file.name);
+
+    this.itineraryService.uploadImage(formData).subscribe({
+      next: (response) => {
+        this.coverImage.setValue(response.fileName);
+      },
+      error: (error: HttpErrorResponse) => {
+        console.error('Error al subir la imagen', error);
+      }
+    });
   }
 
   private calculateDuration(startDate: Date, endDate: Date): number {

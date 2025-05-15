@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ItineraryDTO } from '../models/itinerary.dto';
 import { Observable } from 'rxjs';
+import { Form } from '@angular/forms';
 
 interface updateResponse {
   affected: number;
@@ -53,5 +54,9 @@ export class ItineraryService {
 
   getItineraryCountByUser(userId: string): Observable<number> {
     return this.http.get<number>(`http://localhost:3000/users/${userId}/itineraries/count`);
+  }
+
+   uploadImage(formData: FormData): Observable<{ fileName: string }> {
+    return this.http.post<{ fileName: string }>('http://localhost:3000/itineraries/upload-image', formData);
   }
 }

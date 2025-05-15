@@ -44,7 +44,7 @@ export class ResultsComponent implements OnInit {
   getCardData(itinerary: ItineraryDTO) {
     return {
       link: '/itinerarios/' + itinerary.itineraryId,
-      imageUrl: '../../../../assets/predeterminada-img.webp',
+      imageUrl: itinerary.coverImage ? `http://localhost:3000/uploads/${itinerary.coverImage}` : 'assets/predeterminada-img.webp',
       title: `Itinerario de ${itinerary.duration} días por ${itinerary.destination}`,
       date: itinerary.publicationDate,
       author: itinerary.userAlias || 'Autor desconocido',

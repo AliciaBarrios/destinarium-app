@@ -7,6 +7,8 @@ import { FullCard } from '../../models/full-card.interface';
   styleUrl: './full-card.component.scss'
 })
 export class FullCardComponent {
+  fallbackImage: string = 'assets/predeterminada-img.webp';
+  
   @Input() card: FullCard = {
     imageUrl: '',
     link: '',
