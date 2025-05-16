@@ -73,9 +73,14 @@ export class Step1BasicDataComponent implements OnInit {
       [Validators.required]
     );
 
-    this.rating = new UntypedFormControl(this.newItinerary.rating, []);
+    this.rating = new UntypedFormControl(this.newItinerary.rating, [
+      Validators.min(0),
+      Validators.max(5),
+    ]);
 
-    this.budget = new UntypedFormControl(this.newItinerary.budget, []);
+    this.budget = new UntypedFormControl(this.newItinerary.budget, [
+      Validators.min(0),
+    ]);
 
     this.coverImage = new UntypedFormControl(this.newItinerary.coverImage, []);
 
@@ -134,8 +139,9 @@ export class Step1BasicDataComponent implements OnInit {
           }
         })
       ).subscribe({
-        next: () => {
+        next: (createdItinerary: any) => {
           responseOK = true;
+          this.sharedService.setItineraryId(createdItinerary.itineraryId);
         },
         error: (error: HttpErrorResponse) => {
           errorResponse = error.error;

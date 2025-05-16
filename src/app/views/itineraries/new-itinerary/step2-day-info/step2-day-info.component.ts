@@ -1,7 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { finalize } from 'rxjs/operators';
 import { FormBuilder, UntypedFormGroup, FormArray, Validators } from '@angular/forms';
-import { QuillEditorComponent } from 'ngx-quill';
 import { HttpClient } from '@angular/common/http';
+import { DayService } from '../../../../services/day.service';
+import { SharedService } from '../../../../services/shared.services';
+import { DayDTO } from '../../../../models/day.dto';
 
 @Component({
   selector: 'app-step2-day-info',
@@ -11,13 +15,14 @@ import { HttpClient } from '@angular/common/http';
 export class Step2DayInfoComponent implements OnInit {
   dayForm: UntypedFormGroup;
   dayCount: number = 0;
-
-  @ViewChild(QuillEditorComponent) quillEditor!: QuillEditorComponent;
-  quillInstance: any;
+  itineraryId: string | null = null; 
 
   constructor(
     private formBuilder: FormBuilder, 
-    private http: HttpClient
+    private http: HttpClient,
+    private dayService: DayService,
+    private sharedService: SharedService,
+    private router: Router,
   ) {
     this.dayForm = this.formBuilder.group({
       days: this.formBuilder.array([])
@@ -25,6 +30,11 @@ export class Step2DayInfoComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.itineraryId = this.sharedService.getItineraryIdValue();
+    if (!this.itineraryId) {
+      console.warn('No se encontró itineraryId');
+      return;
+    }
     this.addNewDay();
   }
 
@@ -34,50 +44,48 @@ export class Step2DayInfoComponent implements OnInit {
 
   addNewDay(): void {
     const dayGroup = this.formBuilder.group({
+      dayNumber: [this.dayCount + 1],
       startPlace: ['', Validators.required],
       endPlace: ['', Validators.required],
-      description: ['', Validators.required]
+      description: ['']
     });
 
     this.days.push(dayGroup);
     this.dayCount = this.days.length; 
+
+    this.updateDayNumbers();
   }
 
   // Método para eliminar un día
   removeDay(index: number): void {
     this.days.removeAt(index);
     this.dayCount = this.days.length; 
+    this.updateDayNumbers();
   }
 
-  quillModules = {
-    toolbar: {
-      container: [
-        ['bold', 'italic', 'underline'],
-        ['image']
-      ],
-      handlers: {
-        image: () => this.customImageUpload()
+  updateDayNumbers(): void {
+    this.days.controls.forEach((group, index) => {
+      group.get('dayNumber')?.setValue(index + 1);
+    });
+  }
+
+  getQuillModules(index: number) {
+    return {
+      toolbar: {
+        container: [
+          ['bold', 'italic', 'underline'],
+          ['image']
+        ],
+        handlers: {
+          image: () => this.customImageUpload(index)
+        }
       }
-    }
-  };
+    };
+  }
 
   editorContent = '';
 
-  // Evento cuando se crea el editor de Quill
-  onEditorCreated(quill: any) {
-    this.quillInstance = quill;  
-  }
-
-  // Método para obtener el contenido del editor
-  getEditorContent(): string {
-    if (this.quillInstance) {
-      return this.quillInstance.root.innerHTML;  
-    }
-    return '';
-  }
-
-  // Función personalizada para subir imágenes
-  customImageUpload() {
+  customImageUpload(index: number) {
     const input = document.createElement('input');
     input.setAttribute('type', 'file');
     input.setAttribute('accept', 'image/*');
@@ -88,20 +96,65 @@ export class Step2DayInfoComponent implements OnInit {
       const formData = new FormData();
       formData.append('file', file);
 
-      // Subimos la imagen al backend
-      const response = await this.http.post<{ url: string }>(
-        'http://localhost:3000/uploads',
-        formData
-      ).toPromise();
+      try {
+        const response = await this.http.post<{ url: string }>(
+          'http://localhost:3000/itineraries/upload-image',
+          formData
+        ).toPromise();
 
-      const range = this.quillInstance.getSelection();
-      this.quillInstance.insertEmbed(range.index, 'image', response!.url);
+        const quillEditors = document.querySelectorAll('quill-editor');
+        const editor = (quillEditors[index] as any).__quill; // acceder a la instancia Quill
+
+        const range = editor.getSelection(true);
+        editor.insertEmbed(range.index, 'image', response!.url);
+        editor.setSelection(range.index + 1);
+      } catch (error) {
+        console.error('Error subiendo imagen:', error);
+      }
     };
   }
 
-  onSubmit() {
+  onSubmit(): void {
     if (this.dayForm.valid) {
-      console.log(this.dayForm.value);
+      const daysToSend: DayDTO[] = this.days.controls.map(control => {
+        return new DayDTO(
+          control.get('startPlace')?.value,
+          control.get('endPlace')?.value,
+          control.get('description')?.value,
+          control.get('dayNumber')?.value,
+          this.itineraryId!, 
+        );
+      });
+
+      let responseOK = false;
+      let errorResponse: any;
+
+      this.dayService.newDays(daysToSend).pipe(
+        finalize(async () => {
+          await this.sharedService.managementToast(
+            'step2Feedback',
+            responseOK,
+            errorResponse
+          );
+
+          if (responseOK) {
+            this.router.navigateByUrl('/itinerarios/crear-itinerario/paso-3');
+          }
+        })
+      ).subscribe({
+        next: (response) => {
+          responseOK = true;
+          console.log('Días creados:', response);
+        },
+        error: (error) => {
+          responseOK = false;
+          errorResponse = error.error;
+          console.error('Error creando días:', error);
+          this.sharedService.errorLog(errorResponse);
+        }
+      });
+    } else {
+      console.log('Formulario inválido');
     }
   }
 }

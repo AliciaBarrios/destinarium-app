@@ -3,7 +3,7 @@
   <form *ngIf="formStep1" [formGroup]="formStep1" (ngSubmit)="saveItinerary()">
     <P class="alert">*Los campos marcados con asterísco son obligatorios</P>
     <div class="form-item">
-      <label for="destination">Destino</label>
+      <label for="destination">Destino *</label>
       <input type="text" [formControl]="destination" />
 
       <div *ngIf="destination.errors">
@@ -47,13 +47,32 @@
     </div>
 
     <div class="form-item">
-      <label for="rating">Calificación itinerario</label>
+      <label for="rating">Calificación itinerario (Entre 0 y 5)</label>
       <input type="number" [formControl]="rating" />
+      <div
+        *ngIf="rating.errors && isValidForm != null && !isValidForm"
+        [ngClass]="'error'"
+      >
+        <div *ngIf="rating.errors['min']">
+          La calificación mínima es 0
+        </div>
+        <div *ngIf="rating.errors['max']">
+          La calificación máxima es 5
+        </div>
+      </div>
     </div>
 
     <div class="form-item">
       <label for="budget">Presupuesto por persona (€)</label>
       <input type="text" [formControl]="budget" />
+      <div
+        *ngIf="budget.errors && isValidForm != null && !isValidForm"
+        [ngClass]="'error'"
+      >
+        <div *ngIf="budget.errors['min']">
+          La calificación mínima es 0
+        </div>
+      </div>
     </div>
 
     <div class="form-item">

@@ -1,12 +1,15 @@
 export class DayDTO {
-    dayId!: string;
-    start_location: string;
-    end_location: string;
+    startLocation: string;
+    endLocation: string;
     description: string;
+    dayNumber: number;
+    itineraryId: string;  
   
-    constructor(start_location: string, end_location: string, description: string) {
-      this.start_location = start_location;
-      this.end_location = end_location;
+    constructor(startLocation: string, endLocation: string, description: string, dayNumber: number, itineraryId: string) {
+      this.startLocation = startLocation;
+      this.endLocation = endLocation;
       this.description = description;
+      this.dayNumber = dayNumber;
+      this.itineraryId = itineraryId;
     }
 }

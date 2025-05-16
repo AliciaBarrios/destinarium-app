@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-
+import { BehaviorSubject, Observable } from 'rxjs';
 export interface ResponseError {
   statusCode: number;
   message: string;
@@ -15,6 +15,20 @@ export interface ResponseError {
 })
 export class SharedService {
   constructor() {}
+
+  private itineraryIdSubject = new BehaviorSubject<string | null>(null);
+
+  setItineraryId(id: string) {
+    this.itineraryIdSubject.next(id);
+  }
+
+  getItineraryId(): Observable<string | null> {
+    return this.itineraryIdSubject.asObservable();
+  }
+
+  getItineraryIdValue(): string | null {
+    return this.itineraryIdSubject.getValue();
+  }
 
   async managementToast(
     element: string,

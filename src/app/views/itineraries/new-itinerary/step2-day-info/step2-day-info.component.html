@@ -6,17 +6,18 @@
             <div *ngFor="let day of days.controls; let i = index" [formGroupName]="i" class="day">
                 <h3>Día: {{ i+1 }}</h3>
                 <div class="form-item">
-                    <label for="startPlace">Lugar de inicio</label>
+                    <label for="startPlace">Lugar de inicio *</label>
                     <input type="text" id="startPlace" formControlName="startPlace" placeholder="Lugar de inicio" />
                 </div>
                 <div class="form-item">
-                    <label for="endPlace">Lugar de fin</label>
+                    <label for="endPlace">Lugar de fin *</label>
                     <input type="text" id="endPlace" formControlName="endPlace" placeholder="Lugar de fin" />
                 </div>
+
+                <label>Descripción del día {{ i + 1 }}</label>
                 <quill-editor
-                    [modules]="quillModules"
-                    [(ngModel)]="editorContent"
-                    (onEditorCreated)="onEditorCreated($event)"
+                    [modules]="getQuillModules(i)"
+             
                     formControlName="description"
                     class="form-item">
                 </quill-editor>
@@ -28,5 +29,8 @@
         </div>
 
         <button type="submit" class="primary btn-large">GUARDAR Y CONTINUAR</button>
+        <div style="margin-left: auto; margin-right: auto">
+            <p id="step2Feedback"></p>
+        </div>
     </form>
 </div>
