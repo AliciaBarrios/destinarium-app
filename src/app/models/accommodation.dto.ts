@@ -2,17 +2,16 @@ export class AccommodationDTO {
     accommodationId!: string;
     name: string;
     type: string;
-    location: string;
+    adress: string;
     price: number;
-    rating: number;
     web: string;
 
-    constructor(name: string, type: string, location: string, price: number, rating: number, web: string) {
+    constructor(name: string, type: string, adress: string, price: number, web: string) {
       this.name = name;
       this.type = type;
-      this.location = location;
+      this.adress = adress;
       this.price = price;
-      this.rating = rating;
+
       this.web = web;
     }
 }

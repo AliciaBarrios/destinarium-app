@@ -22,7 +22,7 @@ export class ResultsComponent implements OnInit {
   ngOnInit() {
     this.itineraryService.getItineraries().subscribe((data) => {
       this.itineraries = data;
-
+      
       this.route.queryParams.subscribe(params => {
         this.searchTerm = params['destino'] || '';
         this.filterItineraries();
@@ -33,8 +33,8 @@ export class ResultsComponent implements OnInit {
   filterItineraries(): void {
     const term = this.searchTerm.toLowerCase();
     if (term) {
-      this.filteredItineraries = this.itineraries.filter(itin =>
-        itin.destination.toLowerCase().includes(term)
+      this.filteredItineraries = this.itineraries.filter(itinerary =>
+        itinerary.destination.toLowerCase().includes(term)
       );
     } else {
       this.filteredItineraries = this.itineraries;
@@ -56,5 +56,4 @@ export class ResultsComponent implements OnInit {
   get resultsCount(): number {
     return this.filteredItineraries.length;
   }
-
 }

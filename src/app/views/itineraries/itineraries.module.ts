@@ -5,6 +5,10 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatInputModule } from '@angular/material/input';
 
 import { ItinerariesRoutingModule } from './itineraries-routing.module';
 import { ItinerariesComponent } from './itineraries.component';
@@ -30,6 +34,7 @@ import { QuillModule } from 'ngx-quill';
     ItineraryConfirmationComponent,
     ResultsComponent
   ],
+  providers: [provideNativeDateAdapter()],
   imports: [
     CommonModule,
     ItinerariesRoutingModule,
@@ -40,6 +45,9 @@ import { QuillModule } from 'ngx-quill';
     ReactiveFormsModule,
     FormsModule,
     MatIconModule,
+    MatInputModule,
+    MatExpansionModule,
+    MatButtonModule,
     QuillModule.forRoot()
   ],
   exports: [ItinerariesComponent]

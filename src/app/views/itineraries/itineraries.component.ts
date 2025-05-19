@@ -4,20 +4,18 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-itineraries',
   templateUrl: './itineraries.component.html',
-  styleUrl: './itineraries.component.scss'
+  styleUrl: './itineraries.component.scss',
 })
 export class ItinerariesComponent implements OnInit {
   searchTerm = '';
 
-  constructor(
-    private router: Router
-  ) {}
+  constructor(private router: Router) {}
 
   ngOnInit() {}
 
   search() {
     this.router.navigate(['/itinerarios/resultados'], {
-      queryParams: { destino: this.searchTerm }
+      queryParams: { destino: this.searchTerm },
     });
   }
 }

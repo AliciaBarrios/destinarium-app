@@ -1,1 +1,231 @@
-<p>step3-extras works!</p>
+<div class="display-step3">
+    <div class="main-container">
+        <h2>Paso 3 - Añadir servicios a tu itinerario</h2>
+        <div class="service-selection flex-column">
+            <div class="flex-column">
+                <h3>¿Ya existe el servicio que buscas?</h3>
+                <p>Busca un alojamiento, restaurante o transporte antes de crear uno nuevo:</p>
+                <div class="search-container">
+                    <input 
+                        [formControl]="searchControl" 
+                        type="text" 
+                        placeholder="Buscar servicios disponibles" 
+                        (keydown.enter)="search()" />
+                    <button (click)="search()">
+                        <mat-icon>search</mat-icon>
+                    </button>
+                </div>
+                <div class="search-results" *ngIf="searchResults.length > 0">
+                    <h4>Resultados:</h4>
+                    <ul>
+                        <li *ngFor="let result of searchResults">
+                        <strong>{{ result.tipo | titlecase }}</strong>: 
+                        {{ result.name || result.company || result.address || result.from + ' - ' + result.to }}
+
+                        <!-- <button (click)="selectExisting(result)">
+                            <mat-icon>add</mat-icon> Añadir al itinerario
+                        </button> -->
+                        </li>
+                    </ul>
+                </div>
+                <p *ngIf="searchTerm && searchResults.length === 0">No se encontraron resultados.</p>
+            </div>
+
+            <div class="flex-column">
+                <h3>No lo has encontrado, ¿quieres añadirlo?</h3>
+                <div class="action-buttons">
+                    <button class="call-to-action btn-large" (click)="showForm('alojamiento')">
+                        AÑADIR ALOJAMIENTOS 
+                        <mat-icon class="icon-right">add_circle_outline</mat-icon>
+                    </button>
+                    <button class="call-to-action btn-large" (click)="showForm('transporte')">
+                        AÑADIR TRANSPORTES
+                        <mat-icon class="icon-right">add_circle_outline</mat-icon>
+                    </button>
+                    <button class="call-to-action btn-large" (click)="showForm('restaurante')">
+                        AÑADIR RESTAURANTES
+                        <mat-icon class="icon-right">add_circle_outline</mat-icon>
+                    </button>
+                </div>
+            </div>
+
+            <div *ngIf="showFormType === null" class="flex-column">
+                <h3>¿Prefieres añadir los servicios más tarde?</h3>
+                <button type="button" class="primary btn-large">OMITIR Y CONTINUAR</button>
+            </div>
+        </div>
+        <!-- FORMULARIO ALOJAMIENTOS -->
+        <form *ngIf="showFormType === 'alojamiento'" [formGroup]="forms.alojamiento" (ngSubmit)="onSubmit()">
+            <div formArrayName="alojamientos" class="extra-info-container">
+                <div *ngFor="let alojamiento of getFormArray('alojamiento').controls; let i = index" [formGroupName]="i" class="service">
+                    <h3>Alojamiento {{ i+1 }}</h3>
+
+                    <div class="form-item">
+                        <label>Nombre *</label>
+                        <input type="text" formControlName="name" placeholder="Nombre del alojamiento" />
+                    </div>
+
+                    <div class="form-item">
+                        <label>Dirección *</label>
+                        <input type="text" formControlName="address" placeholder="Dirección" />
+                    </div>
+
+                    <div class="form-item">
+                        <label>Tipo *</label>
+                        <select formControlName="type">
+                            <option value="">Seleccionar</option>
+                            <option value="hostal">Hostal</option>
+                            <option value="hotel">Hotel</option>
+                            <option value="apartment">Apartamento</option>
+                            <option value="house">Casa</option>
+                            <option value="rural">Casa rural</option>
+                            <option value="camping">Camping</option>
+                            <option value="other">Otro</option>
+                        </select>
+                    </div>
+
+                    <div class="form-item">
+                        <label>Precio</label>
+                        <input type="number" formControlName="price" min="0" />
+                    </div>
+
+                    <div class="form-item">
+                        <label>Sitio Web</label>
+                        <input type="text" formControlName="web" placeholder="www.alojamientos.com" />
+                    </div>
+                        
+                    <div class="action-buttons">
+                        <button type="button" class="call-to-action btn-large" (click)="addItem('alojamiento')">GUARDAR Y AÑADIR OTRO</button>
+                        <button type="button" (click)="removeItem('alojamiento', i)" class="secondary btn-large">ELIMINAR ESTE</button>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="primary btn-large">GUARDAR Y CONTINUAR</button>
+        </form>
+
+        <!-- FORMULARIO TRANSPORTES -->
+        <form *ngIf="showFormType === 'transporte'" [formGroup]="forms.transporte" (ngSubmit)="onSubmit()">
+            <div formArrayName="transportes" class="extra-info-container">
+                <div *ngFor="let transporte of getFormArray('transporte').controls; let i = index" [formGroupName]="i" class="service">
+                    <h3>Transporte {{ i + 1 }}</h3>
+
+                    <div class="form-item">
+                        <label>Compañía *</label>
+                        <input type="text" formControlName="company" placeholder="Nombre de la compañía" />
+                    </div>
+
+                    <div class="form-item">
+                        <label>Desde *</label>
+                        <input type="text" formControlName="from" placeholder="Ciudad de origen" />
+                    </div>
+
+                    <div class="form-item">
+                        <label>Hasta *</label>
+                        <input type="text" formControlName="to" placeholder="Ciudad de destino" />
+                    </div>
+
+                    <div class="form-item">
+                        <label>Precio (€/billete)</label>
+                        <input type="number" formControlName="price" min="0" />
+                    </div>
+
+                    <div class="form-item">
+                        <label>Tipo *</label>
+                        <select formControlName="type">
+                            <option value="">Seleccionar</option>
+                            <option value="plane">Avión</option>
+                            <option value="train">Tren</option>
+                            <option value="bus">Autobús</option>
+                            <option value="car">Coche</option>
+                            <option value="bike">Bicicleta</option>
+                            <option value="motorbike">Moto</option>
+                            <option value="boat">Barco</option>
+                            <option value="helicopter">Helicóptero</option>
+                            <option value="other">Otro</option>
+                        </select>
+                    </div>
+
+                    <div class="form-item">
+                        <label>Sitio Web</label>
+                        <input type="text" formControlName="web" placeholder="www.transportes.com" />
+                    </div>
+
+                    <div class="action-buttons">
+                        <button type="button" class="call-to-action btn-large" (click)="addItem('transporte')">GUARDAR Y AÑADIR OTRO</button>
+                        <button type="button" (click)="removeItem('transporte', i)" class="secondary btn-large">ELIMINAR ESTE</button>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="primary btn-large">GUARDAR Y CONTINUAR</button>
+        </form>
+
+        <!-- FORMULARIO RESTAURANTES -->
+        <form *ngIf="showFormType === 'restaurante'" [formGroup]="forms.restaurante" (ngSubmit)="onSubmit()">
+            <div formArrayName="restaurantes" class="extra-info-container">
+                <div *ngFor="let restaurante of getFormArray('restaurante').controls; let i = index" [formGroupName]="i" class="service">
+                    <h3>Restaurante {{ i + 1 }}</h3>
+
+                    <div class="form-item">
+                        <label>Nombre *</label>
+                        <input type="text" formControlName="name" placeholder="Nombre del restaurante" />
+                    </div>
+
+                    <div class="form-item">
+                        <label>Dirección *</label>
+                        <input type="text" formControlName="address" placeholder="Dirección" />
+                    </div>
+
+                    <div class="form-item">
+                        <label>Tipo *</label>
+                        <input type="text" formControlName="type" placeholder="Tipo de comida" />
+                    </div>
+
+                    <div class="form-item">
+                        <label>Precio (€/persona)</label>
+                        <input type="number" formControlName="price" min="0" />
+                    </div>
+
+                    <div class="form-item">
+                        <label>Sitio Web</label>
+                        <input type="text" formControlName="web" placeholder="www.restaurantes.com" />
+                    </div>
+
+                    <div class="action-buttons">
+                        <button type="button" class="call-to-action btn-large" (click)="addItem('restaurante')">GUARDAR Y AÑADIR OTRO</button>
+                        <button type="button" (click)="removeItem('restaurante', i)" class="secondary btn-large">ELIMINAR ESTE</button>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="primary btn-large">GUARDAR Y CONTINUAR</button>
+        </form>
+    </div>
+    <div class="sidebar flex-colum">
+        <h3>Servicios seleccionados</h3>
+        <div *ngIf="getFormArray('alojamiento').length">
+            <h4>Alojamientos</h4>
+            <ul>
+                <li *ngFor="let item of getFormArray('alojamiento').controls">
+                {{ item.get('name')?.value }} – {{ item.get('web')?.value }}
+                </li>
+            </ul>
+        </div>
+
+        <div *ngIf="getFormArray('transporte').length">
+            <h4>Transportes</h4>
+            <ul>
+                <li *ngFor="let item of getFormArray('transporte').controls">
+                {{ item.get('company')?.value }} - {{ item.get('web')?.value  }}
+                </li>
+            </ul>
+        </div>
+
+        <div *ngIf="getFormArray('restaurante').length">
+            <h4>Restaurantes</h4>
+            <ul>
+                <li *ngFor="let item of getFormArray('restaurante').controls">
+                {{ item.get('name')?.value }} – {{ item.get('web')?.value  }}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
