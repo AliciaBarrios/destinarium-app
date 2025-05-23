@@ -6,13 +6,13 @@ import {
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { finalize } from 'rxjs/operators';
 import { LocalStorageService } from '../../../../services/local-storage.service';
 
 import { ItineraryDTO } from '../../../../models/itinerary.dto';
 import { ItineraryService } from '../../../../services/itineraries.service';
+import { ItineraryCreationService } from '../../../../services/itinerary-creation.service';
 import { SharedService } from '../../../../services/shared.services';
 import { CategoryDTO } from '../../../../models/category.dto';
 import { CategoryService } from '../../../../services/category.service';
@@ -32,31 +32,26 @@ export class Step1BasicDataComponent implements OnInit {
   budget: UntypedFormControl;
   coverImage: UntypedFormControl;
   categories!: UntypedFormControl;
-
   formStep1: UntypedFormGroup;
+  
   isValidForm: boolean | null;
 
   categoriesList!: CategoryDTO[];
 
-  private isUpdateMode: boolean;
-  private validRequest: boolean;
-  private itineraryId: string | null;
   constructor(
     private formBuilder: UntypedFormBuilder,
     private itineraryService: ItineraryService,
+    private itineraryCreationService: ItineraryCreationService,
     private sharedService: SharedService,
     private router: Router,
-    private activatedRoute: ActivatedRoute,
     private localStorageService: LocalStorageService,
     private categoryService: CategoryService
   ) {
     this.newItinerary = new ItineraryDTO(
       '', '', new Date(), '', 0, '', new Date(), new Date(), 0, 0, [], ''
     );
-    this.itineraryId = this.activatedRoute.snapshot.paramMap.get('id');
+
     this.isValidForm = null;
-    this.isUpdateMode = false;
-    this.validRequest = false;
 
     this.destination = new UntypedFormControl(this.newItinerary.destination, [
       Validators.required,
@@ -118,38 +113,11 @@ export class Step1BasicDataComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
-
-  private async createItinerary(): Promise<boolean> {
-    let errorResponse: any;
-    let responseOK: boolean = false;
-    const userId = this.localStorageService.get('user_id');
-    if (userId) {
-      this.newItinerary.userId = userId;
-      this.itineraryService.createItinerary(this.newItinerary).pipe(
-        finalize(async () => {
-          await this.sharedService.managementToast(
-            'step1Feedback',
-            responseOK,
-            errorResponse
-          );
-    
-          if (responseOK) {
-            this.router.navigateByUrl('/itinerarios/crear-itinerario/paso-2');
-          }
-        })
-      ).subscribe({
-        next: (createdItinerary: any) => {
-          responseOK = true;
-          this.sharedService.setItineraryId(createdItinerary.itineraryId);
-        },
-        error: (error: HttpErrorResponse) => {
-          errorResponse = error.error;
-          this.sharedService.errorLog(errorResponse);
-        }
-      })
+  ngOnInit(): void {
+    const draft = this.localStorageService.get('draft_itinerary');
+    if (draft) {
+      this.formStep1.patchValue(JSON.parse(draft));
     }
-    return responseOK;
   }
 
   private updateForm() {
@@ -198,9 +166,13 @@ export class Step1BasicDataComponent implements OnInit {
     }
 
     this.isValidForm = true;
+    this.updateForm(); 
+    const itineraryData = this.formStep1.value;
 
-    this.newItinerary = this.formStep1.value
-
-    this.validRequest = await this.createItinerary();
+    // Guardar datos del paso 1 en el servicio para recuperarlo en el útlimo paso
+    this.itineraryCreationService.setStep1(itineraryData);
+    this.localStorageService.set('draft_itinerary', JSON.stringify(itineraryData)); 
+    // Ir al paso 2
+    this.router.navigateByUrl('/itinerarios/crear-itinerario/paso-2');
   }
 }

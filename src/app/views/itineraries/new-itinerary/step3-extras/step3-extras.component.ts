@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { AccommodationService } from '../../../../services/accommodation.service';
+import { SharedService } from '../../../../services/shared.services';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
-import { filter, map } from 'rxjs';
+import { filter, map, of } from 'rxjs';
+import { Router } from '@angular/router';
+import { ItineraryCreationService } from '../../../../services/itinerary-creation.service';
 
 type FormType = 'alojamiento' | 'transporte' | 'restaurante';
 @Component({
@@ -11,6 +14,10 @@ type FormType = 'alojamiento' | 'transporte' | 'restaurante';
   styleUrls: ['./step3-extras.component.scss'],
 })
 export class Step3ExtrasComponent implements OnInit {
+  sidebarOpen = false;
+  isMobile = false;
+
+  selectedItems = false;
   showAddOptions = false;
   searchTerm = '';
   searchResults: any[] = [];
@@ -22,45 +29,70 @@ export class Step3ExtrasComponent implements OnInit {
     restaurante: this.formBuilder.group({ restaurantes: this.formBuilder.array([]) }),
   }
 
+  selectedExtras: {
+    alojamiento: any[],
+    restaurante: any[],
+    transporte: any[],
+  } = {
+    alojamiento: [],
+    restaurante: [],
+    transporte: [],
+  };
+
   filtered: { [key in FormType]: any[] } = {
     alojamiento: [],
     transporte: [],
     restaurante: [],
   };
 
-  // searchControl = this.formBuilder.control('');
   searchControl = new FormControl('');
 
   constructor(
     private formBuilder: FormBuilder,
     private accommodationService: AccommodationService,
+    private sharedService: SharedService,
+    private itineraryCreationService: ItineraryCreationService, 
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
+    this.checkMobile();
+    window.addEventListener('resize', this.checkMobile.bind(this));
+
+    this.loadFromLocalStorage();
+
     this.searchControl.valueChanges
-      .pipe(
-        debounceTime(200), 
-        distinctUntilChanged(),
-        filter((term): term is string => term !== null),
-        map(term => term.trim().toLowerCase()), 
-        switchMap((term: string) => {
-          const trimmed = term.trim().toLowerCase();
-          return trimmed
-            ? this.accommodationService.getAccommodationByName(trimmed)
-            : [];
-        })
-      )
-      .subscribe({
-        next: (results) => {
-          this.searchResults = results;
-        },
-        error: (err) => {
-          console.error('Error al buscar alojamiento:', err);
-          this.searchResults = [];
-        },
-      });
+    .pipe(
+      debounceTime(300), 
+      distinctUntilChanged(),
+      filter((term): term is string => term !== null),
+      map(term => term.trim().toLowerCase()), 
+      switchMap((term: string) => {
+        this.searchTerm = term;
+        return term
+          ? this.accommodationService.getAccommodationByName(term)
+          : of([]);
+      })
+    )
+    .subscribe({
+      next: (results) => {
+        this.searchResults = results;
+      },
+      error: (err) => {
+        console.error('Error al buscar alojamiento:', err);
+        this.searchResults = [];
+      },
+    });
   }
 
+  checkMobile() {
+    this.isMobile = window.innerWidth < 1025;
+    this.sidebarOpen = !this.isMobile;
+  }
+
+  toggleSidebar() {
+    this.sidebarOpen = !this.sidebarOpen;
+  }
   search(): void {
     const term = this.searchTerm.toLowerCase().trim();
 
@@ -68,7 +100,6 @@ export class Step3ExtrasComponent implements OnInit {
       this.searchResults = [];
       return;
     }
-
 
     this.accommodationService.getAccommodationByName(term).subscribe({
       next: (results) => {
@@ -81,19 +112,89 @@ export class Step3ExtrasComponent implements OnInit {
     });
   }
 
+  selectExistingItem(type: FormType, item: any): void {
+    if (!this.selectedExtras[type]) {
+      this.selectedExtras[type] = [];
+    }
+
+    this.selectedItems = true;
+    const exists = this.selectedExtras[type].some((element) => {
+      if (type === 'alojamiento') return element.accommodationId === item.accommodationId;
+      
+      // Para otros tipos, cambia la comparación según la propiedad id correspondiente
+      // Por ejemplo: 
+      // if (type === 'restaurante') return element.restaurantId === item.restaurantId;
+      // if (type === 'transporte') return element.transportId === item.transportId;
+      return;
+    });
+
+    if (!exists) {
+      this.selectedExtras[type].push(item);
+      this.saveToLocalStorage();
+      console.log('Añadido:', this.selectedExtras);
+    } else {
+      console.log('Este elemento ya se ha añadido a la lista');
+    }
+  }
+
+  saveToLocalStorage(): void {
+    this.itineraryCreationService.setStep3Details({
+      accommodations: this.selectedExtras['alojamiento'],
+      restaurants: this.selectedExtras['restaurante'],
+      transports: this.selectedExtras['transporte']
+    });
+  }
+
+  loadFromLocalStorage(): void {
+    const data = this.itineraryCreationService.getStep3Details();
+    if (data) {
+      this.selectedExtras = {
+        alojamiento: data.accommodations || [],
+        restaurante: data.restaurants || [],
+        transporte: data.transports || [],
+      };
+    
+      if (data.accommodations?.length === 0 && data.restaurants?.length === 0 && data.transports?.length === 0) {
+        this.selectedItems = false;
+      } else {
+        this.selectedItems = true;
+      }
+    }
+  }
+
+  removeSelected(type: FormType, item: any): void {
+    this.selectedExtras[type] = this.selectedExtras[type].filter(i => i !== item);
+    this.saveToLocalStorage();
+  }
+
+  editSelected(type: FormType, item: any): void {
+    this.selectedExtras[type] = this.selectedExtras[type].filter(i => i !== item);
+    this.saveToLocalStorage();
+  }
+
+
+  getFormArray(type: FormType): FormArray {
+    const fieldName = {
+      alojamiento: 'alojamientos',
+      transporte: 'transportes',
+      restaurante: 'restaurantes',
+    }[type];
+    return this.forms[type].get(fieldName) as FormArray;
+  }
+
   // Mostrar formulario correspondiente
   showForm(type: FormType): void {
     this.showFormType = type;
     const formArray = this.getFormArray(type);
-    if (formArray.length === 0) this.addItem(type);
+    if (formArray.length === 0) this.createEmptyItem(type);
   }
 
-  addItem(type: FormType): void {
+  createEmptyItem(type: FormType): void {
     const groupConfig: { [key in FormType]: () => FormGroup } = {
       alojamiento: () =>
         this.formBuilder.group({
           name: ['', Validators.required],
-          adress: ['', Validators.required],
+          address: ['', Validators.required],
           type: [''],
           price: ['', Validators.min(0)],
           web: [''],
@@ -116,27 +217,74 @@ export class Step3ExtrasComponent implements OnInit {
         }),
     };
 
-    this.getFormArray(type).push(groupConfig[type]());
+    const formArray = this.getFormArray(type);
+    formArray.push(groupConfig[type]()); 
   }
 
-  removeItem(type: FormType, index: number): void {
-    this.getFormArray(type).removeAt(index);
-  }
+  async addItem(type: 'alojamiento' | 'transporte' | 'restaurante') {
+    const formArray = this.getFormArray(type);
+    const lastIndex = formArray.length - 1;
+    const lastItem = lastIndex >= 0 ? formArray.at(lastIndex) : null;
 
-  getFormArray(type: FormType): FormArray {
-    const fieldName = {
-      alojamiento: 'alojamientos',
-      transporte: 'transportes',
-      restaurante: 'restaurantes',
-    }[type];
-    return this.forms[type].get(fieldName) as FormArray;
-  }
+    let responseOK = false;
+    let errorResponse: any;
 
-  onSubmit(): void {
-    if (!this.showFormType) return;
-    const form = this.forms[this.showFormType];
-    if (form.valid) {
-      console.log(`${this.showFormType}s:`, form.value);
+    if (lastItem && lastItem.invalid) {
+      return;
     }
+
+    if (lastItem) {
+      try {
+        const newItemData = lastItem.value;
+        const savedItem = await this.saveItemToBackend(type, newItemData);
+
+        // Guardar en selectedExtras y añadir nuevo formulario
+        this.selectedExtras[type].push(savedItem);
+        this.saveToLocalStorage();
+        lastItem.reset();
+
+        responseOK = true;
+        await this.sharedService.managementToast(
+          `AddFeedback`,
+          responseOK
+        );
+      } catch (error) {
+        await this.sharedService.managementToast(
+          `AddFeedback`,
+          false,
+          errorResponse?.message || 'Hubo un error al guardar el ítem. Inténtalo de nuevo.'
+        );
+
+      this.sharedService.errorLog(errorResponse);
+      }
+    } else {
+      // Si no hay ítems todavía, añade uno vacío directamente
+      formArray.push(this.createEmptyItem(type));
+    }
+  }
+  saveItemToBackend(type: string, itemData: any): Promise<any> {
+    return new Promise((resolve, reject) => {
+      if (type === 'alojamiento') {
+        this.accommodationService.createAccommodation(itemData).subscribe({
+          next: (savedItem) => {
+            resolve(savedItem);
+          },
+          error: (err) => {
+            reject(err);
+          }
+        });
+      } else {
+        // Para transporte o restaurante: usa simulación por ahora
+        setTimeout(() => {
+          const fakeItem = { ...itemData, id: Math.floor(Math.random() * 100000) };
+          console.log(`Guardado ${type} (simulado):`, fakeItem);
+          resolve(fakeItem);
+        }, 500);
+      }
+    });
+  }
+
+  redirectTo(): void {
+    this.router.navigateByUrl('/itinerarios/crear-itinerario/resumen');
   }
 }

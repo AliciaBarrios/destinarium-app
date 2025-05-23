@@ -23,3 +23,22 @@ $breakpoint-xl-desktop: 1201px; // Pantallas extra-grandes, televisores
     @media (min-width: #{$breakpoint-xl-desktop}) { @content; }
   }
 }
+
+// Mixin para max-width (mobile first)
+@mixin media-breakpoint-down($breakpoint) {
+  @if $breakpoint == mobile {
+    @media (max-width: #{$breakpoint-mobile}) { @content; }
+  }
+  @else if $breakpoint == tablet {
+    @media (max-width: #{$breakpoint-tablet}) { @content; }
+  }
+  @else if $breakpoint == sm-desktop {
+    @media (max-width: #{$breakpoint-sm-desktop}) { @content; }
+  }
+  @else if $breakpoint == lg-desktop {
+    @media (max-width: #{$breakpoint-lg-desktop}) { @content; }
+  }
+  @else if $breakpoint == xl-desktop {
+    @media (max-width: #{$breakpoint-xl-desktop}) { @content; }
+  }
+}

@@ -56,19 +56,37 @@ button {
     cursor: pointer;
 
     &.primary {
+        border: 1px solid $primary-dark-color;
         background-color: $primary-dark-color;
         color: $basic-light;
+        
+        &:hover {
+            background-color: $basic-light;
+            color: $primary-dark-color;
+        }
     }
 
     &.secondary {
         border: 1px solid $secondary-color;
         background-color: $basic-light;
         color: $secondary-color;
+
+        &:hover {
+            background-color: $secondary-color;
+            color: $basic-light;
+        }
     }
 
     &.call-to-action {
+        border: 1px solid $call-to-action-color;
         background-color: $call-to-action-color;
         color: $basic-dark;
+
+        &:hover {
+            background-color: $basic-light;
+            color: $call-to-action-color;
+            font-weight: 700;
+        }
     }
 }
 
@@ -94,7 +112,33 @@ button {
 }
 
 .btn-small {
+    position: relative;
+    justify-content: center; 
+    text-align: center;
     width: 150px;
+
+    .icon-right {
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .icon-left {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}
+
+.btn-rounded{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
 }
 
 // Enlaces

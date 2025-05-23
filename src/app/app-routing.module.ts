@@ -24,6 +24,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./views/users/users.module').then((m) => m.UsersModule),
   },
+  {
+    path: 'puntos-interes',
+    loadChildren: () =>
+      import('./views/points-of-interest/points-of-interest.module').then((m) => m.PointsOfInterestModule),
+  },
 ];
 
 @NgModule({

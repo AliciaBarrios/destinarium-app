@@ -17,21 +17,23 @@
                 </div>
                 <div class="search-results" *ngIf="searchResults.length > 0">
                     <h4>Resultados:</h4>
-                    <ul>
+                    <ul class="container-results">
                         <li *ngFor="let result of searchResults">
-                        <strong>{{ result.tipo | titlecase }}</strong>: 
-                        {{ result.name || result.company || result.address || result.from + ' - ' + result.to }}
+                            <p>
+                                <strong>{{ result.type | titlecase }}</strong>: 
+                                {{ result.name || result.company }} - <a href="{{ result.web }}"> {{ result.web }}</a>
+                            </p>
 
-                        <!-- <button (click)="selectExisting(result)">
-                            <mat-icon>add</mat-icon> Añadir al itinerario
-                        </button> -->
+                            <button (click)="selectExistingItem(result.serviceType, result)" class="secondary btn-rounded">
+                                <mat-icon class="icon-right">add</mat-icon>
+                            </button>
                         </li>
                     </ul>
                 </div>
                 <p *ngIf="searchTerm && searchResults.length === 0">No se encontraron resultados.</p>
             </div>
 
-            <div class="flex-column">
+            <div class="flex-column border-bottom">
                 <h3>No lo has encontrado, ¿quieres añadirlo?</h3>
                 <div class="action-buttons">
                     <button class="call-to-action btn-large" (click)="showForm('alojamiento')">
@@ -49,14 +51,15 @@
                 </div>
             </div>
 
-            <div *ngIf="showFormType === null" class="flex-column">
+            <div *ngIf="showFormType === null && this.selectedItems === false" class="flex-column">
                 <h3>¿Prefieres añadir los servicios más tarde?</h3>
-                <button type="button" class="primary btn-large">OMITIR Y CONTINUAR</button>
+                <button type="button" class="primary btn-large" (click)="redirectTo()">OMITIR Y CONTINUAR</button>
             </div>
         </div>
+
         <!-- FORMULARIO ALOJAMIENTOS -->
-        <form *ngIf="showFormType === 'alojamiento'" [formGroup]="forms.alojamiento" (ngSubmit)="onSubmit()">
-            <div formArrayName="alojamientos" class="extra-info-container">
+        <form *ngIf="showFormType === 'alojamiento'" [formGroup]="forms.alojamiento">
+            <div *ngIf="getFormArray('alojamiento') as alojamientosArray" formArrayName="alojamientos" class="extra-info-container">
                 <div *ngFor="let alojamiento of getFormArray('alojamiento').controls; let i = index" [formGroupName]="i" class="service">
                     <h3>Alojamiento {{ i+1 }}</h3>
 
@@ -74,13 +77,13 @@
                         <label>Tipo *</label>
                         <select formControlName="type">
                             <option value="">Seleccionar</option>
-                            <option value="hostal">Hostal</option>
-                            <option value="hotel">Hotel</option>
-                            <option value="apartment">Apartamento</option>
-                            <option value="house">Casa</option>
-                            <option value="rural">Casa rural</option>
-                            <option value="camping">Camping</option>
-                            <option value="other">Otro</option>
+                            <option value="Hostal">Hostal</option>
+                            <option value="Hotel">Hotel</option>
+                            <option value="Apartamento">Apartamento</option>
+                            <option value="Casa">Casa</option>
+                            <option value="Casa Rural">Casa rural</option>
+                            <option value="Camping">Camping</option>
+                            <option value="Otro">Otro</option>
                         </select>
                     </div>
 
@@ -96,15 +99,16 @@
                         
                     <div class="action-buttons">
                         <button type="button" class="call-to-action btn-large" (click)="addItem('alojamiento')">GUARDAR Y AÑADIR OTRO</button>
-                        <button type="button" (click)="removeItem('alojamiento', i)" class="secondary btn-large">ELIMINAR ESTE</button>
                     </div>
                 </div>
             </div>
-            <button type="submit" class="primary btn-large">GUARDAR Y CONTINUAR</button>
+             <div style="margin-left: auto; margin-right: auto">
+                <p id="AddFeedback"></p>
+            </div>
         </form>
 
         <!-- FORMULARIO TRANSPORTES -->
-        <form *ngIf="showFormType === 'transporte'" [formGroup]="forms.transporte" (ngSubmit)="onSubmit()">
+        <form *ngIf="showFormType === 'transporte'" [formGroup]="forms.transporte">
             <div formArrayName="transportes" class="extra-info-container">
                 <div *ngFor="let transporte of getFormArray('transporte').controls; let i = index" [formGroupName]="i" class="service">
                     <h3>Transporte {{ i + 1 }}</h3>
@@ -152,15 +156,13 @@
 
                     <div class="action-buttons">
                         <button type="button" class="call-to-action btn-large" (click)="addItem('transporte')">GUARDAR Y AÑADIR OTRO</button>
-                        <button type="button" (click)="removeItem('transporte', i)" class="secondary btn-large">ELIMINAR ESTE</button>
                     </div>
                 </div>
             </div>
-            <button type="submit" class="primary btn-large">GUARDAR Y CONTINUAR</button>
         </form>
 
         <!-- FORMULARIO RESTAURANTES -->
-        <form *ngIf="showFormType === 'restaurante'" [formGroup]="forms.restaurante" (ngSubmit)="onSubmit()">
+        <form *ngIf="showFormType === 'restaurante'" [formGroup]="forms.restaurante">
             <div formArrayName="restaurantes" class="extra-info-container">
                 <div *ngFor="let restaurante of getFormArray('restaurante').controls; let i = index" [formGroupName]="i" class="service">
                     <h3>Restaurante {{ i + 1 }}</h3>
@@ -192,40 +194,70 @@
 
                     <div class="action-buttons">
                         <button type="button" class="call-to-action btn-large" (click)="addItem('restaurante')">GUARDAR Y AÑADIR OTRO</button>
-                        <button type="button" (click)="removeItem('restaurante', i)" class="secondary btn-large">ELIMINAR ESTE</button>
                     </div>
                 </div>
             </div>
-            <button type="submit" class="primary btn-large">GUARDAR Y CONTINUAR</button>
         </form>
+        <button *ngIf="showFormType !== null || this.selectedItems === true" type="button" class="primary btn-large" (click)="redirectTo()">GUARDAR Y CONTINUAR</button>
     </div>
-    <div class="sidebar flex-colum">
+
+    <div 
+    class="sidebar-overlay" 
+    *ngIf="isMobile && sidebarOpen" 
+    (click)="toggleSidebar()">
+    </div>
+
+    <button class="toggle-sidebar-btn" (click)="toggleSidebar()" *ngIf="isMobile">
+        Servicios seleccionados
+    </button>
+    <div class="sidebar flex-colum" [class.open]="sidebarOpen" [class.mobile]="isMobile">
+        <button class="close-btn" *ngIf="isMobile" (click)="toggleSidebar()">
+            <mat-icon class="icon-right">close</mat-icon>
+        </button>
         <h3>Servicios seleccionados</h3>
-        <div *ngIf="getFormArray('alojamiento').length">
+        <div>
             <h4>Alojamientos</h4>
-            <ul>
-                <li *ngFor="let item of getFormArray('alojamiento').controls">
-                {{ item.get('name')?.value }} – {{ item.get('web')?.value }}
-                </li>
-            </ul>
+            <div *ngFor="let item of selectedExtras['alojamiento']" class="container-items-list">
+                <div class="item-list">
+                    {{ item.name }} - <a href="{{ item.web }}">{{ item.web }}</a>
+                </div>
+                <div class="buttons-list">
+                    <button (click)="removeSelected('alojamiento', item)" class="btn-rounded">
+                        <mat-icon class="icon-right">delete</mat-icon>
+                    </button>
+                    <button (click)="editSelected('alojamiento', item)" class="btn-rounded">
+                        <mat-icon class="icon-right">edit</mat-icon>
+                    </button>
+                </div>
+            </div>
         </div>
-
-        <div *ngIf="getFormArray('transporte').length">
-            <h4>Transportes</h4>
-            <ul>
-                <li *ngFor="let item of getFormArray('transporte').controls">
-                {{ item.get('company')?.value }} - {{ item.get('web')?.value  }}
-                </li>
-            </ul>
-        </div>
-
-        <div *ngIf="getFormArray('restaurante').length">
+         <div>
             <h4>Restaurantes</h4>
-            <ul>
-                <li *ngFor="let item of getFormArray('restaurante').controls">
-                {{ item.get('name')?.value }} – {{ item.get('web')?.value  }}
-                </li>
-            </ul>
+            <div *ngFor="let item of selectedExtras['restaurante']">
+                {{ item.name || item.web }}
+            </div>
+            <div class="buttons-list">
+                <!-- <button (click)="removeSelected('restaurante', item)">
+                    <mat-icon class="icon-right">delete</mat-icon>
+                </button>
+                <button (click)="editSelected('restaurante', item)">
+                    <mat-icon class="icon-right">edit</mat-icon>
+                </button> -->
+            </div>
+        </div>
+         <div>
+            <h4>Transportes</h4>
+            <div *ngFor="let item of selectedExtras['transporte']">
+                {{ item.name || item.web }}
+            </div>
+             <div class="buttons-list">
+                <!-- <button (click)="removeSelected('transporte', item)">
+                    <mat-icon class="icon-right">delete</mat-icon>
+                </button>
+                <button (click)="editSelected('transporte', item)">
+                    <mat-icon class="icon-right">edit</mat-icon>
+                </button> -->
+            </div>
         </div>
     </div>
 </div>

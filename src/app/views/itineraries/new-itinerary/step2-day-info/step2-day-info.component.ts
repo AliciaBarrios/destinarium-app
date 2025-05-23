@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { finalize } from 'rxjs/operators';
 import { FormBuilder, UntypedFormGroup, FormArray, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { DayService } from '../../../../services/day.service';
-import { SharedService } from '../../../../services/shared.services';
+import { ItineraryCreationService } from '../../../../services/itinerary-creation.service';
 import { DayDTO } from '../../../../models/day.dto';
 
 @Component({
@@ -20,8 +18,7 @@ export class Step2DayInfoComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder, 
     private http: HttpClient,
-    private dayService: DayService,
-    private sharedService: SharedService,
+    private itineraryCreationService: ItineraryCreationService,
     private router: Router,
   ) {
     this.dayForm = this.formBuilder.group({
@@ -30,33 +27,54 @@ export class Step2DayInfoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.itineraryId = this.sharedService.getItineraryIdValue();
-    if (!this.itineraryId) {
-      console.warn('No se encontró itineraryId');
-      return;
+    this.loadDraftDays();
+  }
+
+  saveDraftDays(): void {
+    const days = this.days.getRawValue();
+    console.log(days);
+    this.itineraryCreationService.setStep2Days(days);
+  }
+
+  loadDraftDays(): void {
+    const savedDays = this.itineraryCreationService.getStep2Days();
+    if (savedDays.length > 0) {
+      savedDays.forEach(day => this.addNewDayFromData(day));
+    } else {
+      this.addNewDay();
     }
-    this.addNewDay();
+  }
+
+  addNewDayFromData(dayData: any): void {
+    const dayGroup = this.formBuilder.group({
+      dayNumber: [dayData.dayNumber],
+      startLocation: [dayData.startLocation, Validators.required],
+      endLocation: [dayData.endLocation, Validators.required],
+      description: [dayData.description || '']
+    });
+
+    this.days.push(dayGroup);
+    this.dayCount = this.days.length;
+    this.updateDayNumbers();
+  }
+
+  addNewDay(): void {
+    const dayGroup = this.formBuilder.group({
+      dayNumber: [this.dayCount + 1],
+      startLocation: ['', Validators.required],
+      endLocation: ['', Validators.required],
+      description: ['']
+    });
+
+    this.days.push(dayGroup);
+    this.dayCount = this.days.length; 
+    this.updateDayNumbers();
   }
 
   get days(): FormArray {
     return this.dayForm.get('days') as FormArray;
   }
 
-  addNewDay(): void {
-    const dayGroup = this.formBuilder.group({
-      dayNumber: [this.dayCount + 1],
-      startPlace: ['', Validators.required],
-      endPlace: ['', Validators.required],
-      description: ['']
-    });
-
-    this.days.push(dayGroup);
-    this.dayCount = this.days.length; 
-
-    this.updateDayNumbers();
-  }
-
-  // Método para eliminar un día
   removeDay(index: number): void {
     this.days.removeAt(index);
     this.dayCount = this.days.length; 
@@ -82,8 +100,6 @@ export class Step2DayInfoComponent implements OnInit {
       }
     };
   }
-
-  editorContent = '';
 
   customImageUpload(index: number) {
     const input = document.createElement('input');
@@ -116,43 +132,17 @@ export class Step2DayInfoComponent implements OnInit {
 
   onSubmit(): void {
     if (this.dayForm.valid) {
-      const daysToSend: DayDTO[] = this.days.controls.map(control => {
+      const daysToSave: DayDTO[] = this.days.controls.map(control => {
         return new DayDTO(
-          control.get('startPlace')?.value,
-          control.get('endPlace')?.value,
+          control.get('startLocation')?.value,
+          control.get('endLocation')?.value,
           control.get('description')?.value,
           control.get('dayNumber')?.value,
           this.itineraryId!, 
         );
       });
-
-      let responseOK = false;
-      let errorResponse: any;
-
-      this.dayService.newDays(daysToSend).pipe(
-        finalize(async () => {
-          await this.sharedService.managementToast(
-            'step2Feedback',
-            responseOK,
-            errorResponse
-          );
-
-          if (responseOK) {
-            this.router.navigateByUrl('/itinerarios/crear-itinerario/paso-3');
-          }
-        })
-      ).subscribe({
-        next: (response) => {
-          responseOK = true;
-          console.log('Días creados:', response);
-        },
-        error: (error) => {
-          responseOK = false;
-          errorResponse = error.error;
-          console.error('Error creando días:', error);
-          this.sharedService.errorLog(errorResponse);
-        }
-      });
+      this.itineraryCreationService.setStep2Days(daysToSave);
+      this.router.navigateByUrl('/itinerarios/crear-itinerario/paso-3');
     } else {
       console.log('Formulario inválido');
     }

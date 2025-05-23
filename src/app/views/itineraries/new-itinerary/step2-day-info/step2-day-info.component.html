@@ -6,12 +6,12 @@
             <div *ngFor="let day of days.controls; let i = index" [formGroupName]="i" class="day">
                 <h3>Día: {{ i+1 }}</h3>
                 <div class="form-item">
-                    <label for="startPlace">Lugar de inicio *</label>
-                    <input type="text" id="startPlace" formControlName="startPlace" placeholder="Lugar de inicio" />
+                    <label for="startLocation">Lugar de inicio *</label>
+                    <input type="text" id="startLocation" formControlName="startLocation" placeholder="Lugar de inicio" />
                 </div>
                 <div class="form-item">
-                    <label for="endPlace">Lugar de fin *</label>
-                    <input type="text" id="endPlace" formControlName="endPlace" placeholder="Lugar de fin" />
+                    <label for="endLocation">Lugar de fin *</label>
+                    <input type="text" id="endLocation" formControlName="endLocation" placeholder="Lugar de fin" />
                 </div>
 
                 <label>Descripción del día {{ i + 1 }}</label>

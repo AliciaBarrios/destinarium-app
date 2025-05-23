@@ -1,0 +1,10 @@
+<input type="text" [(ngModel)]="query" placeholder="Busca un lugar..." />
+<button (click)="search()">Buscar</button>
+
+<ul *ngIf="results?.length">
+  <li *ngFor="let place of results">
+    {{ place.name }} — {{ place.formatted_address }}
+  </li>
+</ul>
+
+<p *ngIf="results && results.length === 0">No se encontraron resultados.</p>

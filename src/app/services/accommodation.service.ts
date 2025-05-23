@@ -25,12 +25,12 @@ export class AccommodationService {
 
   getAccommodationByName(name: string): Observable<AccommodationDTO[]> {
     return this.http
-      .get<AccommodationDTO[]>(this.urlBlogUocApi + '/name/' + name);
+      .get<AccommodationDTO[]>(`${this.urlBlogUocApi}/name/${name}`);
   }
 
   getAccommodationById(accommodationId: string): Observable<AccommodationDTO> {
     return this.http
-      .get<AccommodationDTO>(this.urlBlogUocApi + '/' + accommodationId);
+      .get<AccommodationDTO>(`${this.urlBlogUocApi}/${accommodationId}`);
   }
 
   createAccommodation(accommodation: AccommodationDTO): Observable<AccommodationDTO> {
@@ -38,16 +38,23 @@ export class AccommodationService {
       .post<AccommodationDTO>(this.urlBlogUocApi, accommodation);
   }
 
-  updateAccommodarion(
+  updateAccommodation(
     accommodationId: string,
     accommodation: AccommodationDTO
   ): Observable<AccommodationDTO> {
     return this.http
-      .put<AccommodationDTO>(this.urlBlogUocApi + '/' + accommodationId, accommodation);
+      .put<AccommodationDTO>(`${this.urlBlogUocApi}/${accommodationId}`, accommodation);
+  }
+
+  linkAccommodationsToItinerary(itineraryId: string, accommodationIds: string[]): Observable<any> {
+    return this.http.post(
+      `http://localhost:3000/itineraries/${itineraryId}/accommodations`,
+      { accommodationIds }
+    );
   }
 
   deleteAccommodation(accommodationId: string): Observable<deleteResponse> {
     return this.http
-      .delete<deleteResponse>(this.urlBlogUocApi + '/' + accommodationId);
+      .delete<deleteResponse>(`${this.urlBlogUocApi}/${accommodationId}`);
   }
 }
