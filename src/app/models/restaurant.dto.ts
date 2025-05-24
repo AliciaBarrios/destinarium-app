@@ -2,17 +2,15 @@ export class RestaurantDTO {
     restaurantId!: string;
     name: string;
     type: string;
-    location: string;
+    address: string;
     price: number;
-    rating: number;
     web: string;
 
-    constructor(name: string, type: string, location: string, price: number, rating: number, web: string) {
+    constructor(name: string, type: string, address: string, price: number, web: string) {
       this.name = name;
       this.type = type;
-      this.location = location;
+      this.address = address;
       this.price = price;
-      this.rating = rating;
       this.web = web;
     }
 }

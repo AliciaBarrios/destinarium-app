@@ -120,11 +120,8 @@ export class Step3ExtrasComponent implements OnInit {
     this.selectedItems = true;
     const exists = this.selectedExtras[type].some((element) => {
       if (type === 'alojamiento') return element.accommodationId === item.accommodationId;
-      
-      // Para otros tipos, cambia la comparación según la propiedad id correspondiente
-      // Por ejemplo: 
-      // if (type === 'restaurante') return element.restaurantId === item.restaurantId;
-      // if (type === 'transporte') return element.transportId === item.transportId;
+      if (type === 'restaurante') return element.restaurantId === item.restaurantId;
+      if (type === 'transporte') return element.transportId === item.transportId;
       return;
     });
 
@@ -202,17 +199,16 @@ export class Step3ExtrasComponent implements OnInit {
       transporte: () =>
         this.formBuilder.group({
           company: ['', Validators.required],
-          from: ['', Validators.required],
-          to: ['', Validators.required],
           type: ['', Validators.required],
-          day: [''],
+          address: ['', Validators.required],
+          web: [''],
         }),
       restaurante: () =>
         this.formBuilder.group({
           name: ['', Validators.required],
           address: ['', Validators.required],
           type: ['', Validators.required],
-          day: [''],
+          price: ['', Validators.min(0)],
           web: [''],
         }),
     };

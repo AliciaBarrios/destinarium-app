@@ -1,5 +1,45 @@
 @import '../../../../../styles/main.scss';
 
+section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  background-color: $primary-light-color;
+  padding: 1rem;
+  margin: 2rem 0;
+  height: fit-content;
+
+  li {
+    margin: 0.65rem 0;
+    list-style: none;
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+
+    .btn-rounded {
+      background-color: $primary-light-color;
+
+      &:hover {
+        background-color: $call-to-action-color;
+      }
+    }
+  }
+}
+
+@include media-breakpoint-up(sm-desktop) {
+  .summery-container {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  section {
+    padding: 2rem;
+    width: 30%;
+  }
+}
+
 .error {
   color: red;
 }

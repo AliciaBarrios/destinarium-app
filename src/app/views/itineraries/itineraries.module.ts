@@ -18,7 +18,6 @@ import { Step1BasicDataComponent } from './new-itinerary/step1-basic-data/step1-
 import { Step2DayInfoComponent } from './new-itinerary/step2-day-info/step2-day-info.component';
 import { Step3ExtrasComponent } from './new-itinerary/step3-extras/step3-extras.component';
 import { ItinerarySummeryComponent } from './new-itinerary/itinerary-summery/itinerary-summery.component';
-import { ItineraryConfirmationComponent } from './new-itinerary/itinerary-confirmation/itinerary-confirmation.component';
 import { ResultsComponent } from './results/results.component';
 import { MatIconModule } from '@angular/material/icon';
 import { QuillModule } from 'ngx-quill';
@@ -31,7 +30,6 @@ import { QuillModule } from 'ngx-quill';
     Step2DayInfoComponent,
     Step3ExtrasComponent,
     ItinerarySummeryComponent,
-    ItineraryConfirmationComponent,
     ResultsComponent
   ],
   providers: [provideNativeDateAdapter()],

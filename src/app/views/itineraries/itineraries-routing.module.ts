@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '../../Guards/auth.guards';
 import { ItinerariesComponent } from '../../views/itineraries/itineraries.component';
-import { ItineraryConfirmationComponent } from './new-itinerary/itinerary-confirmation/itinerary-confirmation.component';
 import { ItinerarySummeryComponent } from './new-itinerary/itinerary-summery/itinerary-summery.component';
 import { NewItineraryComponent } from './new-itinerary/new-itinerary.component';
 import { Step1BasicDataComponent } from './new-itinerary/step1-basic-data/step1-basic-data.component';
@@ -23,7 +22,6 @@ const routes: Routes = [
       { path: 'paso-2', component: Step2DayInfoComponent },
       { path: 'paso-3', component: Step3ExtrasComponent },
       { path: 'resumen', component: ItinerarySummeryComponent },
-      { path: 'confirmacion', component: ItineraryConfirmationComponent },
     ],
   },
 ];

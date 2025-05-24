@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { ItineraryDTO } from '../../../../models/itinerary.dto';
+import { CategoryDTO } from '../../../../models/category.dto';
 import { DayDTO } from '../../../../models/day.dto';
 import { AccommodationDTO } from '../../../../models/accommodation.dto';
 import { TransportDTO } from '../../../../models/transport.dto';
@@ -9,12 +10,13 @@ import { RestaurantDTO } from '../../../../models/restaurant.dto';
 
 import { ItineraryCreationService } from '../../../../services/itinerary-creation.service';
 import { ItineraryService } from '../../../../services/itineraries.service';
+import { CategoryService } from '../../../../services/category.service';
 import { AccommodationService } from '../../../../services/accommodation.service';
 import { DayService } from '../../../../services/day.service';
 import { LocalStorageService } from '../../../../services/local-storage.service';
 import { SharedService } from '../../../../services/shared.services';
 
-import { finalize } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-itinerary-summery',
@@ -31,14 +33,17 @@ export class ItinerarySummeryComponent implements OnInit{
   };
 
   newItinerary: ItineraryDTO;
+  categories: CategoryDTO[] = [];
 
   constructor(
     private itineraryCreationService: ItineraryCreationService,
     private itineraryService: ItineraryService,
+    private categoryService: CategoryService,
     private dayService: DayService,
     private accommodationService: AccommodationService,
     private localStorageService: LocalStorageService,
     private sharedService: SharedService,
+    private router: Router,
   ) {
     this.newItinerary = new ItineraryDTO(
       '', '', new Date(), '', 0, '', new Date(), new Date(), 0, 0, [], ''
@@ -49,6 +54,10 @@ export class ItinerarySummeryComponent implements OnInit{
     this.step1Data = this.itineraryCreationService.getStep1Data();
     this.step2Days = this.itineraryCreationService.getStep2Days();
     this.step3Details = this.itineraryCreationService.getStep3Details();
+  }
+
+  modifyStep(step: string): void {
+    this.router.navigateByUrl(`/itinerarios/crear-itinerario/${step}`);
   }
 
   private createItinerary(): Promise<string> {
@@ -115,11 +124,11 @@ export class ItinerarySummeryComponent implements OnInit{
   //   return this.transportService.linkTransportsToItinerary(itineraryId, transportIds).toPromise().then(() => {});
   // }
 
-onSubmitItinerary(): void {
-  let responseOK = false;
-  let errorResponse: any;
+  onSubmitItinerary(): void {
+    let responseOK = false;
+    let errorResponse: any;
 
-  this.createItinerary()
+    this.createItinerary()
     .then((itineraryId: string) => {
       return Promise.all([
         this.createDays(itineraryId),

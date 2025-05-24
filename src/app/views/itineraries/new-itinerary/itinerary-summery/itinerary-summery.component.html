@@ -1,5 +1,71 @@
-<p>itinerary-summery works!</p>
-<button type="button" (click)="onSubmitItinerary()">SUBIR ITINERARIO</button>
-<div style="margin-left: auto; margin-right: auto">
-    <p id="summeryFeedback"></p>
+<div>
+    <h2>Resumen - Datos Itinerario</h2>
+    <div class="summery-container">
+        <!-- DATOS BÁSICOS -->
+        <section class="itinerary-summary">
+            <div class="section-header">
+                <h3>Datos básicos</h3>
+                <button type="button" class="btn-rounded" (click)="modifyStep('paso-1')">
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </div>
+            <p><strong>Título:</strong> {{ step1Data.title }}</p>
+            <p><strong>Fecha de inicio:</strong> {{ step1Data.startDate }}</p>
+            <p><strong>Fecha de fin:</strong> {{ step1Data.endDate }} </p>
+            <p><strong>Califiación Itinerario:</strong> {{ step1Data.rating }} </p>
+            <p><strong>Presupuesto:</strong> {{ step1Data.budget }} €/persona</p>
+            <p><strong>Tipo de viaje:</strong></p>
+        </section>
+
+        <!-- DÍAS DEL ITINERARIO -->
+        <section class="itinerary-days">
+            <div class="section-header">
+                <h3>Días</h3>
+                <button type="button" class="btn-rounded" (click)="modifyStep('paso-2')">
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </div>
+            <div *ngFor="let day of step2Days; let i = index">
+                <h4>Día {{ i + 1 }}: {{ day.startLocation }} - {{ day.endLocation }}</h4>
+                <p [innerHTML]="day.description"></p>
+            </div>
+        </section>
+
+        <section class="itinerary-extras">
+            <div class="section-header">
+                <h3>Extras</h3>
+                <button type="button" class="btn-rounded" (click)="modifyStep('paso-3')">
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </div>
+
+            <div *ngIf="step3Details.accommodations?.length">
+                <h4>Alojamientos</h4>
+                <ul *ngFor="let accommodation of step3Details.accommodations">
+                    <li>{{ accommodation.name }} - <a href="{{ accommodation.web }}" target="_blank">{{ accommodation.web }}</a></li>
+                </ul>
+            </div>
+
+            <div *ngIf="step3Details.restaurants?.length">
+                <h4>Restaurantes</h4>
+                <ul *ngFor="let restaurant of step3Details.restaurants">
+                    <li>{{ restaurant.name }} - <a href="{{ restaurant.web }}" target="_blank">{{ restaurant.web }}</a></li>
+                </ul>
+            </div>
+
+            <div *ngIf="step3Details.transports?.length">
+                <h4>Restaurantes</h4>
+                <ul *ngFor="let transport of step3Details.transports">
+                    <li>{{ transport.company }} - <a href="{{ transport.web }}" target="_blank">{{ transport.web }}</a></li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <div  class="flex-column">
+        <button type="button" (click)="onSubmitItinerary()" class="primary btn-large">SUBIR ITINERARIO</button>
+        <div style="margin-left: auto; margin-right: auto">
+            <p id="summeryFeedback"></p>
+        </div>
+    </div>
 </div>

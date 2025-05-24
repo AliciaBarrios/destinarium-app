@@ -21,7 +21,7 @@
                         <li *ngFor="let result of searchResults">
                             <p>
                                 <strong>{{ result.type | titlecase }}</strong>: 
-                                {{ result.name || result.company }} - <a href="{{ result.web }}"> {{ result.web }}</a>
+                                {{ result.name || result.company }} - <a href="{{ result.web }}" target="_blank"> {{ result.web }}</a>
                             </p>
 
                             <button (click)="selectExistingItem(result.serviceType, result)" class="secondary btn-rounded">
@@ -119,21 +119,6 @@
                     </div>
 
                     <div class="form-item">
-                        <label>Desde *</label>
-                        <input type="text" formControlName="from" placeholder="Ciudad de origen" />
-                    </div>
-
-                    <div class="form-item">
-                        <label>Hasta *</label>
-                        <input type="text" formControlName="to" placeholder="Ciudad de destino" />
-                    </div>
-
-                    <div class="form-item">
-                        <label>Precio (€/billete)</label>
-                        <input type="number" formControlName="price" min="0" />
-                    </div>
-
-                    <div class="form-item">
                         <label>Tipo *</label>
                         <select formControlName="type">
                             <option value="">Seleccionar</option>
@@ -147,6 +132,11 @@
                             <option value="helicopter">Helicóptero</option>
                             <option value="other">Otro</option>
                         </select>
+                    </div>
+
+                    <div class="form-item">
+                        <label>Dirección oficina*</label>
+                        <input type="text" formControlName="address" placeholder="Dirección" />
                     </div>
 
                     <div class="form-item">
@@ -219,13 +209,13 @@
             <h4>Alojamientos</h4>
             <div *ngFor="let item of selectedExtras['alojamiento']" class="container-items-list">
                 <div class="item-list">
-                    {{ item.name }} - <a href="{{ item.web }}">{{ item.web }}</a>
+                    {{ item.name }} - <a href="{{ item.web }}" target="_blank">{{ item.web }}</a>
                 </div>
                 <div class="buttons-list">
-                    <button (click)="removeSelected('alojamiento', item)" class="btn-rounded">
+                    <button (click)="removeSelected('alojamiento', item)" class="secondary btn-rounded">
                         <mat-icon class="icon-right">delete</mat-icon>
                     </button>
-                    <button (click)="editSelected('alojamiento', item)" class="btn-rounded">
+                    <button (click)="editSelected('alojamiento', item)" class="secondary btn-rounded">
                         <mat-icon class="icon-right">edit</mat-icon>
                     </button>
                 </div>
@@ -233,30 +223,34 @@
         </div>
          <div>
             <h4>Restaurantes</h4>
-            <div *ngFor="let item of selectedExtras['restaurante']">
-                {{ item.name || item.web }}
-            </div>
-            <div class="buttons-list">
-                <!-- <button (click)="removeSelected('restaurante', item)">
-                    <mat-icon class="icon-right">delete</mat-icon>
-                </button>
-                <button (click)="editSelected('restaurante', item)">
-                    <mat-icon class="icon-right">edit</mat-icon>
-                </button> -->
+            <div *ngFor="let item of selectedExtras['restaurante']" class="container-items-list">
+                <div class="item-list">
+                    {{ item.name }} - <a href="{{ item.web }}" target="_blank">{{ item.web }}</a>
+                </div>
+                <div class="buttons-list">
+                    <button (click)="removeSelected('restaurante', item)" class="secondary btn-rounded">
+                        <mat-icon class="icon-right">delete</mat-icon>
+                    </button>
+                    <button (click)="editSelected('restaurante', item)" class="secondary btn-rounded">
+                        <mat-icon class="icon-right">edit</mat-icon>
+                    </button>
+                </div>
             </div>
         </div>
          <div>
             <h4>Transportes</h4>
-            <div *ngFor="let item of selectedExtras['transporte']">
-                {{ item.name || item.web }}
-            </div>
-             <div class="buttons-list">
-                <!-- <button (click)="removeSelected('transporte', item)">
-                    <mat-icon class="icon-right">delete</mat-icon>
-                </button>
-                <button (click)="editSelected('transporte', item)">
-                    <mat-icon class="icon-right">edit</mat-icon>
-                </button> -->
+            <div *ngFor="let item of selectedExtras['transporte']" class="container-items-list">
+                <div class="item-list">
+                    {{ item.name }} - <a href="{{ item.web }}" target="_blank">{{ item.web }}</a>
+                </div>
+                <div class="buttons-list">
+                    <button (click)="removeSelected('transporte', item)" class="secondary btn-rounded">
+                        <mat-icon class="icon-right">delete</mat-icon>
+                    </button>
+                    <button (click)="editSelected('transporte', item)" class="secondary btn-rounded">
+                        <mat-icon class="icon-right">edit</mat-icon>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
