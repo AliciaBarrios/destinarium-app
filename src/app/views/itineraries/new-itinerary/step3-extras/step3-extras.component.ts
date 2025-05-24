@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { AccommodationService } from '../../../../services/accommodation.service';
+import { TransportService } from '../../../../services/transport.service';
+import { RestaurantService } from '../../../../services/restaurant.service';
 import { SharedService } from '../../../../services/shared.services';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
-import { filter, map, of } from 'rxjs';
+import { filter, map, of, forkJoin } from 'rxjs';
 import { Router } from '@angular/router';
 import { ItineraryCreationService } from '../../../../services/itinerary-creation.service';
 
@@ -50,6 +52,8 @@ export class Step3ExtrasComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private accommodationService: AccommodationService,
+    private transportService: TransportService,
+    private restaurantService: RestaurantService,
     private sharedService: SharedService,
     private itineraryCreationService: ItineraryCreationService, 
     private router: Router,
@@ -69,14 +73,23 @@ export class Step3ExtrasComponent implements OnInit {
       map(term => term.trim().toLowerCase()), 
       switchMap((term: string) => {
         this.searchTerm = term;
-        return term
-          ? this.accommodationService.getAccommodationByName(term)
-          : of([]);
+        if (!term) {
+          return of({ accommodations: [], transports: [], restaurants: [] });
+        }
+        return forkJoin({
+          accommodations: this.accommodationService.getAccommodationByName(term),
+          transports: this.transportService.getTransportByCompany(term),
+          restaurants: this.restaurantService.getRestaurantByName(term)
+        });
       })
     )
     .subscribe({
-      next: (results) => {
-        this.searchResults = results;
+      next:({ accommodations, transports, restaurants }) => {
+        this.searchResults = [
+          ...accommodations,
+          ...transports,
+          ...restaurants
+        ];
       },
       error: (err) => {
         console.error('Error al buscar alojamiento:', err);
@@ -93,6 +106,7 @@ export class Step3ExtrasComponent implements OnInit {
   toggleSidebar() {
     this.sidebarOpen = !this.sidebarOpen;
   }
+
   search(): void {
     const term = this.searchTerm.toLowerCase().trim();
 
@@ -101,14 +115,22 @@ export class Step3ExtrasComponent implements OnInit {
       return;
     }
 
-    this.accommodationService.getAccommodationByName(term).subscribe({
-      next: (results) => {
-        this.searchResults = results;
+    forkJoin({
+      accommodations: this.accommodationService.getAccommodationByName(term),
+      transports: this.transportService.getTransportByCompany(term),
+      restaurants: this.restaurantService.getRestaurantByName(term)
+    }).subscribe({
+      next: ({ accommodations, transports, restaurants }) => {
+        this.searchResults = [
+          ...accommodations,
+          ...transports,
+          ...restaurants
+        ];
       },
       error: (err) => {
-        console.error('Error al buscar alojamiento:', err);
+        console.error('Error en alguna de las búsquedas:', err);
         this.searchResults = [];
-      },
+      }
     });
   }
 
@@ -269,13 +291,26 @@ export class Step3ExtrasComponent implements OnInit {
             reject(err);
           }
         });
+      } else if (type === 'transporte') {
+        this.transportService.createTransport(itemData).subscribe({
+          next: (savedItem) => {
+            resolve(savedItem);
+          },
+          error: (err) => {
+            reject(err);
+          }
+        });
+      } else if (type === 'restaurante') {
+        this.restaurantService.createRestaurant(itemData).subscribe({
+          next: (savedItem) => {
+            resolve(savedItem);
+          },
+          error: (err) => {
+            reject(err);
+          }
+        });
       } else {
-        // Para transporte o restaurante: usa simulación por ahora
-        setTimeout(() => {
-          const fakeItem = { ...itemData, id: Math.floor(Math.random() * 100000) };
-          console.log(`Guardado ${type} (simulado):`, fakeItem);
-          resolve(fakeItem);
-        }, 500);
+        reject(new Error(`Tipo de item no soportado: ${type}`));
       }
     });
   }

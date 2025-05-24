@@ -12,6 +12,8 @@ import { ItineraryCreationService } from '../../../../services/itinerary-creatio
 import { ItineraryService } from '../../../../services/itineraries.service';
 import { CategoryService } from '../../../../services/category.service';
 import { AccommodationService } from '../../../../services/accommodation.service';
+import { TransportService } from '../../../../services/transport.service';
+import { RestaurantService } from '../../../../services/restaurant.service';
 import { DayService } from '../../../../services/day.service';
 import { LocalStorageService } from '../../../../services/local-storage.service';
 import { SharedService } from '../../../../services/shared.services';
@@ -41,6 +43,8 @@ export class ItinerarySummeryComponent implements OnInit{
     private categoryService: CategoryService,
     private dayService: DayService,
     private accommodationService: AccommodationService,
+    private transportService: TransportService,
+    private restaurantService: RestaurantService,
     private localStorageService: LocalStorageService,
     private sharedService: SharedService,
     private router: Router,
@@ -112,17 +116,17 @@ export class ItinerarySummeryComponent implements OnInit{
     return this.accommodationService.linkAccommodationsToItinerary(itineraryId, accommodationIds).toPromise().then(() => {});
   }
 
-  // private linkRestaurants(itineraryId: string): Promise<void> {
-  //   const restaurantIds = this.step3Details.restaurants?.map(restaurant => restaurant.restaurantId) ?? [];
-  //   if (restaurantIds.length === 0) return Promise.resolve();
-  //   return this.restaurantService.linkRestaurantsToItinerary(itineraryId, restaurantIds).toPromise().then(() => {});
-  // }
+  private linkRestaurants(itineraryId: string): Promise<void> {
+    const restaurantIds = this.step3Details.restaurants?.map(restaurant => restaurant.restaurantId) ?? [];
+    if (restaurantIds.length === 0) return Promise.resolve();
+    return this.restaurantService.linkRestaurantsToItinerary(itineraryId, restaurantIds).toPromise().then(() => {});
+  }
 
-  // private linkTransports(itineraryId: string): Promise<void> {
-  //   const transportIds = this.step3Details.transports?.map(transport => transport.transportId) ?? [];
-  //   if (transportIds.length === 0) return Promise.resolve();
-  //   return this.transportService.linkTransportsToItinerary(itineraryId, transportIds).toPromise().then(() => {});
-  // }
+  private linkTransports(itineraryId: string): Promise<void> {
+    const transportIds = this.step3Details.transports?.map(transport => transport.transportId) ?? [];
+    if (transportIds.length === 0) return Promise.resolve();
+    return this.transportService.linkTransportsToItinerary(itineraryId, transportIds).toPromise().then(() => {});
+  }
 
   onSubmitItinerary(): void {
     let responseOK = false;
@@ -133,8 +137,8 @@ export class ItinerarySummeryComponent implements OnInit{
       return Promise.all([
         this.createDays(itineraryId),
         this.linkAccommodations(itineraryId),
-        // this.linkRestaurants(itineraryId),
-        // this.linkTransports(itineraryId),
+        this.linkRestaurants(itineraryId),
+        this.linkTransports(itineraryId),
       ]);
     })
     .then(() => {

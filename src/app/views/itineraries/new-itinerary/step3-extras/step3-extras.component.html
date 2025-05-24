@@ -122,15 +122,14 @@
                         <label>Tipo *</label>
                         <select formControlName="type">
                             <option value="">Seleccionar</option>
-                            <option value="plane">Avión</option>
-                            <option value="train">Tren</option>
-                            <option value="bus">Autobús</option>
-                            <option value="car">Coche</option>
-                            <option value="bike">Bicicleta</option>
-                            <option value="motorbike">Moto</option>
-                            <option value="boat">Barco</option>
-                            <option value="helicopter">Helicóptero</option>
-                            <option value="other">Otro</option>
+                            <option value="Avión">Avión</option>
+                            <option value="Tren">Tren</option>
+                            <option value="Bus">Autobús</option>
+                            <option value="Coche">Coche</option>
+                            <option value="Bicicleta">Bicicleta</option>
+                            <option value="Moto">Moto</option>
+                            <option value="Barco">Barco</option>
+                            <option value="Helicóptero">Helicóptero</option>
                         </select>
                     </div>
 
@@ -241,7 +240,7 @@
             <h4>Transportes</h4>
             <div *ngFor="let item of selectedExtras['transporte']" class="container-items-list">
                 <div class="item-list">
-                    {{ item.name }} - <a href="{{ item.web }}" target="_blank">{{ item.web }}</a>
+                    {{ item.company }} - <a href="{{ item.web }}" target="_blank">{{ item.web }}</a>
                 </div>
                 <div class="buttons-list">
                     <button (click)="removeSelected('transporte', item)" class="secondary btn-rounded">
