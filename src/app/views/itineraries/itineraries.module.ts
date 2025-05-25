@@ -21,6 +21,7 @@ import { ItinerarySummeryComponent } from './new-itinerary/itinerary-summery/iti
 import { ResultsComponent } from './results/results.component';
 import { MatIconModule } from '@angular/material/icon';
 import { QuillModule } from 'ngx-quill';
+import { ItineraryDetailsComponent } from './itinerary-details/itinerary-details.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { QuillModule } from 'ngx-quill';
     Step2DayInfoComponent,
     Step3ExtrasComponent,
     ItinerarySummeryComponent,
-    ResultsComponent
+    ResultsComponent,
+    ItineraryDetailsComponent
   ],
   providers: [provideNativeDateAdapter()],
   imports: [

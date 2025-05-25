@@ -8,10 +8,12 @@ import { Step1BasicDataComponent } from './new-itinerary/step1-basic-data/step1-
 import { Step2DayInfoComponent } from './new-itinerary/step2-day-info/step2-day-info.component';
 import { Step3ExtrasComponent } from './new-itinerary/step3-extras/step3-extras.component';
 import { ResultsComponent } from './results/results.component';
+import { ItineraryDetailsComponent } from './itinerary-details/itinerary-details.component';
 
 const routes: Routes = [
   { path: '', component: ItinerariesComponent },
   { path: 'resultados', component: ResultsComponent },
+  { path: 'itinerario/:id', component: ItineraryDetailsComponent},
   {
     path: 'crear-itinerario',
     component: NewItineraryComponent,

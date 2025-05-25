@@ -1,0 +1,83 @@
+@import '../../../../styles/main.scss';
+
+@include media-breakpoint-up(lg-desktop) {
+    .grid-columns {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        width: 90%;
+    }
+}
+
+.img {
+    border-radius: 16px;
+    width: 100%;
+    height: auto;
+}
+
+.container-tags {
+    display: flex;
+    justify-content: flex-start;
+    gap: 1rem;
+    width: 100%;
+    margin: 1rem 0;
+
+    .tag {
+        background-color: $primary-dark-color;
+        color: $basic-light;
+        padding: 0.3rem 1.2rem;
+        border-radius: 16px;
+    }
+}
+
+.container-dates {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    background-color: $call-to-action-color;
+    padding: 0.75rem;
+    width: 100%;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+}
+
+::ng-deep .custom-accordion {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.75rem;
+  width: 100%;
+}
+
+::ng-deep .custom-panel {
+  background-color: $primary-light-color; 
+  box-shadow: none;
+  border-bottom: 1px solid $call-to-action-color; 
+}
+
+::ng-deep .custom-panel .mat-expansion-panel-header {
+  font-weight: 500;
+  font-family: 'Jura', sans-serif;
+  padding: 1rem;
+}
+
+::ng-deep .custom-panel .mat-expansion-panel-body {
+  padding: 1rem;
+  font-family: 'Jura', sans-serif;
+}
+
+.container-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .link {
+        background-color: $basic-light;
+        color: $primary-dark-color;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}

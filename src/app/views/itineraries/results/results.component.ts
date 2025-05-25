@@ -16,7 +16,7 @@ export class ResultsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private itineraryService: ItineraryService
+    private itineraryService: ItineraryService,
   ) {}
   
   ngOnInit() {
@@ -43,7 +43,7 @@ export class ResultsComponent implements OnInit {
 
   getCardData(itinerary: ItineraryDTO) {
     return {
-      link: '/itinerarios/' + itinerary.itineraryId,
+      link: `/itinerarios/itinerario/${itinerary.itineraryId}`,
       imageUrl: itinerary.coverImage ? `http://localhost:3000/uploads/${itinerary.coverImage}` : 'assets/predeterminada-img.webp',
       title: `Itinerario de ${itinerary.duration} días por ${itinerary.destination}`,
       date: itinerary.publicationDate,
