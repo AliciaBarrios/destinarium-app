@@ -3,7 +3,7 @@
     <div class="grid-columns">
         <div>
             <figure>
-                <img src="{{ coverImage }}" alt="Imágen portada itinerario" class="img"/>
+                <img src="http://localhost:3000/uploads/{{ itinerary.coverImage }}" (error)="setDefaultImage($event)" alt="Imágen portada itinerario" class="img"/>
                 <figcaption>
                     <p>Publicado el {{ itinerary.publicationDate | date: 'dd/MM/yyyy' }} por {{ itinerary.userAlias }}</p>
                 </figcaption>
@@ -15,22 +15,76 @@
             </div>
         </div>
         <div>
-            <div class="container-dates">
-                <mat-icon>calendar_today</mat-icon>
-                <p>Fechas itinerario:</p> 
-                <p>{{ itinerary.startDate | date: 'dd/MM/yyyy' }} - {{ itinerary.endDate | date: 'dd/MM/yyyy' }}</p>
-            </div>
-            <mat-accordion #accordion *ngFor="let day of visibleDays; let i = index" class="custom-accordion">
-                <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)" class="custom-panel">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title> DÍA {{ i + 1 }}:  {{ day.startLocation }} - {{ day.endLocation }} </mat-panel-title>
-                    </mat-expansion-panel-header>
-                    <p [innerHTML]="day.description"></p>
-                </mat-expansion-panel>
-            </mat-accordion>
-            <div *ngIf="itinerary && itinerary.days && itinerary.days.length > visibleDaysCount" class="container-button">
-                <button class="link" (click)="showMoreDays()">Ver más días</button>
-            </div>
+            <section>
+                <div class="section-header">
+                    <mat-icon>star</mat-icon>
+                    <p>Servicios contratados</p> 
+                </div>
+                <mat-accordion #accordion class="custom-accordion" *ngIf="itinerary && itinerary.accommodations && itinerary.accommodations.length">
+                    <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)" class="custom-panel">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <mat-icon class="icon">hotel</mat-icon>
+                                <p class="custom-panel-title">Alojamientos</p>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div *ngFor="let accommodation of itinerary.accommodations; let i = index" class="container-services">
+                            <b>{{ accommodation.type }}</b>:  {{ accommodation.name }} - <a href="{{ accommodation.web }}" target="_blank">{{ accommodation.web }}</a>
+                            <p><b>Dirección:</b> {{ accommodation.address }}</p>
+                            <p><b>Precio:</b> {{ accommodation.price }} €/persona</p>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+                <mat-accordion #accordion class="custom-accordion" *ngIf="itinerary && itinerary.restaurants && itinerary.restaurants.length">
+                    <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)" class="custom-panel">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <mat-icon class="icon">restaurant</mat-icon>
+                                <p class="custom-panel-title">Restaurantes</p>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div *ngFor="let restaurant of itinerary.restaurants; let i = index" class="container-services">
+                            <b>{{ restaurant.type }}</b>:  {{ restaurant.name }} - <a href="{{ restaurant.web }}" target="_blank">{{ restaurant.web }}</a>
+                            <p><b>Dirección:</b> {{ restaurant.address }}</p>
+                            <p><b>Precio medio:</b> {{ restaurant.price }} €/persona</p>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+                <mat-accordion #accordion class="custom-accordion" *ngIf="itinerary && itinerary.transports && itinerary.transports.length">
+                    <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)" class="custom-panel">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <mat-icon class="icon">flight</mat-icon>
+                                <p class="custom-panel-title">Transportes</p>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div *ngFor="let transport of itinerary.transports; let i = index" class="container-services">
+                            <b>{{ transport.type }}</b>:  {{ transport.company }} - <a href="{{ transport.web }}" target="_blank">{{ transport.web }}</a>
+                            <p><b>Dirección:</b> {{ transport.address }}</p>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </section>
+            <section>
+                <div class="section-header">
+                    <mat-icon>calendar_today</mat-icon>
+                    <p>Fechas itinerario:</p> 
+                    <p>{{ itinerary.startDate | date: 'dd/MM/yyyy' }} - {{ itinerary.endDate | date: 'dd/MM/yyyy' }}</p>
+                </div>
+                <mat-accordion #accordion *ngFor="let day of visibleDays; let i = index" class="custom-accordion">
+                    <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)" class="custom-panel">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title class="custom-panel-title"> 
+                                DÍA {{ i + 1 }}:  {{ day.startLocation }} - {{ day.endLocation }} 
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div [innerHTML]="day.description"></div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+                <div *ngIf="itinerary && itinerary.days && itinerary.days.length > visibleDaysCount" class="container-button">
+                    <button class="link" (click)="showMoreDays()">Ver más días</button>
+                </div>
+            </section>
         </div>
     </div>
 </div>

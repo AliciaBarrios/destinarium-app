@@ -17,9 +17,9 @@
                 <label>Descripción del día {{ i + 1 }}</label>
                 <quill-editor
                     [modules]="getQuillModules(i)"
-             
                     formControlName="description"
-                    class="form-item">
+                    class="form-item"
+                    (onContentChanged)="onEditorContentChanged($event, i)">
                 </quill-editor>
                 <div class="action-buttons flex-column">
                     <button type="button" class="call-to-action btn-large" (click)="addNewDay()">GUARDAR Y AÑADIR OTRO DÍA</button>

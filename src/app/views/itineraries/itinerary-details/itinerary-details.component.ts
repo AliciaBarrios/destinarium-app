@@ -17,7 +17,6 @@ import { ChangeDetectorRef } from '@angular/core';
 export class ItineraryDetailsComponent implements OnInit {
   readonly panelOpenState = signal(false);
   itinerary: ItineraryDTO = new ItineraryDTO('','',new Date(),'',0,'',new Date(), new Date(), 0, 0, [], '');
-  coverImage: string = '';
 
   visibleDaysCount: number = 2;
 
@@ -38,8 +37,6 @@ export class ItineraryDetailsComponent implements OnInit {
     }
 
     this.getItinerary(itineraryId);
-
-    this.coverImage = '../../../../assets/predeterminada-img.webp';
   }
 
    private async getItinerary(id: any): Promise<void> {
@@ -62,5 +59,9 @@ export class ItineraryDetailsComponent implements OnInit {
 
   showMoreDays() {
     this.visibleDaysCount += 5;
+  }
+
+  setDefaultImage(event: Event) {
+    (event.target as HTMLImageElement).src = '../../../../assets/predeterminada-img.webp';
   }
 }

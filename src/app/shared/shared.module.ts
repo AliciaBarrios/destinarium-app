@@ -11,6 +11,7 @@ import { NavComponent } from './nav/nav.component';
 import { RouterModule } from '@angular/router';
 import { FooterComponent } from './footer/footer.component';
 import { FullCardComponent } from './full-card/full-card.component';
+import { FullCardPlacesComponent } from './full-card-places/full-card-places.component';
 import { SimpleCardComponent } from './simple-card/simple-card.component';
 import { SwitchAuthComponent } from './switch-auth/switch-auth.component';
 
@@ -20,6 +21,7 @@ import { SwitchAuthComponent } from './switch-auth/switch-auth.component';
     HeaderComponent,
     SimpleCardComponent,
     FullCardComponent,
+    FullCardPlacesComponent,
     SwitchAuthComponent,
     FooterComponent,
   ],
@@ -38,6 +40,7 @@ import { SwitchAuthComponent } from './switch-auth/switch-auth.component';
     FooterComponent,
     SimpleCardComponent,
     FullCardComponent,
+    FullCardPlacesComponent,
     SwitchAuthComponent,
   ],
 })

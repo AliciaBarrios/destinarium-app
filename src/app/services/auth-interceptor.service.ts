@@ -24,13 +24,22 @@ import { LocalStorageService } from './local-storage.service';
     ): Observable<HttpEvent<any>> {
       this.access_token = this.localStorageService.get('access_token');
       if (this.access_token) {
-        req = req.clone({
-          setHeaders: {
-            'Content-Type': 'application/json; charset=utf-8',
-            Accept: 'application/json',
-            Authorization: `Bearer ${this.access_token}`,
-          },
-        });
+         if (req.body instanceof FormData) {
+            req = req.clone({
+              setHeaders: {
+                Authorization: `Bearer ${this.access_token}`,
+                Accept: 'application/json',
+              }
+            });
+          } else {
+            req = req.clone({
+              setHeaders: {
+                'Content-Type': 'application/json; charset=utf-8',
+                Accept: 'application/json',
+                Authorization: `Bearer ${this.access_token}`,
+              },
+            });
+          }
       }
   
       return next.handle(req);

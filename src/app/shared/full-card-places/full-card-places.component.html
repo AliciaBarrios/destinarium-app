@@ -1,0 +1,23 @@
+<div class="full-card">
+  <img
+    [src]="card.imageUrl"
+    [alt]="card.title"
+    (error)="onImgError($event)"
+    class="card-background-img"
+  />
+  <div class="card-content">
+    
+    <div class="meta">
+      <h3>{{ card.title }}</h3>
+      <span>
+        <mat-icon>location_on</mat-icon> 
+        {{ card.address }}
+      </span>
+    </div>
+    <div class="tags">
+      <p class="category-tag tag" *ngFor="let category of card.categories">{{ category }}</p>
+      <p class="rating-tag tag">{{ card.rating }} ★</p>
+    </div>
+    <a class="card-link" [routerLink]="card.link">Ver detalles</a>
+  </div>
+</div>

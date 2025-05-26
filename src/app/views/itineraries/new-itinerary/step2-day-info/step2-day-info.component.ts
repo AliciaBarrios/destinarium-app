@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
+import { QuillEditorComponent } from 'ngx-quill';
 import { Router } from '@angular/router';
 import { FormBuilder, UntypedFormGroup, FormArray, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -11,6 +12,7 @@ import { DayDTO } from '../../../../models/day.dto';
   styleUrl: './step2-day-info.component.scss'
 })
 export class Step2DayInfoComponent implements OnInit {
+  @ViewChildren(QuillEditorComponent) quillEditors!: QueryList<QuillEditorComponent>;
   dayForm: UntypedFormGroup;
   dayCount: number = 0;
   itineraryId: string | null = null; 
@@ -101,6 +103,7 @@ export class Step2DayInfoComponent implements OnInit {
     };
   }
 
+  editorContent = '';
   customImageUpload(index: number) {
     const input = document.createElement('input');
     input.setAttribute('type', 'file');
@@ -110,7 +113,7 @@ export class Step2DayInfoComponent implements OnInit {
     input.onchange = async () => {
       const file = input.files![0];
       const formData = new FormData();
-      formData.append('file', file);
+      formData.append('coverImage', file);
 
       try {
         const response = await this.http.post<{ url: string }>(
@@ -118,16 +121,25 @@ export class Step2DayInfoComponent implements OnInit {
           formData
         ).toPromise();
 
-        const quillEditors = document.querySelectorAll('quill-editor');
-        const editor = (quillEditors[index] as any).__quill; // acceder a la instancia Quill
+        const quillEditor = this.quillEditors.get(index);
+        if (!quillEditor) {
+          console.error('Editor no encontrado para el índice', index);
+          return;
+        }
 
+        const editor = quillEditor.quillEditor;
         const range = editor.getSelection(true);
         editor.insertEmbed(range.index, 'image', response!.url);
-        editor.setSelection(range.index + 1);
+        editor.setSelection({ index: range.index + 1, length: 0 });
       } catch (error) {
         console.error('Error subiendo imagen:', error);
       }
     };
+  }
+
+  onEditorContentChanged(event: any, index: number): void {
+    const html = event.html;
+    this.days.at(index).get('description')?.setValue(html);
   }
 
   onSubmit(): void {

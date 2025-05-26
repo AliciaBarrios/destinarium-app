@@ -1,10 +1,40 @@
-<input type="text" [(ngModel)]="query" placeholder="Busca un lugar..." />
-<button (click)="search()">Buscar</button>
 
-<ul *ngIf="results?.length">
-  <li *ngFor="let place of results">
-    {{ place.name }} — {{ place.formatted_address }}
-  </li>
-</ul>
 
-<p *ngIf="results && results.length === 0">No se encontraron resultados.</p>
+<div class="main-container">
+    <h1>Puntos de interés</h1>
+  
+    <div class="action-buttons">
+        <button class="btn-filtro">
+            <mat-icon>tune</mat-icon>
+            Filtrar
+        </button>
+        <button class="btn-ordenar">
+            <mat-icon>sort</mat-icon>
+            Ordenar
+        </button>
+    </div>
+
+
+  <div class="search-container">
+    <input 
+    [(ngModel)]="query" 
+    type="text"
+    placeholder="Escribe un punto de interés" 
+    (keydown.enter)="search()" />
+    <button (click)="search()">
+        <mat-icon>search</mat-icon>
+    </button>
+  </div>
+
+  <div *ngIf="loading">Buscando...</div>
+  <div *ngIf="error" style="color:red">{{ error }}</div>
+
+  <div *ngIf="places?.length" class="cards-container">
+    <app-full-card-places
+      *ngFor="let place of places"
+      [card]="getCardData(place)">
+    </app-full-card-places>
+  </div>
+</div>
+
+  
