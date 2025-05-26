@@ -1,8 +1,8 @@
 <div class="main-container">
     <h1>¿Qué te apetece hoy?</h1>
-    <div class="cards-container">
+    <section class="cards-container">
         <app-simple-card *ngFor="let card of simpleCards" [card]="card"></app-simple-card>
-    </div>
+    </section>
     <section class="extras-container">
         <h2>IMPRESCINDIBLES</h2>
         <ul class="nav-links">
@@ -37,6 +37,25 @@
               </a>
             </li>
           </ul>
+    </section>
+    <section>
+      <h2 class="top-itineraries">TOP ITINERARIOS</h2>
+      <div class="carousel-wrapper">
+        <button class="nav-button left" (click)="scrollCarousel('left')">
+          <mat-icon>arrow_back_ios</mat-icon>
+        </button>
+
+        <div class="carousel-container" #carousel>
+          <div class="itinerary-card" *ngFor="let itinerary of topItineraries">
+            <img [src]="itinerary.coverImage || 'assets/predeterminada-img.webp'" alt="{{ itinerary.destination }}" />
+            <a [routerLink]="['/itinerarios/itinerario/', itinerary.itineraryId]">{{ itinerary.destination }}</a>
+          </div>
+        </div>
+
+        <button class="nav-button right" (click)="scrollCarousel('right')">
+          <mat-icon>arrow_forward_ios</mat-icon>
+        </button>
+      </div>
     </section>
 </div>
 

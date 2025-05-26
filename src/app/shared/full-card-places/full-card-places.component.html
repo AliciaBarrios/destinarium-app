@@ -6,16 +6,16 @@
     class="card-background-img"
   />
   <div class="card-content">
-    
+    <h3>{{ card.title }}</h3>
     <div class="meta">
-      <h3>{{ card.title }}</h3>
+      
       <span>
         <mat-icon>location_on</mat-icon> 
         {{ card.address }}
       </span>
     </div>
     <div class="tags">
-      <p class="category-tag tag" *ngFor="let category of card.categories">{{ category }}</p>
+      <p class="category-tag tag" *ngFor="let category of card.categories | slice:0:2">{{ category }}</p>
       <p class="rating-tag tag">{{ card.rating }} ★</p>
     </div>
     <a class="card-link" [routerLink]="card.link">Ver detalles</a>

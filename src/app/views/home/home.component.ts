@@ -1,13 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { SimpleCard } from '../../models/simple-card.interface';
+import { ItineraryDTO } from '../../models/itinerary.dto';
+import { ItineraryService } from '../../services/itineraries.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent {
-
+export class HomeComponent implements OnInit {
+  topItineraries: ItineraryDTO[] = [];
+  
   simpleCards: SimpleCard[] = [
     {
       imageUrl: '../../../assets/itinerarios-img.jpg',
@@ -26,4 +29,27 @@ export class HomeComponent {
     }
   ];
 
+  constructor(private itineraryService: ItineraryService) {}
+
+  ngOnInit(): void {
+    this.itineraryService.getItineraries().subscribe({
+      next: (itineraries: ItineraryDTO[]) => {
+        this.topItineraries = itineraries.filter(itinerary => itinerary.rating >= 4);
+      },
+      error: (err) => {
+        console.error('Error al cargar los itinerarios:', err);
+      }
+    });
+  }
+
+  @ViewChild('carousel', { static: false }) carousel!: ElementRef;
+
+  scrollCarousel(direction: 'left' | 'right') {
+    const container = this.carousel.nativeElement;
+    const scrollAmount = container.offsetWidth;
+    container.scrollBy({
+      left: direction === 'left' ? -scrollAmount : scrollAmount,
+      behavior: 'smooth'
+    });
+  }
 }

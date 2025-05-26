@@ -1,15 +1,24 @@
 @import '../../../styles/main.scss';
 
 .full-card {
+    max-width: 400px;
     width: 100%;
     height: 300px;
-    background-size: cover;
-    background-position: center;
     position: relative;
     border-radius: 10px;
     overflow: hidden;
     margin: 1.2rem 0;
     padding: 0.5rem;
+
+    .card-background-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1; // para que quede detrás del contenido
+    }
 
     .card-content {
         display: flex;
@@ -18,6 +27,12 @@
         height: 100%;
         gap: 1rem;
         padding: 0.6rem;
+
+        h3 {
+          border-radius: 10px;
+          background-color: rgba($primary-light-color, 0.8);
+          padding: 0.5rem;
+        }
 
         .meta {
             display: flex;
@@ -64,16 +79,3 @@
     }
   }
   
-.card-background-img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: -1; // para que quede detrás del contenido
-}
-.full-card {
-  position: relative;
-  overflow: hidden;
-}

@@ -14,7 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
     CommonModule,
     HomeRoutingModule,
     SharedModule,
-    MatIconModule
+    MatIconModule,
   ],
   exports: [
     HomeComponent
