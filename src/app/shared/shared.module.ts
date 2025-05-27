@@ -14,6 +14,7 @@ import { FullCardComponent } from './full-card/full-card.component';
 import { FullCardPlacesComponent } from './full-card-places/full-card-places.component';
 import { SimpleCardComponent } from './simple-card/simple-card.component';
 import { SwitchAuthComponent } from './switch-auth/switch-auth.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { SwitchAuthComponent } from './switch-auth/switch-auth.component';
     RouterModule,
     MatIconModule,
     FormsModule,
+    MatProgressSpinnerModule
   ],
   exports: [
     NavComponent,
@@ -42,6 +44,7 @@ import { SwitchAuthComponent } from './switch-auth/switch-auth.component';
     FullCardComponent,
     FullCardPlacesComponent,
     SwitchAuthComponent,
+    MatProgressSpinnerModule
   ],
 })
 export class SharedModule {}

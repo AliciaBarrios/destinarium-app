@@ -46,29 +46,10 @@
   }
 }
 
-@include media-breakpoint-up(sm-desktop) {
-    .cards-container {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 3rem;
-        width: 100%;
-    }
-}
-
-@include media-breakpoint-up(lg-desktop) {
-    .cards-container {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 3rem;
-        width: 100%;
-    }
-}
-
-@include media-breakpoint-up(xl-desktop) {
-    .cards-container {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 3rem;
-        width: 100%;
-    }
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0rem 3rem;
+    width: 100%;
 }

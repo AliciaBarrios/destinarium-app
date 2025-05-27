@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PlacesApiService, PlaceFull } from '../../services/places.api.service';
 
 @Component({
@@ -6,22 +6,42 @@ import { PlacesApiService, PlaceFull } from '../../services/places.api.service';
   templateUrl: './points-of-interest.component.html',
   styleUrl: './points-of-interest.component.scss'
 })
-export class PointsOfInterestComponent {
+export class PointsOfInterestComponent implements OnInit {
   query = '';
   loading = false;
   error = '';
   places: PlaceFull[] = [];
+
   constructor(private placesService: PlacesApiService) {}
 
+  ngOnInit(): void {
+      this.loadDefaultPlaces();
+  }
+
+  loadDefaultPlaces() {
+    this.loading = true;
+    this.error = '';
+    this.placesService.searchPlaces('restaurantes Barcelona').subscribe({
+      next: (data) => {
+        this.places = data;
+        this.loading = false;
+      },
+      error: (err) => {
+        this.loading = false;
+        this.error = 'Error al cargar lugares predeterminados.';
+        console.error(err);
+      }
+    });
+  }
   search() {
     if (!this.query.trim()) return;
     this.loading = true;
     this.error = '';
-    this.places = [];  // cambiar place a places, un array
+    this.places = []; 
 
     this.placesService.searchPlaces(this.query).subscribe({
       next: (data) => {
-        this.places = data;  // ahora data es un array
+        this.places = data; 
         this.loading = false;
         if (!data || data.length === 0) {
           this.error = 'No se encontró ningún lugar con esa búsqueda.';

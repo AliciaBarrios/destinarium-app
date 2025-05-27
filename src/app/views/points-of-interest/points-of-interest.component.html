@@ -1,19 +1,5 @@
-
-
 <div class="main-container">
-    <h1>Puntos de interés</h1>
-  
-    <div class="action-buttons">
-        <button class="btn-filtro">
-            <mat-icon>tune</mat-icon>
-            Filtrar
-        </button>
-        <button class="btn-ordenar">
-            <mat-icon>sort</mat-icon>
-            Ordenar
-        </button>
-    </div>
-
+  <h1>Puntos de interés</h1>
 
   <div class="search-container">
     <input 
@@ -28,6 +14,17 @@
 
   <div *ngIf="loading">Buscando...</div>
   <div *ngIf="error" style="color:red">{{ error }}</div>
+  
+  <div class="action-buttons">
+      <button class="btn-filtro">
+          <mat-icon>tune</mat-icon>
+          Filtrar
+      </button>
+      <button class="btn-ordenar">
+          <mat-icon>sort</mat-icon>
+          Ordenar
+      </button>
+  </div>
 
   <div *ngIf="places?.length" class="cards-container">
     <app-full-card-places

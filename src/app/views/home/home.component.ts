@@ -34,12 +34,19 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.itineraryService.getItineraries().subscribe({
       next: (itineraries: ItineraryDTO[]) => {
-        this.topItineraries = itineraries.filter(itinerary => itinerary.rating >= 4);
+        this.topItineraries = itineraries.filter(itinerary => itinerary.rating >= 4.5);
       },
       error: (err) => {
         console.error('Error al cargar los itinerarios:', err);
       }
     });
+  }
+
+  getImageUrl(itinerary: ItineraryDTO): string {
+    if (itinerary.coverImage) {
+      return `http://localhost:3000/uploads/${itinerary.coverImage}`;
+    }
+    return 'assets/predeterminada-img.webp';
   }
 
   @ViewChild('carousel', { static: false }) carousel!: ElementRef;

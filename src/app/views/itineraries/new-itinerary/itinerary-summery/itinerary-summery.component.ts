@@ -159,4 +159,23 @@ export class ItinerarySummeryComponent implements OnInit{
       }
     });
   }
+
+  getCoordenadasByName(nombre: string): Promise<{ lat: number, lng: number }> {
+  const encodedName = encodeURIComponent(nombre);
+  const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodedName}`;
+
+  return fetch(url)
+    .then(res => res.json())
+    .then(data => {
+      if (data.length > 0) {
+        return {
+          lat: parseFloat(data[0].lat),
+          lng: parseFloat(data[0].lon)
+        };
+      } else {
+        throw new Error('No se encontraron coordenadas');
+      }
+    });
+  }
+
 }

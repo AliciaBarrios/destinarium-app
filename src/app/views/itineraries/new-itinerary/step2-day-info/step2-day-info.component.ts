@@ -129,8 +129,10 @@ export class Step2DayInfoComponent implements OnInit {
 
         const editor = quillEditor.quillEditor;
         const range = editor.getSelection(true);
-        editor.insertEmbed(range.index, 'image', response!.url);
-        editor.setSelection({ index: range.index + 1, length: 0 });
+        if (range) {
+          editor.insertEmbed(range.index, 'image', response!.url);
+          editor.setSelection({ index: range.index + 1, length: 0 });
+        } 
       } catch (error) {
         console.error('Error subiendo imagen:', error);
       }
@@ -139,7 +141,11 @@ export class Step2DayInfoComponent implements OnInit {
 
   onEditorContentChanged(event: any, index: number): void {
     const html = event.html;
-    this.days.at(index).get('description')?.setValue(html);
+    const control = this.days.at(index).get('description');
+
+    if (control?.value !== html) {
+      control?.patchValue(html, { emitEvent: false });
+    }
   }
 
   onSubmit(): void {
