@@ -18,7 +18,7 @@ export class ItineraryDetailsComponent implements OnInit {
   readonly panelOpenState = signal(false);
   itinerary: ItineraryDTO = new ItineraryDTO('','',new Date(),'',0,'',new Date(), new Date(), 0, 0, [], '');
 
-  visibleDaysCount: number = 2;
+  visibleDaysCount: number = 3;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -58,7 +58,7 @@ export class ItineraryDetailsComponent implements OnInit {
   }
 
   showMoreDays() {
-    this.visibleDaysCount += 5;
+    this.visibleDaysCount += 3;
   }
 
   setDefaultImage(event: Event) {

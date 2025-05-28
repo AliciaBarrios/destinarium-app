@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditItineraryComponent } from './edit-itinerary.component';
+import { SortDialogComponent } from './sort-dialog.component';
 
-describe('EditItineraryComponent', () => {
-  let component: EditItineraryComponent;
-  let fixture: ComponentFixture<EditItineraryComponent>;
+describe('SortDialogComponent', () => {
+  let component: SortDialogComponent;
+  let fixture: ComponentFixture<SortDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [EditItineraryComponent]
+      declarations: [SortDialogComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(EditItineraryComponent);
+    fixture = TestBed.createComponent(SortDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

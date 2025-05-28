@@ -19,6 +19,12 @@
         gap: 1rem;
         padding: 0.6rem;
 
+        h3 {
+            border-radius: 10px;
+            background-color: rgba($primary-light-color, 0.7);
+            padding: 0.5rem;
+        }
+
         .card-actions {
             display: flex;
             justify-content: space-between;

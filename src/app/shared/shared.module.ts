@@ -15,6 +15,10 @@ import { FullCardPlacesComponent } from './full-card-places/full-card-places.com
 import { SimpleCardComponent } from './simple-card/simple-card.component';
 import { SwitchAuthComponent } from './switch-auth/switch-auth.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { SortDialogComponent } from './sort-dialog/sort-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatRadioModule } from '@angular/material/radio';
+import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +29,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     FullCardPlacesComponent,
     SwitchAuthComponent,
     FooterComponent,
+    SortDialogComponent,
+    FilterDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -34,7 +40,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     RouterModule,
     MatIconModule,
     FormsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatDialogModule,
+    MatRadioModule,
   ],
   exports: [
     NavComponent,
@@ -44,7 +52,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     FullCardComponent,
     FullCardPlacesComponent,
     SwitchAuthComponent,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatDialogModule,
+    MatRadioModule,
   ],
 })
 export class SharedModule {}

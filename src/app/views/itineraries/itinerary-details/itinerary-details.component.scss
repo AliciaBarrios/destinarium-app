@@ -4,8 +4,9 @@
     .grid-columns {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 2rem;
-        width: 90%;
+        gap: 3rem;
+        width: 100%;
+        margin-bottom: 2rem;
     }
 }
 
@@ -17,6 +18,10 @@ p {
     border-radius: 16px;
     width: 100%;
     height: auto;
+}
+
+.days-section {
+    width: 100%;
 }
 
 .container-tags {
@@ -47,7 +52,7 @@ p {
     border-radius: 10px;
 
     p {
-        font-size: $h2-font-size;
+        font-size: 1.3rem;
     }    
 }
 
@@ -76,7 +81,7 @@ p {
 }
 
 .custom-panel-title {
-    font-size: $h3-font-size;
+    font-size: 1.2rem;
 }
 
 .icon{

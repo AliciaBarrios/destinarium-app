@@ -26,6 +26,7 @@ const routes: Routes = [
       { path: 'resumen', component: ItinerarySummeryComponent },
     ],
   },
+  { path: 'editar/:id', component: Step1BasicDataComponent }
 ];
 
 @NgModule({

@@ -65,26 +65,27 @@
                     </mat-expansion-panel>
                 </mat-accordion>
             </section>
-            <section>
-                <div class="section-header">
-                    <mat-icon>calendar_today</mat-icon>
-                    <p>Fechas itinerario:</p> 
-                    <p>{{ itinerary.startDate | date: 'dd/MM/yyyy' }} - {{ itinerary.endDate | date: 'dd/MM/yyyy' }}</p>
-                </div>
-                <mat-accordion #accordion *ngFor="let day of visibleDays; let i = index" class="custom-accordion">
-                    <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)" class="custom-panel">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title class="custom-panel-title"> 
-                                DÍA {{ i + 1 }}:  {{ day.startLocation }} - {{ day.endLocation }} 
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        <div [innerHTML]="day.description"></div>
-                    </mat-expansion-panel>
-                </mat-accordion>
-                <div *ngIf="itinerary && itinerary.days && itinerary.days.length > visibleDaysCount" class="container-button">
-                    <button class="link" (click)="showMoreDays()">Ver más días</button>
-                </div>
-            </section>
+           
         </div>
     </div>
+    <section class="days-section">
+        <div class="section-header">
+            <mat-icon>calendar_today</mat-icon>
+            <p>Fechas itinerario:</p> 
+            <p>{{ itinerary.startDate | date: 'dd/MM/yyyy' }} - {{ itinerary.endDate | date: 'dd/MM/yyyy' }}</p>
+        </div>
+        <mat-accordion #accordion *ngFor="let day of visibleDays; let i = index" class="custom-accordion">
+            <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)" class="custom-panel">
+                <mat-expansion-panel-header>
+                    <mat-panel-title class="custom-panel-title"> 
+                        DÍA {{ i + 1 }}:  {{ day.startLocation }} - {{ day.endLocation }} 
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div [innerHTML]="day.description"></div>
+            </mat-expansion-panel>
+        </mat-accordion>
+        <div *ngIf="itinerary && itinerary.days && itinerary.days.length > visibleDaysCount" class="container-button">
+            <button class="link" (click)="showMoreDays()">Ver más días</button>
+        </div>
+    </section>
 </div>
