@@ -48,3 +48,11 @@
     gap: 0rem 3rem;
     width: 100%;
 }
+
+.chips-container, 
+.mdc-evolution-chip-set__chips {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem auto;
+}

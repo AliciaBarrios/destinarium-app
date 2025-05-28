@@ -1,9 +1,8 @@
 <div class="main-container text-center">
-    <h1 *ngIf="searchTerm">Resultados para "{{ searchTerm }}"</h1>
-    <h1 *ngIf="!searchTerm">Todos los itinerarios</h1>
+    <h1>{{ resultsTitle }}</h1>
   
     <div class="action-buttons">
-        <button class="btn-filtro">
+        <button class="btn-filtro" (click)="openFilterDialog()">
             <mat-icon>tune</mat-icon>
             Filtrar
         </button>
@@ -11,6 +10,18 @@
             <mat-icon>sort</mat-icon>
             Ordenar
         </button>
+    </div>
+
+    <div *ngIf="filterData.destination || filterData.selectedCategories?.length || filterData.minRating || filterData.maxRating || filterData.minDuration || filterData.maxDuration">
+        <p>Filtros aplicados:</p>
+        <mat-chip-set class="chips-container">
+            <mat-chip *ngIf="filterData.destination">Destino: {{ filterData.destination }}</mat-chip>
+            <mat-chip *ngIf="filterData.minRating">Min rating: {{ filterData.minRating }}</mat-chip>
+            <mat-chip *ngIf="filterData.maxRating">Max rating: {{ filterData.maxRating }}</mat-chip>
+            <mat-chip *ngIf="filterData.minDuration">Min días: {{ filterData.minDuration }}</mat-chip>
+            <mat-chip *ngIf="filterData.maxDuration">Max días: {{ filterData.maxDuration }}</mat-chip>
+            <mat-chip *ngFor="let cat of filterData.selectedCategories">{{ cat }}</mat-chip>
+        </mat-chip-set>
     </div>
 
     <p>{{ resultsCount }} Resultados</p>

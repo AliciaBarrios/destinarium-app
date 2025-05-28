@@ -1,8 +1,10 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-export type SortOption = 'category' | 'destination-a-z' | 'destination-z-a' | 'rating-5-0' | 'rating-0-5' | 'duration-asc' | 'duration-des';
-
+export interface SortOption {
+  value: string;
+  label: string;
+}
 @Component({
   selector: 'app-sort-dialog',
   templateUrl: './sort-dialog.component.html',
@@ -10,13 +12,18 @@ export type SortOption = 'category' | 'destination-a-z' | 'destination-z-a' | 'r
 })
 export class SortDialogComponent {
 
-  selectedOption: SortOption;
+  selectedOption: string;
+  options: SortOption[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<SortDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { currentSort: SortOption }
+    @Inject(MAT_DIALOG_DATA) public data: { 
+      currentSort: string,
+      options: SortOption[]
+    }
   ) {
-    this.selectedOption = data.currentSort || 'destination-a-z';
+    this.options = data.options || [];
+    this.selectedOption = data.currentSort || (this.options.length ? this.options[0].value : '');
   }
 
   onConfirm() {

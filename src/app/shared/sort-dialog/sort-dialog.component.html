@@ -1,16 +1,12 @@
-<h2 mat-dialog-title>Ordenar itinerarios</h2>
+<h2 mat-dialog-title>Ordenar</h2>
 <mat-dialog-content>
-    <mat-radio-group [(ngModel)]="selectedOption">
-        <mat-radio-button value="category">Categoría</mat-radio-button><br />
-        <mat-radio-button value="destination-a-z">Destino (A-Z)</mat-radio-button><br />
-        <mat-radio-button value="destination-z-a">Destino (Z-A)</mat-radio-button><br />
-        <mat-radio-button value="rating-0-5">Valoración (0-5)</mat-radio-button><br />
-        <mat-radio-button value="rating-5-0">Valoración (5-0)</mat-radio-button><br />
-        <mat-radio-button value="duration-asc">Duración (ascendente)</mat-radio-button>
-        <mat-radio-button value="duration-des">Duración (descendente)</mat-radio-button>
-    </mat-radio-group>
+  <mat-radio-group [(ngModel)]="selectedOption">
+    <mat-radio-button *ngFor="let option of options" [value]="option.value">
+      {{ option.label }}
+    </mat-radio-button>
+  </mat-radio-group>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-button (click)="onCancel()">Cancelar</button>
-    <button mat-button color="primary" (click)="onConfirm()">Aceptar</button>
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-button color="primary" (click)="onConfirm()">Aceptar</button>
 </mat-dialog-actions>

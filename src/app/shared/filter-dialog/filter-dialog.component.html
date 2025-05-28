@@ -1,1 +1,39 @@
-<p>filter-dialog works!</p>
+<h2 mat-dialog-title>Filtros</h2>
+<mat-dialog-content [formGroup]="filtersForm">
+
+  <div appearance="fill">
+    <mat-label>Destino</mat-label>
+    <input matInput placeholder="Introduce el destino" formControlName="destination">
+  </div>
+
+  <div class="range-group">
+    <mat-label>Valoración</mat-label>
+    <mat-slider min="0" max="5">
+        <input value="0" matSliderStartThumb formControlName="minRating">
+        <input value="1" matSliderEndThumb formControlName="maxRating">
+    </mat-slider>
+    <div>
+        Mín: {{ filtersForm.get('minRating')?.value }} - Máx: {{ filtersForm.get('maxRating')?.value }}
+    </div>
+  </div>
+
+  <div class="range-group">
+    <mat-label>Duración (días)</mat-label>
+    <input matInput type="number" placeholder="Mín." formControlName="minDuration">
+    <input matInput type="number" placeholder="Máx." formControlName="maxDuration">
+  </div>
+
+  <div class="category-list">
+    <mat-label>Categorías</mat-label>
+    <mat-checkbox *ngFor="let cat of categories; let i = index"
+    [formControl]="selectedCategoryControls[i]">
+        {{ cat }}
+    </mat-checkbox>
+  </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="clearFilters()">Limpiar</button>
+  <button mat-flat-button color="primary" (click)="applyFilters()">Aplicar</button>
+</mat-dialog-actions>

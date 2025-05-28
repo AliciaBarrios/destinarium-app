@@ -33,6 +33,10 @@ export class ItineraryService {
       .get<ItineraryDTO[]>('http://localhost:3000/users/itineraries/' + userId);
   }
 
+  getFilteredItineraries(filters: any): Observable<ItineraryDTO[]> {
+    return this.http.post<ItineraryDTO[]>(this.urlBlogUocApi + '/filter', filters);
+  }
+
   createItinerary(itinerary: ItineraryDTO): Observable<ItineraryDTO> {
     return this.http.post<ItineraryDTO>(this.urlBlogUocApi, itinerary);
   }

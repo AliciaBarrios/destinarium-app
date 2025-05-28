@@ -7,6 +7,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { HeaderComponent } from './header/header.component';
 import { NavComponent } from './nav/nav.component';
+import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { RouterModule } from '@angular/router';
 import { FooterComponent } from './footer/footer.component';
@@ -18,7 +20,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SortDialogComponent } from './sort-dialog/sort-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatRadioModule } from '@angular/material/radio';
-import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
   declarations: [
@@ -43,6 +48,11 @@ import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
     MatProgressSpinnerModule,
     MatDialogModule,
     MatRadioModule,
+    MatFormFieldModule,
+    MatCheckboxModule,
+    ReactiveFormsModule,
+    MatSliderModule,
+    MatChipsModule
   ],
   exports: [
     NavComponent,
@@ -55,6 +65,10 @@ import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
     MatProgressSpinnerModule,
     MatDialogModule,
     MatRadioModule,
+    MatFormFieldModule,
+    MatCheckboxModule,
+    MatSliderModule,
+    MatChipsModule
   ],
 })
 export class SharedModule {}

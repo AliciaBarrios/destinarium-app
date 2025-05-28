@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PlacesApiService, PlaceFull } from '../../services/places.api.service';
+import { MatDialog } from '@angular/material/dialog';
+import { SortDialogComponent, SortOption } from '../../shared/sort-dialog/sort-dialog.component';
 
 @Component({
   selector: 'app-points-of-interest',
@@ -11,8 +13,19 @@ export class PointsOfInterestComponent implements OnInit {
   loading = false;
   error = '';
   places: PlaceFull[] = [];
+  currentSort: string = 'title-a-z';
 
-  constructor(private placesService: PlacesApiService) {}
+  sortOptions: SortOption[] = [
+    { value: 'title-a-z', label: 'Título (A-Z)' },
+    { value: 'title-z-a', label: 'Título (Z-A)' },
+    { value: 'rating-0-5', label: 'Valoración (ascendente)' },
+    { value: 'rating-5-0', label: 'Valoración (descendente)' }
+  ];
+
+  constructor(
+    private placesService: PlacesApiService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
       this.loadDefaultPlaces();
@@ -68,4 +81,48 @@ export class PointsOfInterestComponent implements OnInit {
       rating: place.rating ?? 'No disponible'
     };
   }
+
+  openSortDialog() {
+    const dialogRef = this.dialog.open(SortDialogComponent, {
+      data: { 
+        currentSort: this.currentSort, 
+        options: this.sortOptions 
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.currentSort = result;
+        this.applySort();
+      }
+    });
+  }
+
+  applySort() {
+    switch (this.currentSort) {
+      case 'title-a-z':
+        this.places.sort((a, b) => a.name.localeCompare(b.name));
+        break;
+      case 'title-z-a':
+        this.places.sort((a, b) => b.name.localeCompare(a.name));
+        break;
+      case 'rating-0-5':
+        this.places.sort((a, b) => (a.rating ?? 0) - (b.rating ?? 0));
+        break;
+      case 'rating-5-0':
+        this.places.sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0));
+        break;
+      case 'category':
+        // Ordenar por la primera categoría alfabéticamente
+        this.places.sort((a, b) => {
+          const catA = a.types?.[0] || '';
+          const catB = b.types?.[0] || '';
+          return catA.localeCompare(catB);
+        });
+        break;
+      default:
+        break;
+    }
+  }
+
 }
