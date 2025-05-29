@@ -24,6 +24,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatChipsModule } from '@angular/material/chips';
+import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { MatChipsModule } from '@angular/material/chips';
     FooterComponent,
     SortDialogComponent,
     FilterDialogComponent,
+    BreadcrumbComponent,
   ],
   imports: [
     CommonModule,
@@ -68,7 +70,8 @@ import { MatChipsModule } from '@angular/material/chips';
     MatFormFieldModule,
     MatCheckboxModule,
     MatSliderModule,
-    MatChipsModule
+    MatChipsModule,
+    BreadcrumbComponent
   ],
 })
 export class SharedModule {}

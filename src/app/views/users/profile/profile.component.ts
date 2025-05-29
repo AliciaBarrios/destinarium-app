@@ -61,7 +61,7 @@ export class ProfileComponent implements OnInit {
 
   getCardData(itinerary: ItineraryDTO) {
     return {
-      link: `/itinerarios/itinerario/${itinerary.itineraryId}`,
+      link: `/itinerarios/resultados/${itinerary.itineraryId}`,
       imageUrl: itinerary.coverImage ? `http://localhost:3000/uploads/${itinerary.coverImage}` : 'assets/predeterminada-img.webp',
       title: itinerary.title,
       date: itinerary.publicationDate,

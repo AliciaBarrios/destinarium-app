@@ -13,7 +13,7 @@ import { ItineraryDetailsComponent } from './itinerary-details/itinerary-details
 const routes: Routes = [
   { path: '', component: ItinerariesComponent },
   { path: 'resultados', component: ResultsComponent },
-  { path: 'itinerario/:id', component: ItineraryDetailsComponent},
+  { path: 'resultados/:id', component: ItineraryDetailsComponent },
   {
     path: 'crear-itinerario',
     component: NewItineraryComponent,

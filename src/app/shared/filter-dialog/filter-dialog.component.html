@@ -1,12 +1,12 @@
 <h2 mat-dialog-title>Filtros</h2>
 <mat-dialog-content [formGroup]="filtersForm">
 
-  <div appearance="fill">
+  <div appearance="fill" class="display-column">
     <mat-label>Destino</mat-label>
     <input matInput placeholder="Introduce el destino" formControlName="destination">
   </div>
 
-  <div class="range-group">
+  <div class="range-group" class="display-column">
     <mat-label>Valoración</mat-label>
     <mat-slider min="0" max="5">
         <input value="0" matSliderStartThumb formControlName="minRating">
@@ -17,7 +17,7 @@
     </div>
   </div>
 
-  <div class="range-group">
+  <div class="range-group" class="display-column">
     <mat-label>Duración (días)</mat-label>
     <input matInput type="number" placeholder="Mín." formControlName="minDuration">
     <input matInput type="number" placeholder="Máx." formControlName="maxDuration">

@@ -1,0 +1,20 @@
+@import '../../../styles/main.scss';
+
+.breadcrumb {
+  font-size: 1.2rem;
+  margin: 1.5rem;
+
+  a {
+    color: $primary-dark-color;
+    text-decoration: none;
+    font-size: 1.2rem;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  span {
+    color: #555;
+  }
+}

@@ -8,7 +8,7 @@
     position: relative;
     border-radius: 10px;
     overflow: hidden;
-    margin: 1.2rem 0;
+    margin: 1rem 0;
     padding: 0.5rem;
 
     .card-content {
@@ -16,7 +16,7 @@
         flex-direction: column;
         justify-content: space-between;
         height: 100%;
-        gap: 1rem;
+        gap: 0.70rem;
         padding: 0.6rem;
 
         h3 {
@@ -83,7 +83,7 @@
           color: $basic-light;
           text-align: center;
           background-color: rgba(0, 0, 0, 0.6);
-          padding: 0.5rem;
+          padding: 0.4rem;
           border-radius: 4px;
         }
     }

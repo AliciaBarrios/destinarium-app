@@ -41,9 +41,11 @@ export class ResultsComponent implements OnInit {
       this.itineraryService.getItineraries(),
       this.route.queryParams
     ]).subscribe(([data, params]) => {
+      console.log(data, params);
       this.itineraries = data;
       this.searchTerm = params['destino'] || '';
-      this.filterItineraries();
+      this.filterData.destination = this.searchTerm;
+      this.applyFilters();
     });
   }
 
@@ -61,7 +63,7 @@ export class ResultsComponent implements OnInit {
 
   getCardData(itinerary: ItineraryDTO) {
     return {
-      link: `/itinerarios/itinerario/${itinerary.itineraryId}`,
+      link: `/itinerarios/resultados/${itinerary.itineraryId}`,
       imageUrl: itinerary.coverImage ? `http://localhost:3000/uploads/${itinerary.coverImage}` : 'assets/predeterminada-img.webp',
       title: `Itinerario de ${itinerary.duration} días por ${itinerary.destination}`,
       date: itinerary.publicationDate,
@@ -134,9 +136,11 @@ export class ResultsComponent implements OnInit {
     dialogRef.afterClosed().subscribe((filters: FilterData | null) => {
       if (filters) {
         this.filterData = filters;
+        this.searchTerm = this.filterData.destination || '';
         this.applyFilters();
       } else {
         this.filterData = {};
+        this.searchTerm = ''; 
         this.filteredItineraries = [...this.itineraries];
         this.applySort();
       }
@@ -178,12 +182,12 @@ export class ResultsComponent implements OnInit {
       return 'No se han encontrado itinerarios con esos criterios';
     }
 
-    if (hasFilters || hasSearch && hasFilters) {
-      return 'Itinerarios filtrados';
-    }
-
     if (hasSearch) {
       return `Resultados para "${this.searchTerm}"`;
+    }
+
+    if (hasFilters) {
+      return 'Itinerarios filtrados';
     }
 
     return 'Todos los itinerarios';

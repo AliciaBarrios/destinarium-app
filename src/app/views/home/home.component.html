@@ -48,7 +48,7 @@
         <div class="carousel-container" #carousel>
           <div class="itinerary-card" *ngFor="let itinerary of topItineraries">
             <img [src]="getImageUrl(itinerary)" alt="{{ itinerary.destination }}" />
-            <a [routerLink]="['/itinerarios/itinerario/', itinerary.itineraryId]">{{ itinerary.destination }}</a>
+            <a [routerLink]="['/itinerarios/resultados/', itinerary.itineraryId]">{{ itinerary.destination }}</a>
           </div>
         </div>
 

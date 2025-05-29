@@ -18,7 +18,7 @@ export interface FilterData {
   styleUrls: ['./filter-dialog.component.scss']
 })
 export class FilterDialogComponent implements OnInit {
-  filtersForm: FormGroup;
+  filtersForm!: FormGroup;
   categories: string[] = [];
   data: FilterData;
 
@@ -26,13 +26,13 @@ export class FilterDialogComponent implements OnInit {
     private formBuilder: FormBuilder,
     private categoryService: CategoryService,
     public dialogRef: MatDialogRef<FilterDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public passedData: FilterData
+    @Inject(MAT_DIALOG_DATA) public passedData: FilterData,
   ) {
     this.data = { ...passedData };
     this.filtersForm = new FormGroup({
       destination: new FormControl(this.data.destination || ''),
-      minRating: new FormControl(this.data.minRating || 0),
-      maxRating: new FormControl(this.data.maxRating || 5),
+      minRating: new FormControl(this.data.minRating || null),
+      maxRating: new FormControl(this.data.maxRating || null),
       minDuration: new FormControl(this.data.minDuration || null),
       maxDuration: new FormControl(this.data.maxDuration || null),
       selectedCategories: new FormControl(this.data.selectedCategories || [])
