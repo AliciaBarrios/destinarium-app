@@ -9,7 +9,6 @@ import { UsersRoutingModule } from './users-routing.module';
 
 import { UsersComponent } from './users.component';
 import { LoginComponent } from './login/login.component';
-import { MenuComponent } from './menu/menu.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
 
@@ -18,8 +17,7 @@ import { RegisterComponent } from './register/register.component';
     UsersComponent,
     LoginComponent,
     RegisterComponent,
-    ProfileComponent,
-    MenuComponent,
+    ProfileComponent
   ],
   imports: [
     CommonModule,

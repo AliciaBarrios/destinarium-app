@@ -5,6 +5,7 @@ import { FormBuilder, UntypedFormGroup, FormArray, Validators } from '@angular/f
 import { HttpClient } from '@angular/common/http';
 import { ItineraryCreationService } from '../../../../services/itinerary-creation.service';
 import { DayDTO } from '../../../../models/day.dto';
+import { SharedService } from '../../../../services/shared.services';
 
 @Component({
   selector: 'app-step2-day-info',
@@ -15,6 +16,7 @@ export class Step2DayInfoComponent implements OnInit {
   @ViewChildren(QuillEditorComponent) quillEditors!: QueryList<QuillEditorComponent>;
   dayForm: UntypedFormGroup;
   dayCount: number = 0;
+  itineraryDuration: number = 0;
   itineraryId: string | null = null; 
 
   constructor(
@@ -22,6 +24,7 @@ export class Step2DayInfoComponent implements OnInit {
     private http: HttpClient,
     private itineraryCreationService: ItineraryCreationService,
     private router: Router,
+    private sharedService: SharedService
   ) {
     this.dayForm = this.formBuilder.group({
       days: this.formBuilder.array([])
@@ -29,12 +32,13 @@ export class Step2DayInfoComponent implements OnInit {
   }
 
   ngOnInit() {
+    const step1 = this.itineraryCreationService.getStep1Data();
+    this.itineraryDuration = step1.duration ?? 0;
     this.loadDraftDays();
   }
 
   saveDraftDays(): void {
     const days = this.days.getRawValue();
-    console.log(days);
     this.itineraryCreationService.setStep2Days(days);
   }
 
@@ -61,6 +65,11 @@ export class Step2DayInfoComponent implements OnInit {
   }
 
   addNewDay(): void {
+      if (this.days.length >= this.itineraryDuration) {
+        this.sharedService.managementToast('toast', true, undefined, 'No puedes añadir más días que la duración del itinerario');
+      return;
+    }
+
     const dayGroup = this.formBuilder.group({
       dayNumber: [this.dayCount + 1],
       startLocation: ['', Validators.required],

@@ -12,6 +12,11 @@
 
 p {
     font-size: 1.1rem;
+
+    &.paragraph-center {
+        text-align: center;
+        margin: 1rem 0;
+    }
 }
 
 .img {

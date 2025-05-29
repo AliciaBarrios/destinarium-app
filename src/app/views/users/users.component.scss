@@ -1,2 +1,58 @@
+@import '../../../styles/main.scss';
 
+.user-header {
+    display: flex;
+    padding: 1.5rem 1rem;
+    border-bottom: 1px solid $primary-dark-color;
+}
+
+.navigation {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 60vh;
+    background-color: $basic-light;
+  
+    .nav-links {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: start;
+        width: 100%;
+        list-style: none;
+        max-width: 100vw;
+        padding: 0;
+
+        li {
+            border-bottom: 1px solid $basic-grey;
+            padding: 1rem 0;
+            width: 85vw;
+
+            &.call-to-action {
+                background-color: $primary-light-color;
+                border-bottom: 1px solid $call-to-action-color;
+            }
+
+            .nav-item {
+                color: $basic-dark;
+                text-decoration: none;
+                font-size: $link-font-size;
+            }
+        }
+    }
+
+    .nav-buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 2rem;
+    }
+}
+
+.icon-left {
+    margin: 0 0.75rem 0 0.5rem;
+    vertical-align: middle;
+}
+  
   

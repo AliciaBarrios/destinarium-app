@@ -36,7 +36,7 @@ export class HeaderComponent {
   goToUserSection(): void {
     const token = this.localStorage.get('access_token');
     if (token) {
-      this.router.navigate(['/usuario/menu']);
+      this.router.navigate(['/usuario']);
     } else {
       this.router.navigate(['/usuario/login']);
     }

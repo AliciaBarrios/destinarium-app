@@ -20,6 +20,12 @@
                     <mat-icon>star</mat-icon>
                     <p>Servicios contratados</p> 
                 </div>
+                <p 
+                *ngIf="(itinerary && itinerary.accommodations && !itinerary.accommodations.length) 
+                && (itinerary && itinerary.restaurants && !itinerary.restaurants.length) 
+                && (itinerary && itinerary.transports  && !itinerary.transports.length)" class="paragraph-center">
+                    El usuario no ha informado de ningún servicio extra en este itinerario.
+                </p>
                 <mat-accordion #accordion class="custom-accordion" *ngIf="itinerary && itinerary.accommodations && itinerary.accommodations.length">
                     <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)" class="custom-panel">
                         <mat-expansion-panel-header>
@@ -29,7 +35,13 @@
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <div *ngFor="let accommodation of itinerary.accommodations; let i = index" class="container-services">
-                            <b>{{ accommodation.type }}</b>:  {{ accommodation.name }} - <a href="{{ accommodation.web }}" target="_blank">{{ accommodation.web }}</a>
+                            <p>
+                                <b>{{ accommodation.type }}</b>:  {{ accommodation.name }} - 
+                                <ng-container *ngIf="accommodation.web && accommodation.web.trim() !== '' else noWeb">
+                                    <a [href]="accommodation.web" target="_blank">{{ accommodation.web }}</a>
+                                </ng-container>
+                                <ng-template #noWeb>No disponen de web</ng-template>
+                            </p>
                             <p><b>Dirección:</b> {{ accommodation.address }}</p>
                             <p><b>Precio:</b> {{ accommodation.price }} €/persona</p>
                         </div>
@@ -44,7 +56,13 @@
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <div *ngFor="let restaurant of itinerary.restaurants; let i = index" class="container-services">
-                            <b>{{ restaurant.type }}</b>:  {{ restaurant.name }} - <a href="{{ restaurant.web }}" target="_blank">{{ restaurant.web }}</a>
+                            <p>
+                                <b>{{ restaurant.type }}</b>:  {{ restaurant.name }} - 
+                                <ng-container *ngIf="restaurant.web && restaurant.web.trim() !== '' else noWeb">
+                                    <a [href]="restaurant.web" target="_blank">{{ restaurant.web }}</a>
+                                </ng-container>
+                                <ng-template #noWeb>No disponen de web</ng-template>
+                            </p>
                             <p><b>Dirección:</b> {{ restaurant.address }}</p>
                             <p><b>Precio medio:</b> {{ restaurant.price }} €/persona</p>
                         </div>
@@ -59,13 +77,18 @@
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <div *ngFor="let transport of itinerary.transports; let i = index" class="container-services">
-                            <b>{{ transport.type }}</b>:  {{ transport.company }} - <a href="{{ transport.web }}" target="_blank">{{ transport.web }}</a>
+                            <p>
+                                <b>{{ transport.type }}</b>:  {{ transport.company }} - 
+                                <ng-container *ngIf="transport.web && transport.web.trim() !== '' else noWeb">
+                                    <a [href]="transport.web" target="_blank">{{ transport.web }}</a>
+                                </ng-container>
+                                <ng-template #noWeb>No disponen de web</ng-template>
+                            </p>
                             <p><b>Dirección:</b> {{ transport.address }}</p>
                         </div>
                     </mat-expansion-panel>
                 </mat-accordion>
             </section>
-           
         </div>
     </div>
     <section class="days-section">
@@ -74,6 +97,9 @@
             <p>Fechas itinerario:</p> 
             <p>{{ itinerary.startDate | date: 'dd/MM/yyyy' }} - {{ itinerary.endDate | date: 'dd/MM/yyyy' }}</p>
         </div>
+         <p *ngIf="(itinerary && itinerary.days && !itinerary.days.length)" class="paragraph-center">
+            El usuario no ha añadido información detallada de ninguno de los días de este itinerario.
+        </p>
         <mat-accordion #accordion *ngFor="let day of visibleDays; let i = index" class="custom-accordion">
             <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)" class="custom-panel">
                 <mat-expansion-panel-header>

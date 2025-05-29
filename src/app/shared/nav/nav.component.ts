@@ -32,7 +32,7 @@ export class NavComponent implements OnInit {
     this.linkClicked.emit();
   }
 
-  goTo(path: 'login' | 'registro' | 'menu') {
+  goTo(path: 'login' | 'registro' | '') {
     this.onLinkClick();
     this.router.navigate([`/usuario/${path}`]);
   }
