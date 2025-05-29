@@ -49,8 +49,8 @@ export class FilterDialogComponent implements OnInit {
   private initForm() {
     this.filtersForm = this.formBuilder.group({
       destination: [this.data.destination || ''],
-      minRating: [this.data.minRating ?? null],
-      maxRating: [this.data.maxRating ?? null],
+      minRating: [this.data.minRating ?? 0],
+      maxRating: [this.data.maxRating ?? 5],
       minDuration: [this.data.minDuration ?? null],
       maxDuration: [this.data.maxDuration ?? null],
       selectedCategories: this.buildCategoriesFormArray()

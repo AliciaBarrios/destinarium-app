@@ -41,7 +41,6 @@ export class ResultsComponent implements OnInit {
       this.itineraryService.getItineraries(),
       this.route.queryParams
     ]).subscribe(([data, params]) => {
-      console.log(data, params);
       this.itineraries = data;
       this.searchTerm = params['destino'] || '';
       this.filterData.destination = this.searchTerm;

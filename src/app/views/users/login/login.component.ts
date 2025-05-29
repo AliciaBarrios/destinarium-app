@@ -50,7 +50,13 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const msg = this.sharedService.getLoginRedirectMessage();
+    if (msg) {
+      this.sharedService.managementToast('toast', true, undefined, msg);
+      this.sharedService.clearLoginRedirectMessage();
+    }
+  }
 
   login(): void {
     let responseOK: boolean = false;
@@ -62,7 +68,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.loginUser).pipe(
       finalize(async () => {
         await this.sharedService.managementToast(
-        'loginFeedback',
+        'toast',
         responseOK,
         errorResponse as any
         );

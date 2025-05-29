@@ -263,12 +263,12 @@ export class Step3ExtrasComponent implements OnInit {
 
         responseOK = true;
         await this.sharedService.managementToast(
-          `AddFeedback`,
+          `toast`,
           responseOK
         );
       } catch (error) {
         await this.sharedService.managementToast(
-          `AddFeedback`,
+          `toast`,
           false,
           errorResponse?.message || 'Hubo un error al guardar el ítem. Inténtalo de nuevo.'
         );

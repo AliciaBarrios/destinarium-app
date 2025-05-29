@@ -153,7 +153,7 @@ export class ItinerarySummeryComponent implements OnInit{
       console.error('Error al crear el itinerario:', error);
     })
     .finally(async () => {
-      await this.sharedService.managementToast('summeryFeedback', responseOK, errorResponse);
+      await this.sharedService.managementToast('toast', responseOK, errorResponse);
         if (responseOK) {
         this.itineraryCreationService.reset();
       }

@@ -8,6 +8,7 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { LocalStorageService } from '../services/local-storage.service';
+import { SharedService } from '../services/shared.services';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,8 @@ import { LocalStorageService } from '../services/local-storage.service';
 export class AuthGuard implements CanActivate {
   constructor(
     private router: Router,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private sharedService: SharedService
   ) {}
 
   canActivate(
@@ -31,7 +33,9 @@ export class AuthGuard implements CanActivate {
       // logged in so return true
       return true;
     }
-    alert('Por favor, inicia sesión para continuar');
+
+    this.sharedService.setLoginRedirectMessage('Por favor, inicia sesión para continuar');
+
     this.router.navigate(['/usuario/login']);
 
     return false;

@@ -30,16 +30,31 @@ export class SharedService {
     return this.itineraryIdSubject.getValue();
   }
 
+  private redirectMsgKey = 'redirectLoginMsg';
+
+  setLoginRedirectMessage(msg: string) {
+    localStorage.setItem(this.redirectMsgKey, msg);
+  }
+
+  getLoginRedirectMessage(): string | null {
+    return localStorage.getItem(this.redirectMsgKey);
+  }
+
+  clearLoginRedirectMessage() {
+    localStorage.removeItem(this.redirectMsgKey);
+  }
+
   async managementToast(
     element: string,
     validRequest: boolean,
-    error?: ResponseError
+    error?: ResponseError,
+    customMessage?: string
   ): Promise<void> {
     const toastMsg = document.getElementById(element);
     if (toastMsg) {
       if (validRequest) {
         toastMsg.className = 'show requestOk';
-        toastMsg.textContent = 'El proceso se ha compleatdo con éxito';
+        toastMsg.textContent = customMessage ?? 'El proceso se ha compleatdo con éxito';
         await this.wait(2500);
         toastMsg.className = toastMsg.className.replace('show', '');
       } else {

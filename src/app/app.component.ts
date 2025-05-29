@@ -21,7 +21,6 @@ export class AppComponent {
     });
 
     this.loadGoogleMaps().then(() => {
-      console.log('Google Maps cargado');
     }).catch(err => console.error(err));
   }
 

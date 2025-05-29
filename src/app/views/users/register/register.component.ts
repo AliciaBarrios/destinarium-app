@@ -110,7 +110,7 @@ export class RegisterComponent implements OnInit {
     this.userService.register(this.registerUser).pipe(
       finalize(async () => {
         await this.sharedService.managementToast(
-          'registerFeedback',
+          'toast',
           responseOK,
           errorResponse
         );
