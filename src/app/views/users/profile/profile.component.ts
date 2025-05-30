@@ -7,6 +7,8 @@ import { UserDTO } from '../../../models/user.dto';
 import { Router } from '@angular/router';
 import { SharedService } from '../../../services/shared.services';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-profile',
@@ -22,7 +24,8 @@ export class ProfileComponent implements OnInit {
   private itineraryService: ItineraryService,
   private localStorageService: LocalStorageService,
   private router: Router,
-  private sharedService: SharedService
+  private sharedService: SharedService,
+  private dialog: MatDialog
   ) {
     this.userData = new UserDTO('', '', '', '', new Date(), '', '', 0, 0);
   }
@@ -63,7 +66,7 @@ export class ProfileComponent implements OnInit {
 
   getCardData(itinerary: ItineraryDTO) {
     return {
-      link: `/itinerarios/resultados/${itinerary.itineraryId}`,
+      link: `/usuario/perfil/${itinerary.itineraryId}`,
       imageUrl: itinerary.coverImage ? `http://localhost:3000/uploads/${itinerary.coverImage}` : 'assets/predeterminada-img.webp',
       title: itinerary.title,
       date: itinerary.publicationDate,
@@ -78,23 +81,26 @@ export class ProfileComponent implements OnInit {
   }
 
   onDeleteItinerary(id: string) {
-    let errorResponse: any;
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        message: '¿Estás segura de que quieres eliminar este itinerario?'
+      }
+    });
 
-    // show confirmation popup
-    let result = confirm('Confirm delete post with id: ' + id + ' .');
-    if (result) {
-      this.itineraryService.deleteItinerary(id).subscribe({
-        next: (response: any) => {
-          const rowsAffected = response; 
-          if (rowsAffected.affected > 0) {
-            this.loadItineraries();
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.itineraryService.deleteItinerary(id).subscribe({
+          next: (response: any) => {
+            const rowsAffected = response;
+            if (rowsAffected.affected > 0) {
+              this.loadItineraries();
+            }
+          },
+          error: (error: HttpErrorResponse) => {
+            this.sharedService.errorLog(error.error);
           }
-        }, 
-        error: (error: HttpErrorResponse) => {
-          errorResponse = error.error;
-          this.sharedService.errorLog(errorResponse);
-        }
-      });
-    }
+        });
+      }
+    });
   }
 }

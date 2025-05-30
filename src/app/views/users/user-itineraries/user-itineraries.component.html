@@ -1,0 +1,35 @@
+<div class="main-container">
+    <h1>Tus Itinerarios</h1>
+    <div class="action-buttons">
+        <button class="btn-filtro">
+            <mat-icon>tune</mat-icon>
+            Filtrar
+        </button>
+        <button class="btn-ordenar">
+            <mat-icon>sort</mat-icon>
+            Ordenar
+        </button>
+    </div>
+
+    <ul class="itinerary-list">
+        <li *ngFor="let itinerary of itineraries" class="itinerary-item">
+            <div class="itinerary-content">
+                <img matListAvatar [src]="itinerary.coverImage ? 'http://localhost:3000/uploads/' + itinerary.coverImage : 'assets/predeterminada-img.webp'" alt="Imagen del itinerario" class="itinerary-image" />
+                <div class="itinerary-info">
+                    <h3 class="itinerary-title">{{ itinerary.title }}</h3>
+                    <p class="itinerary-date">Publicado el {{ itinerary.publicationDate | date: 'dd/MM/yyyy' }}</p>
+                    <a [routerLink]="['/usuario/mis-itinerarios', itinerary.itineraryId]" class="itinerary-link">Ver detalles</a>
+                </div>
+            </div>
+            <div class="itinerary-actions">
+                <button mat-icon-button color="primary" (click)="onEditItinerary(itinerary.itineraryId)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="onDeleteItinerary(itinerary.itineraryId)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
+        </li>
+    </ul>
+</div>
+

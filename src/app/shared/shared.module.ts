@@ -25,6 +25,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatChipsModule } from '@angular/material/chips';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
     SortDialogComponent,
     FilterDialogComponent,
     BreadcrumbComponent,
+    ConfirmDialogComponent,
   ],
   imports: [
     CommonModule,

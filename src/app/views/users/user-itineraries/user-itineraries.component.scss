@@ -1,0 +1,130 @@
+@import '../../../../styles/main.scss';
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1.5rem 0;
+
+    .btn-filtro,
+    .btn-ordenar {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background-color: white;
+        border: 1px solid black;
+        border-radius: 0px;
+        width: 110px;
+        padding: 0.75rem;
+        text-align: center;
+    }
+}
+
+.itinerary-list {
+  width: 100%;
+  padding: 0;
+
+  .itinerary-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid #e0e0e0;
+
+    .itinerary-content {
+        flex: 1;
+        display: flex;
+
+        .itinerary-image {
+            width: 90px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .itinerary-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-left: 1.5rem;
+
+            .itinerary-title {
+                margin: 0;
+            }
+
+            .itinerary-date {
+                color: #666;
+                margin: 0.5rem 0;
+            }
+
+            .itinerary-link {
+                cursor: pointer;
+                color: $primary-dark-color;
+            }
+        }
+    }
+
+    .itinerary-actions {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        margin-top: 1.5rem;
+
+        button {
+            background-color: rgba(23, 115, 219, 0.438);
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            width: 48px;
+            height: 48px;
+
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.5);
+            }
+        }
+    }
+  }
+}
+
+@include media-breakpoint-up(tablet) {
+    .itinerary-list {
+        .itinerary-item {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+
+            .itinerary-content {
+                .itinerary-image {
+                    width: 120px;
+                    height: 120px;
+                }
+
+                .itinerary-info {
+                    justify-content: center;
+                    margin-left: 4rem;
+                     .itinerary-title {
+                        font-size: 1.4rem;
+                    }
+
+                    .itinerary-date {
+                       font-size: 1.2rem;
+                    }
+
+                    .itinerary-link {
+                        font-size: 1.2rem;
+                    }
+                }
+            }
+
+            .itinerary-actions {
+                flex-direction: column;
+                width: auto;
+                button {
+                    margin: 0.5rem 0;
+                }   
+            }
+        }
+    }
+}   

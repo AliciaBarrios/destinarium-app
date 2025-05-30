@@ -12,6 +12,7 @@ import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { UserItinerariesComponent } from './user-itineraries/user-itineraries.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
     LoginComponent,
     RegisterComponent,
     ProfileComponent,
-    EditProfileComponent
+    EditProfileComponent,
+    UserItinerariesComponent
   ],
   imports: [
     CommonModule,
