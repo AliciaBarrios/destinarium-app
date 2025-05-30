@@ -20,7 +20,7 @@ export class UsersComponent implements OnInit {
   private localStorageService: LocalStorageService,
   private router: Router
   ) {
-    this.userData = new UserDTO('', '', '', '', new Date(), '', '');
+    this.userData = new UserDTO('', '', '', '', new Date(), '', '', 0, 0);
   }
 
   ngOnInit(): void {

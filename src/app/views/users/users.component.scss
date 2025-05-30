@@ -2,8 +2,19 @@
 
 .user-header {
     display: flex;
-    padding: 1.5rem 1rem;
+    padding: 1rem;
     border-bottom: 1px solid $primary-dark-color;
+
+    .large-icon {
+        font-size: 48px; 
+        width: 54px;
+        height: 48px;
+        line-height: 48px;
+    }
+
+    .user-title {
+        font-size: 1.5rem;
+    }
 }
 
 .navigation {

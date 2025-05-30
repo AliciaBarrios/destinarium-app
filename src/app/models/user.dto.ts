@@ -8,6 +8,8 @@ export class UserDTO {
     birth_date: Date;
     email: string;
     password: string;
+    followers: number;
+    followed: number;
   
     constructor(
       name: string,
@@ -16,7 +18,9 @@ export class UserDTO {
       alias: string,
       birth_date: Date,
       email: string,
-      password: string
+      password: string,
+      followers: number,
+      followed: number
     ) {
       this.name = name;
       this.surname_1 = surname_1;
@@ -25,5 +29,7 @@ export class UserDTO {
       this.birth_date = birth_date;
       this.email = email;
       this.password = password;
+      this.followers = followers,
+      this.followed = followed
     }
   }

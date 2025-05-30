@@ -1,12 +1,12 @@
 <mat-list class="user-header">
     <mat-icon matListIcon class="large-icon">account_circle</mat-icon>
     <mat-list-item>
-        <h1>{{ userData.name }}</h1>
+        <span class="user-title">{{ userData.name }}</span>
     </mat-list-item>
 </mat-list>
 <mat-list class="counter">
-    <mat-list-item>{{ userData.name }} Siguiendo</mat-list-item>
-    <mat-list-item>{{ userData.name }} Seguidores</mat-list-item>
+    <mat-list-item>{{ userData.followed }} Siguiendo</mat-list-item>
+    <mat-list-item>{{ userData.followers }} Seguidores</mat-list-item>
     <mat-list-item>{{ itineraryCount }} Itinerarios</mat-list-item>
 </mat-list>
 <div class="main-container">

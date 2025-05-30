@@ -1,6 +1,8 @@
 <mat-list class="user-header">
     <mat-icon matListIcon class="large-icon">account_circle</mat-icon>
-    <mat-list-item>{{ userData.name }}</mat-list-item>
+    <mat-list-item>
+        <span class="user-title">{{ userData.name }}</span>
+    </mat-list-item>
 </mat-list>
 <nav class="navigation">
     <ul class="nav-links">
@@ -11,9 +13,9 @@
             </a>
         </li>
         <li>
-            <a mat-button [routerLink]="['/configuracion']" (click)="onLinkClick()" class="nav-item">
+            <a mat-button [routerLink]="['/usuario/mis-datos']" (click)="onLinkClick()" class="nav-item">
                 <mat-icon class="icon-left">settings</mat-icon>
-                Configuración
+                Mis datos
             </a>
         </li>
         <li>

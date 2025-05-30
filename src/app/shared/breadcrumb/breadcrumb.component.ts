@@ -74,9 +74,9 @@ export class BreadcrumbComponent implements OnInit {
       'home': 'Home',
       'perfil': 'Perfil',
       'usuario': 'Usuario',
-      'menu': 'Menu de Usuario',
       'login': 'Login',
       'registro': 'Registro',
+      'mis-datos': 'Mis Datos',
       'blog': 'Blog',
       'puntos-interes': 'Puntos de Interés'
     };

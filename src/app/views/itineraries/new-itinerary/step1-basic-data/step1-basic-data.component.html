@@ -6,17 +6,9 @@
       <label for="destination">Destino *</label>
       <input type="text" [formControl]="destination" />
 
-      <div *ngIf="destination.errors">
-        <div
-          *ngIf="destination.errors && isValidForm != null && !isValidForm"
-          [ngClass]="'error'"
-        >
-          <div *ngIf="destination.errors['required']">Campo requerido</div>
-
-          <div *ngIf="destination.errors['minLenght']">
-            Al menos debe contener tres caracteres
-          </div>
-        </div>
+     <div *ngIf="destination.invalid && (destination.dirty || destination.touched)" class="error">
+        <small *ngIf="destination.errors?.['required']">Destino obligatorio.</small>
+        <small *ngIf="destination.errors?.['minlength']">Mínimo 3 caracteres.</small>
       </div>
     </div>
 
@@ -49,29 +41,17 @@
     <div class="form-item">
       <label for="rating">Calificación itinerario (Entre 0 y 5)</label>
       <input type="number" [formControl]="rating" />
-      <div
-        *ngIf="rating.errors && isValidForm != null && !isValidForm"
-        [ngClass]="'error'"
-      >
-        <div *ngIf="rating.errors['min']">
-          La calificación mínima es 0
-        </div>
-        <div *ngIf="rating.errors['max']">
-          La calificación máxima es 5
-        </div>
+      <div *ngIf="rating.invalid && (rating.dirty || rating.touched)" class="error">
+        <small *ngIf="rating.errors?.['min']">La calificación mínima es 0</small>
+        <small *ngIf="rating.errors?.['max']">La calificación máxima es 5</small>
       </div>
     </div>
 
     <div class="form-item">
       <label for="budget">Presupuesto por persona (€)</label>
       <input type="text" [formControl]="budget" />
-      <div
-        *ngIf="budget.errors && isValidForm != null && !isValidForm"
-        [ngClass]="'error'"
-      >
-        <div *ngIf="budget.errors['min']">
-          La calificación mínima es 0
-        </div>
+      <div *ngIf="budget.invalid && (budget.dirty || budget.touched)" class="error">
+        <small *ngIf="rating.errors?.['min']">El presupuesto mínimo es 0</small>
       </div>
     </div>
 

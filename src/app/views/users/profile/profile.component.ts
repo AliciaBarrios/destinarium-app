@@ -24,7 +24,7 @@ export class ProfileComponent implements OnInit {
   private router: Router,
   private sharedService: SharedService
   ) {
-    this.userData = new UserDTO('', '', '', '', new Date(), '', '');
+    this.userData = new UserDTO('', '', '', '', new Date(), '', '', 0, 0);
   }
 
  ngOnInit(): void {
@@ -38,6 +38,8 @@ export class ProfileComponent implements OnInit {
       this.userService.getUSerById(userId).subscribe({
         next: (user: UserDTO) => {
           this.userData = user;
+          this.userData.followed = 0;
+          this.userData.followers = 0;
           this.itineraryService.getItinerariesByUserId(userId).subscribe({
             next: (itinerarios: ItineraryDTO[]) => {
               this.itineraries = itinerarios;

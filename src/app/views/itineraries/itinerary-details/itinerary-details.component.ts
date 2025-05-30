@@ -43,6 +43,9 @@ export class ItineraryDetailsComponent implements OnInit {
     let errorResponse: any;
     this.itineraryService.getItineraryById(id).subscribe({
       next: (data: ItineraryDTO) => {
+        if(data.days) {
+          data.days = data.days.sort((a, b) => a.dayNumber - b.dayNumber);
+        }
         this.itinerary = data;
         this.changeDetector.detectChanges(); 
       },
