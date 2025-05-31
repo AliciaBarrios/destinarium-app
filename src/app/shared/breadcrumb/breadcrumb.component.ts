@@ -55,7 +55,12 @@ export class BreadcrumbComponent implements OnInit {
         idIndex !== -1 && 
           (urlSegments[idIndex - 1] === 'resultados' ||
           urlSegments[idIndex - 1] === 'perfil' ||
-          urlSegments[idIndex - 1] === 'mis-itinerarios')
+          urlSegments[idIndex - 1] === 'mis-itinerarios' ||
+          urlSegments[idIndex - 1] === 'paso-1' ||
+          urlSegments[idIndex - 1] === 'paso-2' ||
+          urlSegments[idIndex - 1] === 'paso-3' ||
+          urlSegments[idIndex - 1] === 'resumen'
+        )
       ) {
         const id = urlSegments[idIndex];
         this.itineraryService.getItineraryById(id).subscribe(itinerary => {

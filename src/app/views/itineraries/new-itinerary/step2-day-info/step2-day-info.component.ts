@@ -111,7 +111,7 @@ export class Step2DayInfoComponent implements OnInit {
 
   removeDay(index: number): void {
     const dayId = this.days.at(index).value.dayId;
-    console.log('id dia:', dayId)
+    
     this.days.removeAt(index);
     this.dayCount = this.days.length; 
     this.updateDayNumbers();
@@ -123,7 +123,6 @@ export class Step2DayInfoComponent implements OnInit {
       },
       error: (err: any) => {
         console.error(`Error al eliminar día ${dayId} en backend`, err);
-        // Aquí puedes manejar el error (ej: mostrar alerta, volver a insertar el día, etc.)
       }
     });
     }
