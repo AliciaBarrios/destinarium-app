@@ -11,6 +11,7 @@ import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-d
 import { FilterDialogComponent, FilterData } from '../../../shared/filter-dialog/filter-dialog.component';
 import { SortDialogComponent, SortOption } from '../../../shared/sort-dialog/sort-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-profile',
@@ -83,7 +84,7 @@ export class ProfileComponent implements OnInit {
   getCardData(itinerary: ItineraryDTO) {
     return {
       link: `/usuario/perfil/${itinerary.itineraryId}`,
-      imageUrl: itinerary.coverImage ? `http://localhost:3000/uploads/${itinerary.coverImage}` : 'assets/predeterminada-img.webp',
+      imageUrl: itinerary.coverImage ? `${environment.apiUrlDestinarium}/uploads/${itinerary.coverImage}` : 'assets/predeterminada-img.webp',
       title: itinerary.title,
       date: itinerary.publicationDate,
       author: this.userData.alias || 'Autor desconocido',

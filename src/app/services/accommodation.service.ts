@@ -49,7 +49,7 @@ export class AccommodationService {
 
   linkAccommodationsToItinerary(itineraryId: string, accommodationIds: string[]): Observable<any> {
     return this.http.post(
-      `http://localhost:3000/itineraries/${itineraryId}/accommodations`,
+      `${environment.apiUrlDestinarium}/itineraries/${itineraryId}/accommodations`,
       { accommodationIds }
     );
   }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PlacesApiService, PlaceFull } from '../../services/places.api.service';
 import { MatDialog } from '@angular/material/dialog';
 import { SortDialogComponent, SortOption } from '../../shared/sort-dialog/sort-dialog.component';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-points-of-interest',
@@ -74,7 +75,7 @@ export class PointsOfInterestComponent implements OnInit {
   const isFullUrl = validPhoto?.startsWith('http');
     return {
       link: `/puntos-interes/punto-interes/${place.place_id}`,
-      imageUrl: validPhoto ? (isFullUrl ? validPhoto : `http://localhost:3000/uploads/${validPhoto}`) : fallback,
+      imageUrl: validPhoto ? (isFullUrl ? validPhoto : `${environment.apiUrlDestinarium}/uploads/${validPhoto}`) : fallback,
       title: place.name,
       address: place.address || 'Dirección desconocida',
       categories: place.types || ['Sin categoría'],

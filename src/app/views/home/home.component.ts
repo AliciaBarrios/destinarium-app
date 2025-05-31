@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { SimpleCard } from '../../models/simple-card.interface';
 import { ItineraryDTO } from '../../models/itinerary.dto';
 import { ItineraryService } from '../../services/itineraries.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -44,7 +45,7 @@ export class HomeComponent implements OnInit {
 
   getImageUrl(itinerary: ItineraryDTO): string {
     if (itinerary.coverImage) {
-      return `http://localhost:3000/uploads/${itinerary.coverImage}`;
+      return `${environment.apiUrlDestinarium}/uploads/${itinerary.coverImage}`;
     }
     return 'assets/predeterminada-img.webp';
   }

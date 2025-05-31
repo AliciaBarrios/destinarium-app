@@ -6,6 +6,7 @@ import { SortDialogComponent, SortOption } from '../../../shared/sort-dialog/sor
 import { MatDialog } from '@angular/material/dialog';
 import { FilterDialogComponent, FilterData } from '../../../shared/filter-dialog/filter-dialog.component';
 import { combineLatest } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-results',
@@ -63,7 +64,7 @@ export class ResultsComponent implements OnInit {
   getCardData(itinerary: ItineraryDTO) {
     return {
       link: `/itinerarios/resultados/${itinerary.itineraryId}`,
-      imageUrl: itinerary.coverImage ? `http://localhost:3000/uploads/${itinerary.coverImage}` : 'assets/predeterminada-img.webp',
+      imageUrl: itinerary.coverImage ? `${environment.apiUrlDestinarium}/uploads/${itinerary.coverImage}` : 'assets/predeterminada-img.webp',
       title: `Itinerario de ${itinerary.duration} días por ${itinerary.destination}`,
       date: itinerary.publicationDate,
       author: itinerary.userAlias || 'Autor desconocido',
