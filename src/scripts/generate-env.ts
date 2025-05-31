@@ -11,4 +11,3 @@ export const environment = {
 `;
 
 fs.writeFileSync(targetPath, content);
-console.log('✅ environment.prod.ts generado correctamente con la API KEY');
