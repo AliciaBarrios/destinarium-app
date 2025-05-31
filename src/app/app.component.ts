@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { environment } from '../environments/environment';
+import { PlacesApiService } from './services/places.api.service';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,10 @@ import { environment } from '../environments/environment';
 export class AppComponent {
   title = 'destinarium-app';
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private placesApiService: PlacesApiService
+  ) {}
 
   ngOnInit() {
     this.router.events.subscribe(event => {
@@ -31,19 +35,15 @@ export class AppComponent {
         return;
       }
 
-      const script = document.createElement('script');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${environment.googlePlacesApiKey}&libraries=places`;
-      script.defer = true;
-      script.async = true;
-
-      script.onload = () => {
-        resolve();
-      };
-      script.onerror = () => {
-        reject('Error al cargar Google Maps');
-      };
-
-      document.head.appendChild(script);
+      this.placesApiService.getGoogleMapsApiUrl().subscribe(({ url }) => {
+        const script = document.createElement('script');
+        script.src = url;
+        script.defer = true;
+        script.async = true;
+        script.onload = () => {
+        };
+        document.head.appendChild(script);
+      });
     });
   }
 }

@@ -35,7 +35,7 @@ export class ItinerariesComponent implements OnInit {
       const destinosUnicos = [...new Set(itinerarios.map((itinerary: any) => itinerary.destination))];
 
       const coordRequests = destinosUnicos.map(name =>
-        this.placesApi.getCoordinates(name, this.map).pipe(
+        this.placesApi.getCoordinates(name).pipe(
           map(coords => ({
             name: name,
             lat: coords.lat,
