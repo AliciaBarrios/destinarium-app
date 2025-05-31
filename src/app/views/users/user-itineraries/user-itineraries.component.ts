@@ -8,6 +8,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
 import { FilterDialogComponent, FilterData } from '../../../shared/filter-dialog/filter-dialog.component';
 import { SortDialogComponent, SortOption } from '../../../shared/sort-dialog/sort-dialog.component';
+import { environment } from '../../../../environments/environment';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -20,6 +21,7 @@ export class UserItinerariesComponent implements OnInit {
   filteredItineraries: ItineraryDTO[] = [];
   filterData: FilterData = {};
   sortOption: string = 'destination-a-z';
+  apiUrl: string = environment.apiUrlDestinarium;
 
   itinerariesSortOptions: SortOption[] = [
     { value: 'destination-a-z', label: 'Destino (A-Z)' },

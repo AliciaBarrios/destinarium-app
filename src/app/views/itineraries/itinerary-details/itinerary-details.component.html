@@ -3,7 +3,7 @@
     <div class="grid-columns">
         <div>
             <figure>
-                <img [src]="environment.apiUrlDestinarium + '/uploads/' + itinerary.coverImage" (error)="setDefaultImage($event)" alt="Imágen portada itinerario" class="img"/>
+                <img [src]="apiUrl + '/uploads/' + itinerary.coverImage" (error)="setDefaultImage($event)" alt="Imágen portada itinerario" class="img"/>
                 <figcaption>
                     <p>Publicado el {{ itinerary.publicationDate | date: 'dd/MM/yyyy' }} por {{ itinerary.userAlias }}</p>
                 </figcaption>

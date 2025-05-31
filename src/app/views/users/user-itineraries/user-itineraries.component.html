@@ -14,7 +14,7 @@
     <ul class="itinerary-list">
         <li *ngFor="let itinerary of filteredItineraries" class="itinerary-item">
             <div class="itinerary-content">
-                <img matListAvatar [src]="itinerary.coverImage ? environment.apiUrlDestinarium + '/uploads/' + itinerary.coverImage : 'assets/predeterminada-img.webp'" alt="Imagen del itinerario" class="itinerary-image" />
+                <img matListAvatar [src]="itinerary.coverImage ? apiUrl + '/uploads/' + itinerary.coverImage : 'assets/predeterminada-img.webp'" alt="Imagen del itinerario" class="itinerary-image" />
                 <div class="itinerary-info">
                     <h3 class="itinerary-title">{{ itinerary.title }}</h3>
                     <p class="itinerary-date">Publicado el {{ itinerary.publicationDate | date: 'dd/MM/yyyy' }}</p>

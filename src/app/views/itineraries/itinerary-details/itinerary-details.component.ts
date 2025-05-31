@@ -7,6 +7,7 @@ import { DayDTO } from '../../../models/day.dto';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-itinerary-details',
@@ -17,7 +18,7 @@ import { ChangeDetectorRef } from '@angular/core';
 export class ItineraryDetailsComponent implements OnInit {
   readonly panelOpenState = signal(false);
   itinerary: ItineraryDTO = new ItineraryDTO('','',new Date(),'',0,'',new Date(), new Date(), 0, 0, [], '');
-
+  apiUrl: string = environment.apiUrlDestinarium;
   visibleDaysCount: number = 3;
 
   constructor(
