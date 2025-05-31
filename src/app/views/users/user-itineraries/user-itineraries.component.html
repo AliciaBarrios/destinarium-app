@@ -1,18 +1,18 @@
 <div class="main-container">
     <h1>Tus Itinerarios</h1>
     <div class="action-buttons">
-        <button class="btn-filtro">
+        <button class="btn-filtro" (click)="openFilterDialog()">
             <mat-icon>tune</mat-icon>
             Filtrar
         </button>
-        <button class="btn-ordenar">
+        <button class="btn-ordenar" (click)="openSortDialog()">
             <mat-icon>sort</mat-icon>
             Ordenar
         </button>
     </div>
 
     <ul class="itinerary-list">
-        <li *ngFor="let itinerary of itineraries" class="itinerary-item">
+        <li *ngFor="let itinerary of filteredItineraries" class="itinerary-item">
             <div class="itinerary-content">
                 <img matListAvatar [src]="itinerary.coverImage ? 'http://localhost:3000/uploads/' + itinerary.coverImage : 'assets/predeterminada-img.webp'" alt="Imagen del itinerario" class="itinerary-image" />
                 <div class="itinerary-info">

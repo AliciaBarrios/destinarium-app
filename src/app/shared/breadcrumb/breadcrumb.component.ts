@@ -51,7 +51,12 @@ export class BreadcrumbComponent implements OnInit {
       }
 
       const idIndex = this.breadcrumbs.findIndex(breadcrumb => breadcrumb.label.length > 10 && breadcrumb.label.includes('-')); 
-      if (idIndex !== -1 && urlSegments[idIndex - 1] === 'resultados' || 'perfil' || 'mis-itinerarios') {
+      if (
+        idIndex !== -1 && 
+          (urlSegments[idIndex - 1] === 'resultados' ||
+          urlSegments[idIndex - 1] === 'perfil' ||
+          urlSegments[idIndex - 1] === 'mis-itinerarios')
+      ) {
         const id = urlSegments[idIndex];
         this.itineraryService.getItineraryById(id).subscribe(itinerary => {
           this.breadcrumbs[idIndex].label = itinerary.title;

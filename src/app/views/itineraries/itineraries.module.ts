@@ -22,6 +22,7 @@ import { ResultsComponent } from './results/results.component';
 import { MatIconModule } from '@angular/material/icon';
 import { QuillModule } from 'ngx-quill';
 import { ItineraryDetailsComponent } from './itinerary-details/itinerary-details.component';
+import { EditItineraryComponent } from './edit-itinerary/edit-itinerary.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { ItineraryDetailsComponent } from './itinerary-details/itinerary-details
     ItinerarySummeryComponent,
     ResultsComponent,
     ItineraryDetailsComponent,
+    EditItineraryComponent,
   ],
   providers: [provideNativeDateAdapter()],
   imports: [

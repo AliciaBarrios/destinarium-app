@@ -9,6 +9,7 @@ import { Step2DayInfoComponent } from './new-itinerary/step2-day-info/step2-day-
 import { Step3ExtrasComponent } from './new-itinerary/step3-extras/step3-extras.component';
 import { ResultsComponent } from './results/results.component';
 import { ItineraryDetailsComponent } from './itinerary-details/itinerary-details.component';
+import { EditItineraryComponent } from './edit-itinerary/edit-itinerary.component';
 
 const routes: Routes = [
   { path: '', component: ItinerariesComponent },
@@ -26,7 +27,18 @@ const routes: Routes = [
       { path: 'resumen', component: ItinerarySummeryComponent },
     ],
   },
-  { path: 'editar/:id', component: Step1BasicDataComponent }
+  {
+    path: 'editar',
+    component: EditItineraryComponent,
+    canActivate: [AuthGuard],
+    children: [
+      { path: '', redirectTo: 'paso-1', pathMatch: 'full' },
+      { path: 'paso-1/:id', component: Step1BasicDataComponent },
+      { path: 'paso-2/:id', component: Step2DayInfoComponent },
+      { path: 'paso-3/:id', component: Step3ExtrasComponent },
+      { path: 'resumen/:id', component: ItinerarySummeryComponent },
+    ],
+  }
 ];
 
 @NgModule({

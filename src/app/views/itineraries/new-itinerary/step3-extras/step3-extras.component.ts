@@ -6,7 +6,7 @@ import { RestaurantService } from '../../../../services/restaurant.service';
 import { SharedService } from '../../../../services/shared.services';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 import { filter, map, of, forkJoin } from 'rxjs';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ItineraryCreationService } from '../../../../services/itinerary-creation.service';
 
 type FormType = 'alojamiento' | 'transporte' | 'restaurante';
@@ -16,14 +16,18 @@ type FormType = 'alojamiento' | 'transporte' | 'restaurante';
   styleUrls: ['./step3-extras.component.scss'],
 })
 export class Step3ExtrasComponent implements OnInit {
-  sidebarOpen = false;
-  isMobile = false;
+  sidebarOpen: boolean = false;
+  isMobile: boolean = false;
+  isEditMode: boolean = false; 
+  itineraryId?: string;
 
-  selectedItems = false;
-  showAddOptions = false;
+  selectedItems: boolean = false;
+  showAddOptions: boolean = false;
   searchTerm = '';
   searchResults: any[] = [];
   showFormType: FormType | null = null;
+
+  editingItem: { type: FormType, id: string } | null = null;
 
   forms: { [key in FormType]: FormGroup } = {
     alojamiento: this.formBuilder.group({ alojamientos: this.formBuilder.array([]) }),
@@ -57,11 +61,18 @@ export class Step3ExtrasComponent implements OnInit {
     private sharedService: SharedService,
     private itineraryCreationService: ItineraryCreationService, 
     private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.checkMobile();
     window.addEventListener('resize', this.checkMobile.bind(this));
+
+    this.itineraryId = this.route.snapshot.paramMap.get('id') ?? undefined;
+
+    if (this.itineraryId) {
+      this.isEditMode = true;
+    }
 
     this.loadFromLocalStorage();
 
@@ -187,10 +198,49 @@ export class Step3ExtrasComponent implements OnInit {
   }
 
   editSelected(type: FormType, item: any): void {
+    // 1. Eliminar el ítem de la lista actual
     this.selectedExtras[type] = this.selectedExtras[type].filter(i => i !== item);
     this.saveToLocalStorage();
-  }
 
+    // 2. Mostrar el formulario adecuado
+    this.showFormType = type;
+
+    // 3. Cargar el ítem en el formulario
+    const formArray = this.getFormArray(type);
+
+    let formGroup: FormGroup;
+
+    if (type === 'alojamiento') {
+      formGroup = this.formBuilder.group({
+        name: [item.name, Validators.required],
+        address: [item.address, Validators.required],
+        type: [item.type || ''],
+        price: [item.price || '', Validators.min(0)],
+        web: [item.web || ''],
+      });
+    } else if (type === 'transporte') {
+      formGroup = this.formBuilder.group({
+        company: [item.company, Validators.required],
+        type: [item.type || '', Validators.required],
+        address: [item.address || '', Validators.required],
+        web: [item.web || ''],
+      });
+    } else {
+      // restaurante
+      formGroup = this.formBuilder.group({
+        name: [item.name, Validators.required],
+        address: [item.address, Validators.required],
+        type: [item.type || '', Validators.required],
+        price: [item.price || '', Validators.min(0)],
+        web: [item.web || ''],
+      });
+    }
+
+    // 4. Añadir el grupo al FormArray para que se muestre el formulario con los datos
+    formArray.push(formGroup);
+
+    this.editingItem = { type, id: item.accommodationId || item.transportId || item.restaurantId };
+  }
 
   getFormArray(type: FormType): FormArray {
     const fieldName = {
@@ -253,8 +303,16 @@ export class Step3ExtrasComponent implements OnInit {
 
     if (lastItem) {
       try {
-        const newItemData = lastItem.value;
-        const savedItem = await this.saveItemToBackend(type, newItemData);
+        const itemData = lastItem.value;
+
+        let savedItem;
+
+        if (this.editingItem && this.editingItem.type === type) {
+          savedItem = await this.updateItemInBackend(type, this.editingItem.id, itemData);
+          this.editingItem = null; 
+        } else {
+          savedItem = await this.saveItemToBackend(type, itemData);
+        }
 
         // Guardar en selectedExtras y añadir nuevo formulario
         this.selectedExtras[type].push(savedItem);
@@ -279,6 +337,29 @@ export class Step3ExtrasComponent implements OnInit {
       // Si no hay ítems todavía, añade uno vacío directamente
       formArray.push(this.createEmptyItem(type));
     }
+  }
+
+  updateItemInBackend(type: FormType, id: string, itemData: any): Promise<any> {
+    return new Promise((resolve, reject) => {
+      if (type === 'alojamiento') {
+        this.accommodationService.updateAccommodation(id, itemData).subscribe({
+          next: resolve,
+          error: reject
+        });
+      } else if (type === 'transporte') {
+        this.transportService.updateTransport(id, itemData).subscribe({
+          next: resolve,
+          error: reject
+        });
+      } else if (type === 'restaurante') {
+        this.restaurantService.updateRestaurant(id, itemData).subscribe({
+          next: resolve,
+          error: reject
+        });
+      } else {
+        reject(new Error(`Tipo de item no soportado: ${type}`));
+      }
+    });
   }
   saveItemToBackend(type: string, itemData: any): Promise<any> {
     return new Promise((resolve, reject) => {
@@ -316,6 +397,10 @@ export class Step3ExtrasComponent implements OnInit {
   }
 
   redirectTo(): void {
-    this.router.navigateByUrl('/itinerarios/crear-itinerario/resumen');
+    if (this.isEditMode) {
+      this.router.navigateByUrl(`/itinerarios/editar/resumen/${this.itineraryId}`); 
+    } else {
+      this.router.navigateByUrl('/itinerarios/crear-itinerario/resumen');
+    }
   }
 }

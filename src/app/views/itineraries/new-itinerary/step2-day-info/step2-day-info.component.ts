@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { QuillEditorComponent } from 'ngx-quill';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, UntypedFormGroup, FormArray, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ItineraryCreationService } from '../../../../services/itinerary-creation.service';
+import { DayService } from '../../../../services/day.service';
 import { DayDTO } from '../../../../models/day.dto';
 import { SharedService } from '../../../../services/shared.services';
 
@@ -17,14 +18,17 @@ export class Step2DayInfoComponent implements OnInit {
   dayForm: UntypedFormGroup;
   dayCount: number = 0;
   itineraryDuration: number = 0;
-  itineraryId: string | null = null; 
+  itineraryId?: string; 
+  isEditMode: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder, 
     private http: HttpClient,
     private itineraryCreationService: ItineraryCreationService,
     private router: Router,
-    private sharedService: SharedService
+    private route: ActivatedRoute,
+    private sharedService: SharedService,
+    private dayService: DayService
   ) {
     this.dayForm = this.formBuilder.group({
       days: this.formBuilder.array([])
@@ -34,7 +38,25 @@ export class Step2DayInfoComponent implements OnInit {
   ngOnInit() {
     const step1 = this.itineraryCreationService.getStep1Data();
     this.itineraryDuration = step1.duration ?? 0;
-    this.loadDraftDays();
+
+    this.itineraryId = this.route.snapshot.paramMap.get('id') ?? undefined;
+
+    if (this.itineraryId) {
+      this.isEditMode = true;
+    }
+
+    const existingItinerary = this.itineraryCreationService.getExistingItinerary();
+
+    if (existingItinerary && existingItinerary.days && existingItinerary.days.length > 0) {
+      this.days.clear();
+      existingItinerary.days.forEach((day: any) => this.addNewDayFromData(day));
+    } else {
+      this.loadDraftDays();
+    }
+
+    this.dayForm.valueChanges.subscribe(() => {
+      this.saveDraftDays();
+    });
   }
 
   saveDraftDays(): void {
@@ -56,7 +78,8 @@ export class Step2DayInfoComponent implements OnInit {
       dayNumber: [dayData.dayNumber],
       startLocation: [dayData.startLocation, Validators.required],
       endLocation: [dayData.endLocation, Validators.required],
-      description: [dayData.description || '']
+      description: [dayData.description || ''],
+      dayId: [dayData.dayId || ''],
     });
 
     this.days.push(dayGroup);
@@ -74,7 +97,7 @@ export class Step2DayInfoComponent implements OnInit {
       dayNumber: [this.dayCount + 1],
       startLocation: ['', Validators.required],
       endLocation: ['', Validators.required],
-      description: ['']
+      description: [''], 
     });
 
     this.days.push(dayGroup);
@@ -87,9 +110,23 @@ export class Step2DayInfoComponent implements OnInit {
   }
 
   removeDay(index: number): void {
+    const dayId = this.days.at(index).value.dayId;
+    console.log('id dia:', dayId)
     this.days.removeAt(index);
     this.dayCount = this.days.length; 
     this.updateDayNumbers();
+
+    if (this.isEditMode && dayId) {
+      this.dayService.deleteDay(dayId).subscribe({
+      next: (response: any) => {
+        console.log(`Día ${dayId} eliminado en backend, filas afectadas:`, response.affected);
+      },
+      error: (err: any) => {
+        console.error(`Error al eliminar día ${dayId} en backend`, err);
+        // Aquí puedes manejar el error (ej: mostrar alerta, volver a insertar el día, etc.)
+      }
+    });
+    }
   }
 
   updateDayNumbers(): void {
@@ -169,7 +206,12 @@ export class Step2DayInfoComponent implements OnInit {
         );
       });
       this.itineraryCreationService.setStep2Days(daysToSave);
-      this.router.navigateByUrl('/itinerarios/crear-itinerario/paso-3');
+
+      if (this.isEditMode) {
+        this.router.navigateByUrl(`/itinerarios/editar/paso-3/${this.itineraryId}`);
+      } else {
+        this.router.navigateByUrl('/itinerarios/crear-itinerario/paso-3');
+      }
     } else {
       console.log('Formulario inválido');
     }

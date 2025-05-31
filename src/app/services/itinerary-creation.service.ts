@@ -10,11 +10,24 @@ import { RestaurantDTO } from '../models/restaurant.dto';
 })
 export class ItineraryCreationService {
   private partialItinerary: Partial<ItineraryDTO & { days?: any[] }> = {};
+  private draftKey: string = 'draft_itinerary_new';
 
-  constructor() { 
-    const stored = localStorage.getItem('draft_itinerary');
+  constructor() {}
+  setDraftMode(mode: 'new' | 'edit', itineraryId?: string) {
+    if (mode === 'new') {
+      this.draftKey = 'draft_itinerary_new';
+    } else if (mode === 'edit' && itineraryId) {
+      this.draftKey = `draft_itinerary_edit_${itineraryId}`;
+    } else {
+      throw new Error('ItineraryCreationService: Missing itinerary ID for edit mode');
+    }
+
+    // 👇 Carga el draft que toque según el modo
+    const stored = localStorage.getItem(this.draftKey);
     if (stored) {
       this.partialItinerary = JSON.parse(stored);
+    } else {
+      this.partialItinerary = {};
     }
   }
   
@@ -66,10 +79,19 @@ export class ItineraryCreationService {
 
   reset() {
     this.partialItinerary = {};
-    localStorage.removeItem('draft_itinerary');
+    localStorage.removeItem(this.draftKey);
   }
 
-  private saveToLocalStorage() {
-    localStorage.setItem('draft_itinerary', JSON.stringify(this.partialItinerary));
+  loadExistingItinerary(itinerary: ItineraryDTO & { days?: DayDTO[] }): void {
+    this.partialItinerary = itinerary;
+    this.saveToLocalStorage();
+  }
+
+  getExistingItinerary() {
+    return this.partialItinerary; 
+  }
+
+  saveToLocalStorage() {
+    localStorage.setItem(this.draftKey, JSON.stringify(this.partialItinerary));
   }
 }

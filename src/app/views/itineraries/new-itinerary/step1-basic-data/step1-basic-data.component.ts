@@ -6,10 +6,9 @@ import {
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LocalStorageService } from '../../../../services/local-storage.service';
-
 import { ItineraryDTO } from '../../../../models/itinerary.dto';
 import { ItineraryService } from '../../../../services/itineraries.service';
 import { ItineraryCreationService } from '../../../../services/itinerary-creation.service';
@@ -24,6 +23,7 @@ import { CategoryService } from '../../../../services/category.service';
 })
 export class Step1BasicDataComponent implements OnInit {
   newItinerary: ItineraryDTO;
+  itineraryId?: string;
 
   destination: UntypedFormControl;
   startDate: UntypedFormControl;
@@ -35,6 +35,7 @@ export class Step1BasicDataComponent implements OnInit {
   formStep1: UntypedFormGroup;
   
   isValidForm: boolean | null;
+  isEditMode: boolean = false;
 
   categoriesList!: CategoryDTO[];
 
@@ -45,7 +46,8 @@ export class Step1BasicDataComponent implements OnInit {
     private sharedService: SharedService,
     private router: Router,
     private localStorageService: LocalStorageService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+     private route: ActivatedRoute, //new
   ) {
     this.newItinerary = new ItineraryDTO(
       '', '', new Date(), '', 0, '', new Date(), new Date(), 0, 0, [], ''
@@ -113,11 +115,44 @@ export class Step1BasicDataComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    const draft = this.localStorageService.get('draft_itinerary');
-    if (draft) {
-      this.formStep1.patchValue(JSON.parse(draft));
+  async ngOnInit(): Promise<void> {
+    this.itineraryId = this.route.snapshot.paramMap.get('id') ?? undefined;
+
+    if (this.itineraryId) {
+      this.isEditMode = true;
+      this.itineraryService.getItineraryById(this.itineraryId).subscribe({
+        next: (itinerary) => {
+          // Cargar el itinerario completo en el servicio para mantener estado
+          this.itineraryCreationService.loadExistingItinerary(itinerary);
+
+          // Cargar datos del paso 1 en el form desde el servicio
+          let step1Data = this.itineraryCreationService.getStep1Data();
+
+          // Aquí transformo categories para que sean solo los ids
+          if (step1Data.categories && Array.isArray(step1Data.categories)) {
+            step1Data = {
+              ...step1Data,
+              categories: step1Data.categories.map((cat: any) => cat.categoryId)
+            };
+          }
+          this.formStep1.patchValue(step1Data);
+        },
+        error: (error) => {
+          console.error('Error al cargar itinerario para edición', error);
+        }
+      });
+    } 
+
+    this.itineraryCreationService.setDraftMode(this.isEditMode ? 'edit' : 'new', this.itineraryId ?? undefined);
+    const draftData = this.itineraryCreationService.getStep1Data();
+    if (draftData) {
+      this.formStep1.patchValue(draftData);
     }
+
+    this.loadCategories();
+
+    this.startDate.valueChanges.subscribe(() => this.updateForm());
+    this.endDate.valueChanges.subscribe(() => this.updateForm());
   }
 
   private updateForm() {
@@ -167,12 +202,18 @@ export class Step1BasicDataComponent implements OnInit {
 
     this.isValidForm = true;
     this.updateForm(); 
+    
     const itineraryData = this.formStep1.value;
 
     // Guardar datos del paso 1 en el servicio para recuperarlo en el útlimo paso
     this.itineraryCreationService.setStep1(itineraryData);
-    this.localStorageService.set('draft_itinerary', JSON.stringify(itineraryData)); 
+    // this.localStorageService.set('draft_itinerary', JSON.stringify(itineraryData)); 
+    this.itineraryCreationService.saveToLocalStorage();
     // Ir al paso 2
-    this.router.navigateByUrl('/itinerarios/crear-itinerario/paso-2');
+    if (this.isEditMode) {
+      this.router.navigateByUrl(`/itinerarios/editar/paso-2/${this.itineraryId}`);
+    } else {
+      this.router.navigateByUrl('/itinerarios/crear-itinerario/paso-2');
+    }
   }
 }

@@ -3,6 +3,7 @@ export class DayDTO {
     endLocation: string;
     description: string;
     dayNumber: number;
+    dayId?: string;
     itineraryId?: string;  
   
     constructor(startLocation: string, endLocation: string, description: string, dayNumber: number, itineraryId: string) {

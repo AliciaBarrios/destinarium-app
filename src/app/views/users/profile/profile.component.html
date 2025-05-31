@@ -13,11 +13,11 @@
     <div>
       <h2>Tus itinerarios</h2>
       <div class="action-buttons">
-        <button class="btn-filtro">
+        <button class="btn-filtro" (click)="openFilterDialog()">
             <mat-icon>tune</mat-icon>
             Filtrar
         </button>
-        <button class="btn-ordenar">
+        <button class="btn-ordenar" (click)="openSortDialog()">
             <mat-icon>sort</mat-icon>
             Ordenar
         </button>
@@ -25,7 +25,7 @@
     </div>
     <div *ngIf="itineraries.length > 0; else noItineraries" class="cards-container">
       <app-full-card
-        *ngFor="let itinerary of itineraries"
+        *ngFor="let itinerary of filteredItineraries"
         [card]="getCardData(itinerary)"
         (edit)="onEditItinerary(itinerary.itineraryId)"
         (delete)="onDeleteItinerary(itinerary.itineraryId)">
