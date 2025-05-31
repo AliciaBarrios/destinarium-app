@@ -1,31 +1,32 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserDTO } from '../models/user.dto';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private urlBlogUocApi: string;
+  private apiUrl: string;
   private controller: string;
 
   constructor(private http: HttpClient) {
     this.controller = 'users';
-    this.urlBlogUocApi = 'http://localhost:3000/' + this.controller;
+    this.apiUrl = environment.apiUrlDestinarium + '/' + this.controller;
   }
 
   register(user: UserDTO): Observable<UserDTO> {
-    return this.http.post<UserDTO>(this.urlBlogUocApi, user);
+    return this.http.post<UserDTO>(this.apiUrl, user);
   }
 
   updateUser(userId: string, user: UserDTO): Observable<UserDTO> {
     return this.http
-      .put<UserDTO>(this.urlBlogUocApi + '/' + userId, user);
+      .put<UserDTO>(this.apiUrl + '/' + userId, user);
   }
 
   getUSerById(userId: string): Observable<UserDTO> {
     return this.http
-      .get<UserDTO>(this.urlBlogUocApi + '/' + userId);
+      .get<UserDTO>(this.apiUrl + '/' + userId);
   }
 }

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TransportDTO } from '../models/transport.dto';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 interface deleteResponse {
   affected: number;
@@ -11,31 +12,31 @@ interface deleteResponse {
   providedIn: 'root',
 })
 export class TransportService {
-  private urlBlogUocApi: string;
+  private apiUrl: string;
   private controller: string;
 
   constructor(private http: HttpClient) {
     this.controller = 'transports';
-    this.urlBlogUocApi = 'http://localhost:3000/' + this.controller;
+    this.apiUrl = environment.apiUrlDestinarium + '/' + this.controller;
   }
 
   getTransports(): Observable<TransportDTO[]>  {
-    return this.http.get<TransportDTO[]>(this.urlBlogUocApi);
+    return this.http.get<TransportDTO[]>(this.apiUrl);
   }
 
   getTransportByCompany(company: string): Observable<TransportDTO[]> {
     return this.http
-      .get<TransportDTO[]>(`${this.urlBlogUocApi}/company/${company}`);
+      .get<TransportDTO[]>(`${this.apiUrl}/company/${company}`);
   }
 
   getTransportById(transportId: string): Observable<TransportDTO> {
     return this.http
-      .get<TransportDTO>(`${this.urlBlogUocApi}/${transportId}`);
+      .get<TransportDTO>(`${this.apiUrl}/${transportId}`);
   }
 
   createTransport(transport: TransportDTO): Observable<TransportDTO> {
     return this.http
-      .post<TransportDTO>(this.urlBlogUocApi, transport);
+      .post<TransportDTO>(this.apiUrl, transport);
   }
 
   updateTransport(
@@ -43,18 +44,18 @@ export class TransportService {
     transport: TransportDTO
   ): Observable<TransportDTO> {
     return this.http
-      .put<TransportDTO>(`${this.urlBlogUocApi}/${transportId}`, transport);
+      .put<TransportDTO>(`${this.apiUrl}/${transportId}`, transport);
   }
 
   linkTransportsToItinerary(itineraryId: string, transportIds: string[]): Observable<any> {
     return this.http.post(
-      `http://localhost:3000/itineraries/${itineraryId}/transports`,
+      `${environment.apiUrlDestinarium}/itineraries/${itineraryId}/transports`,
       { transportIds }
     );
   }
 
   deleteTransport(transportId: string): Observable<deleteResponse> {
     return this.http
-      .delete<deleteResponse>(`${this.urlBlogUocApi}/${transportId}`);
+      .delete<deleteResponse>(`${this.apiUrl}/${transportId}`);
   }
 }

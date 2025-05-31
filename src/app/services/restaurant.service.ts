@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { RestaurantDTO } from '../models/restaurant.dto';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 interface deleteResponse {
   affected: number;
@@ -11,31 +12,31 @@ interface deleteResponse {
   providedIn: 'root',
 })
 export class RestaurantService {
-  private urlBlogUocApi: string;
+  private apiUrl: string;
   private controller: string;
 
   constructor(private http: HttpClient) {
     this.controller = 'restaurants';
-    this.urlBlogUocApi = 'http://localhost:3000/' + this.controller;
+    this.apiUrl = environment.apiUrlDestinarium + '/' + this.controller;
   }
 
   getRestaurants(): Observable<RestaurantDTO[]>  {
-    return this.http.get<RestaurantDTO[]>(this.urlBlogUocApi);
+    return this.http.get<RestaurantDTO[]>(this.apiUrl);
   }
 
   getRestaurantByName(name: string): Observable<RestaurantDTO[]> {
     return this.http
-      .get<RestaurantDTO[]>(`${this.urlBlogUocApi}/name/${name}`);
+      .get<RestaurantDTO[]>(`${this.apiUrl}/name/${name}`);
   }
 
   getRestaurantById(restaurantId: string): Observable<RestaurantDTO> {
     return this.http
-      .get<RestaurantDTO>(`${this.urlBlogUocApi}/${restaurantId}`);
+      .get<RestaurantDTO>(`${this.apiUrl}/${restaurantId}`);
   }
 
   createRestaurant(restaurant: RestaurantDTO): Observable<RestaurantDTO> {
     return this.http
-      .post<RestaurantDTO>(this.urlBlogUocApi, restaurant);
+      .post<RestaurantDTO>(this.apiUrl, restaurant);
   }
 
   updateRestaurant(
@@ -43,18 +44,18 @@ export class RestaurantService {
     restaurant: RestaurantDTO
   ): Observable<RestaurantDTO> {
     return this.http
-      .put<RestaurantDTO>(`${this.urlBlogUocApi}/${restaurantId}`, restaurant);
+      .put<RestaurantDTO>(`${this.apiUrl}/${restaurantId}`, restaurant);
   }
 
   linkRestaurantsToItinerary(itineraryId: string, restaurantIds: string[]): Observable<any> {
     return this.http.post(
-      `http://localhost:3000/itineraries/${itineraryId}/restaurants`,
+      `${environment.apiUrlDestinarium}/itineraries/${itineraryId}/restaurants`,
       { restaurantIds }
     );
   }
 
   deleteRestaurant(restaurantId: string): Observable<deleteResponse> {
     return this.http
-      .delete<deleteResponse>(`${this.urlBlogUocApi}/${restaurantId}`);
+      .delete<deleteResponse>(`${this.apiUrl}/${restaurantId}`);
   }
 }

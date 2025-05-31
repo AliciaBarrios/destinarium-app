@@ -1,7 +1,8 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AccommodationDTO } from '../models/accommodation.dto';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 interface deleteResponse {
   affected: number;
@@ -11,31 +12,31 @@ interface deleteResponse {
   providedIn: 'root',
 })
 export class AccommodationService {
-  private urlBlogUocApi: string;
+  private apiUrl: string;
   private controller: string;
 
   constructor(private http: HttpClient) {
     this.controller = 'accommodations';
-    this.urlBlogUocApi = 'http://localhost:3000/' + this.controller;
+    this.apiUrl = environment.apiUrlDestinarium + '/' + this.controller;
   }
 
   getAccommodations(): Observable<AccommodationDTO[]>  {
-    return this.http.get<AccommodationDTO[]>(this.urlBlogUocApi);
+    return this.http.get<AccommodationDTO[]>(this.apiUrl);
   }
 
   getAccommodationByName(name: string): Observable<AccommodationDTO[]> {
     return this.http
-      .get<AccommodationDTO[]>(`${this.urlBlogUocApi}/name/${name}`);
+      .get<AccommodationDTO[]>(`${this.apiUrl}/name/${name}`);
   }
 
   getAccommodationById(accommodationId: string): Observable<AccommodationDTO> {
     return this.http
-      .get<AccommodationDTO>(`${this.urlBlogUocApi}/${accommodationId}`);
+      .get<AccommodationDTO>(`${this.apiUrl}/${accommodationId}`);
   }
 
   createAccommodation(accommodation: AccommodationDTO): Observable<AccommodationDTO> {
     return this.http
-      .post<AccommodationDTO>(this.urlBlogUocApi, accommodation);
+      .post<AccommodationDTO>(this.apiUrl, accommodation);
   }
 
   updateAccommodation(
@@ -43,7 +44,7 @@ export class AccommodationService {
     accommodation: AccommodationDTO
   ): Observable<AccommodationDTO> {
     return this.http
-      .put<AccommodationDTO>(`${this.urlBlogUocApi}/${accommodationId}`, accommodation);
+      .put<AccommodationDTO>(`${this.apiUrl}/${accommodationId}`, accommodation);
   }
 
   linkAccommodationsToItinerary(itineraryId: string, accommodationIds: string[]): Observable<any> {
@@ -55,6 +56,6 @@ export class AccommodationService {
 
   deleteAccommodation(accommodationId: string): Observable<deleteResponse> {
     return this.http
-      .delete<deleteResponse>(`${this.urlBlogUocApi}/${accommodationId}`);
+      .delete<deleteResponse>(`${this.apiUrl}/${accommodationId}`);
   }
 }

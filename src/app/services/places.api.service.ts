@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface PlaceFull {
   name: string;
@@ -15,14 +16,17 @@ export interface Destination {
   lng: number;
 }
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class PlacesApiService {
-  private apiUrl = 'http://localhost:3000/places';
+  private apiUrl: string;
+  private controller: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.controller = 'places';
+    this.apiUrl = environment.apiUrlDestinarium + '/' + this.controller;
+  }
 
   searchPlaces(query: string): Observable<PlaceFull[]> {
     const params = new HttpParams().set('query', query);

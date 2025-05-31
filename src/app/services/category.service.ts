@@ -1,7 +1,8 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CategoryDTO } from '../models/category.dto';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 interface deleteResponse {
   affected: number;
@@ -11,31 +12,31 @@ interface deleteResponse {
   providedIn: 'root',
 })
 export class CategoryService {
-  private urlBlogUocApi: string;
+  private apiUrl: string;
   private controller: string;
 
   constructor(private http: HttpClient) {
     this.controller = 'categories';
-    this.urlBlogUocApi = 'http://localhost:3000/' + this.controller;
+    this.apiUrl = environment.apiUrlDestinarium + '/' + this.controller;
   }
 
   getCategories(): Observable<CategoryDTO[]>  {
-    return this.http.get<CategoryDTO[]>(this.urlBlogUocApi);
+    return this.http.get<CategoryDTO[]>(this.apiUrl);
   }
 
   getCategoriesByItineraryId(itineraryId: string): Observable<CategoryDTO[]> {
     return this.http
-      .get<CategoryDTO[]>('http://localhost:3000/users/categories/' + itineraryId);
+      .get<CategoryDTO[]>(environment.apiUrlDestinarium + '/users/categories/' + itineraryId);
   }
 
   createCategory(category: CategoryDTO): Observable<CategoryDTO> {
     return this.http
-      .post<CategoryDTO>(this.urlBlogUocApi, category);
+      .post<CategoryDTO>(this.apiUrl, category);
   }
 
   getCategoryById(categoryId: string): Observable<CategoryDTO> {
     return this.http
-      .get<CategoryDTO>(this.urlBlogUocApi + '/' + categoryId);
+      .get<CategoryDTO>(this.apiUrl + '/' + categoryId);
   }
 
   updateCategory(
@@ -43,11 +44,11 @@ export class CategoryService {
     category: CategoryDTO
   ): Observable<CategoryDTO> {
     return this.http
-      .put<CategoryDTO>(this.urlBlogUocApi + '/' + categoryId, category);
+      .put<CategoryDTO>(this.apiUrl + '/' + categoryId, category);
   }
 
   deleteCategory(categoryId: string): Observable<deleteResponse> {
     return this.http
-      .delete<deleteResponse>(this.urlBlogUocApi + '/' + categoryId);
+      .delete<deleteResponse>(this.apiUrl + '/' + categoryId);
   }
 }

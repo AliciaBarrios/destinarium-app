@@ -1,8 +1,9 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthDTO } from '../models/auth.dto';
 import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 interface AuthToken {
   user_id: string;
@@ -13,13 +14,13 @@ interface AuthToken {
   providedIn: 'root',
 })
 export class AuthService {
-  private urlBlogUocApi: string;
+  private apiUrl: string;
   private controller: string;
   private authState = new BehaviorSubject<boolean>(this.hasToken());
 
   constructor(private http: HttpClient) {
     this.controller = 'auth';
-    this.urlBlogUocApi = 'http://localhost:3000/' + this.controller;
+    this.apiUrl = environment.apiUrlDestinarium + '/' + this.controller;
   }
 
   isAuthenticated$ = this.authState.asObservable();
@@ -29,7 +30,7 @@ export class AuthService {
   }
 
   login(auth: AuthDTO): Observable<AuthToken> {
-    return this.http.post<AuthToken>(this.urlBlogUocApi, auth);
+    return this.http.post<AuthToken>(this.apiUrl, auth);
   }
 
   logout(): void {
