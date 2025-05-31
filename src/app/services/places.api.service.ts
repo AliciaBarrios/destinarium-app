@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
+
 export interface PlaceFull {
   name: string;
   address: string;
@@ -31,7 +32,7 @@ export class PlacesApiService {
   searchPlaceFull(query: string): Observable<PlaceFull | null> {
     return this.http.get<PlaceFull | null>(`${this.apiUrl}/search?query=${encodeURIComponent(query)}`);
   }
-  
+
   getCoordinates(place: string, map: google.maps.Map): Observable<{ lat: number; lng: number }> {
     return new Observable(observer => {
       const service = new google.maps.places.PlacesService(map);
