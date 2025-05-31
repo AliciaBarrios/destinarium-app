@@ -30,7 +30,7 @@
                 "node_modules"
               ]
             },
-            "outputPath": "dist/destinarium-app",
+            "outputPath": "dist/destinarium-app/browser",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
