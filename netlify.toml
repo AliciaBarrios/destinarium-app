@@ -1,6 +1,6 @@
 [build]
   command = "npm run build"
-  publish = "dist/destinarium-app"
+  publish = "dist/destinarium-app/browser"
 
 [context.production.environment]
   NODE_VERSION = "18"
