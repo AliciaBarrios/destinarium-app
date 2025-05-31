@@ -32,7 +32,7 @@ export class AppComponent {
       }
 
       const script = document.createElement('script');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env['GOOGLE_PLACES_API_KEY']}&libraries=places`;
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${environment.googleMapsApiKey}&libraries=places`;
       script.defer = true;
       script.async = true;
 
