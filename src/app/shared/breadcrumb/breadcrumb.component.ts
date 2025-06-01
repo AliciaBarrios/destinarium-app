@@ -89,6 +89,8 @@ export class BreadcrumbComponent implements OnInit {
       'mis-datos': 'Mis Datos',
       'mis-itinerarios': 'Mis Itinerarios',
       'blog': 'Blog',
+      'contacto': 'Contacto',
+      'faqs': 'Faqs',
       'puntos-interes': 'Puntos de Interés'
     };
 

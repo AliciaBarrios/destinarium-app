@@ -156,8 +156,6 @@ export class ItinerarySummeryComponent implements OnInit{
     });
   }
 
-
-
   private updateItinerary(): Promise<string> {
     return new Promise((resolve, reject) => {
       if (!this.itineraryId) {

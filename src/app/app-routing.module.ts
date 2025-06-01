@@ -20,6 +20,16 @@ const routes: Routes = [
       import('./views/blog/blog.module').then((m) => m.BlogModule),
   },
   {
+    path: 'faqs',
+    loadChildren: () =>
+      import('./views/faqs/faqs.module').then((m) => m.FaqsModule),
+  },
+    {
+    path: 'contacto',
+    loadChildren: () =>
+      import('./views/contact/contact.module').then((m) => m.ContactModule),
+  },
+  {
     path: 'usuario',
     loadChildren: () =>
       import('./views/users/users.module').then((m) => m.UsersModule),

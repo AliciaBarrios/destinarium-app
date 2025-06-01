@@ -186,6 +186,26 @@ a {
     }
 }
 
+.development-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: $primary-light-color;
+  padding: 4rem;
+  border-radius: 20px;
+
+  p {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  img {
+    width: 200px;
+    height: auto;
+  }
+}
+
 // Toast styles
 .error {
   color: red;
