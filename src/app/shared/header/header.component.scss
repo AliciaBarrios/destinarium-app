@@ -16,6 +16,32 @@
     }
 }
 
+.search-container {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+
+  input {
+    width: 100%;
+    padding: 0.75rem 1.2rem;
+    font-size: 1rem;
+    border-radius: 25px;
+    border: 1px solid #ccc;
+  }
+
+  button {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+  }
+}
+
+
 // Header para pantallas móviles y tablets
 .header-mobile {
     display: flex;

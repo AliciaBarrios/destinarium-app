@@ -5,8 +5,18 @@
             <div> 
                 <a [routerLink]="['/']" class="logo">Destinarium</a>
             </div>
-            <div class="search-bar">
+            <!-- <div class="search-bar">
                 <input type="text" class="form-control" placeholder="Buscar..." />
+            </div> -->
+            <div class="search-container">
+                <input 
+                    [(ngModel)]="searchTerm" 
+                    type="text" 
+                    placeholder="Buscar por destino" 
+                    (keydown.enter)="search()" />
+                <button (click)="search()">
+                    <mat-icon>search</mat-icon>
+                </button>
             </div>
             <div class="header-icons">
                 <button mat-icon-button aria-label="Soporte" (click)="goTo('faqs')"><mat-icon>support_agent</mat-icon></button>

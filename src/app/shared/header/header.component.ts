@@ -10,11 +10,18 @@ import { LocalStorageService } from '../../services/local-storage.service';
 export class HeaderComponent {
 
   menuOpen = false;
+  searchTerm = '';
 
   constructor(
     private router: Router,
     private localStorage: LocalStorageService
   ) {}
+
+  search() {
+    this.router.navigate(['/itinerarios/resultados'], {
+      queryParams: { destino: this.searchTerm },
+    });
+  }
 
   // Método para abrir y cerrar el menú
   toggleMenu() {
